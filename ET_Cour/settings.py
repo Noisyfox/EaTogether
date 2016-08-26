@@ -80,7 +80,7 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(PACKAGE_ROOT, "templates"),
+            os.path.join(PACKAGE_ROOT, "../ET_Cour/templates"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -110,10 +110,10 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "ET.urls"
+ROOT_URLCONF = "ET_Cour.urls"
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = "ET.wsgi.application"
+WSGI_APPLICATION = "ET_Cour.wsgi.application"
 
 INSTALLED_APPS = [
     "django.contrib.auth",
@@ -122,13 +122,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.sites",
     "django.contrib.staticfiles",
+    "django.contrib.admin",
 
     # theme
     "bootstrapform",
     "pinax_theme_bootstrap",
 
     # project
-    "ET",
+    "ET_Cust",
 ]
 
 # A sample logging configuration. The only tangible logging

@@ -11,8 +11,24 @@
         "pk": 2,
         "model": "sites.site",
         "fields": {
-            "domain": "example.com",
-            "name": "example.com"
+            "domain": "localhost:8000",
+            "name": "owner.example.com [localhost]"
+        }
+    },
+    {
+        "pk": 3,
+        "model": "sites.site",
+        "fields": {
+            "domain": "localhost:8000",
+            "name": "courier.example.com [localhost]"
+        }
+    },
+    {
+        "pk": 4,
+        "model": "sites.site",
+        "fields": {
+            "domain": "localhost:8000",
+            "name": "admin.example.com [localhost]"
         }
     }
 ]

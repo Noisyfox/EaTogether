@@ -1,6 +1,5 @@
 from django.apps import AppConfig as BaseAppConfig
 
 
-class AppConfig(BaseAppConfig):
-
+class EtConfig(BaseAppConfig):
     name = "ET"
