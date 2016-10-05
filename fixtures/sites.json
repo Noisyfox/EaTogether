@@ -11,24 +11,8 @@
         "pk": 2,
         "model": "sites.site",
         "fields": {
-            "domain": "localhost:8081",
-            "name": "owner.example.com [localhost]"
-        }
-    },
-    {
-        "pk": 3,
-        "model": "sites.site",
-        "fields": {
-            "domain": "localhost:8082",
-            "name": "courier.example.com [localhost]"
-        }
-    },
-    {
-        "pk": 4,
-        "model": "sites.site",
-        "fields": {
-            "domain": "localhost:8083",
-            "name": "admin.example.com [localhost]"
+            "domain": "example.com:8080",
+            "name": "example.com"
         }
     }
 ]

@@ -1,4 +1,4 @@
-const templatePath = '{{ project_name }}/templates/';
+const templatePath = 'ET/templates/';
 const staticRoot = 'static/';
 const staticSource = staticRoot + 'src/';
 const staticBuild = staticRoot + '_build/';

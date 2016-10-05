@@ -29,7 +29,7 @@ TIME_ZONE = "UTC"
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = "en-us"
 
-SITE_ID = int(os.environ.get("SITE_ID", 3))
+SITE_ID = int(os.environ.get("SITE_ID", 1))
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -80,7 +80,11 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(PACKAGE_ROOT, "templates"),
+            os.path.join(PROJECT_ROOT, "ET", "templates"),
+            os.path.join(PROJECT_ROOT, "ET_Cust", "templates"),
+            os.path.join(PROJECT_ROOT, "ET_Owner", "templates"),
+            os.path.join(PROJECT_ROOT, "ET_Cour", "templates"),
+            os.path.join(PROJECT_ROOT, "ET_Admin", "templates"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -110,10 +114,10 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "%s.urls" % __package__
+ROOT_URLCONF = "ET.urls"
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = "%s.wsgi.application" % __package__
+WSGI_APPLICATION = "ET.wsgi.application"
 
 INSTALLED_APPS = [
     "django.contrib.auth",
@@ -129,7 +133,11 @@ INSTALLED_APPS = [
     "pinax_theme_bootstrap",
 
     # project
-    __package__,
+    "ET",
+    "ET_Admin",
+    "ET_Cour",
+    "ET_Cust",
+    "ET_Owner",
 ]
 
 # A sample logging configuration. The only tangible logging
