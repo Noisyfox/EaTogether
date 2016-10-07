@@ -1,12 +1,14 @@
 from django.db import models
 from django.conf import settings
 
+
 class Courier(models.Model):
-    courier_login_id = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     restaurant = models.ForeignKey('Restaurant', on_delete=models.CASCADE)
 
+
 class Restaurant(models.Model):
-    user_id = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=10)
     introduction = models.TextField()
     state = models.SlugField(max_length=3)  # The max length of the state abbr in Australia is 3.
@@ -17,6 +19,7 @@ class Restaurant(models.Model):
     id_photo = models.URLField()
     business_license = models.URLField()
 
+
 class Food(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
@@ -24,8 +27,9 @@ class Food(models.Model):
     picture = models.URLField()
     price = models.FloatField()
 
+
 class Group(models.Model):
-    restaurant_id = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     group_time = models.TimeField()
     create_time = models.DateTimeField()
 
@@ -40,29 +44,28 @@ class Group(models.Model):
 
     # Order_id actually is not needed in this case.
 
+
 class GroupOrder(models.Model):
-    group_id = models.OneToOneField(Group, on_delete=models.CASCADE)
-    courier_id = models.ForeignKey(Courier, on_delete=models.CASCADE)
+    group = models.OneToOneField(Group, on_delete=models.CASCADE)
+    courier = models.ForeignKey(Courier, on_delete=models.CASCADE)
+
 
 class Customer(models.Model):
-    user_id = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=10)
     balance = models.FloatField()
+    favourite_restaurants = models.ManyToManyField(Restaurant, blank=True)
 
-# Suggest change to the many to many relation directly.
-class FavoriteRestaurant(models.Model):
-    customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    restaurant_id = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
 
 class PersonalOrder(models.Model):
-    customer_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    group_id = models.ForeignKey(GroupOrder, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    group = models.ForeignKey(GroupOrder, on_delete=models.CASCADE)
     price = models.FloatField()
     delivery_fee = models.FloatField()
-    ordertime = models.DateTimeField()
+    order_time = models.DateTimeField()
+
 
 class OrderFood(models.Model):
     personal_order = models.ForeignKey(PersonalOrder, on_delete=models.CASCADE)
-    food_id = models.ManyToManyField(Food)
+    food = models.ManyToManyField(Food)
     count = models.SmallIntegerField()
-
