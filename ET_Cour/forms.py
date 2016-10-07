@@ -15,7 +15,7 @@ class CourierLoginForm(LoginPhoneNumberForm):
         self.phone_number.label = _('Owner Phone Number')
 
     def user_credentials(self):
-        credentials = super().user_credentials()
+        credentials = super(CourierLoginForm, self).user_credentials()
         credentials.update({'courier_id': self.cleaned_data['courier_id']})
 
         return credentials
