@@ -175,3 +175,7 @@ FIXTURE_DIRS = [
 ]
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+AUTHENTICATION_BACKENDS = [
+    'ET.auth_backends.UniversalAuthenticationBackend',
+]
