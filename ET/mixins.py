@@ -21,7 +21,8 @@ class GroupRequiredMixin(AccessMixin):
         )
 
     def in_group(self):
-        return self.request.user.groups.filter(name=self.get_required_group()).exists()
+        group = self.get_required_group()
+        return self.request.user.groups.filter(name=group).exists()
 
     def dispatch(self, request, *args, **kwargs):
         if not self.in_group():
