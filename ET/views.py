@@ -18,6 +18,9 @@ class LoginView(FormView):
             "redirect_field_name": redirect_field_name,
             "redirect_field_value": self.request.POST.get(redirect_field_name,
                                                           self.request.GET.get(redirect_field_name, "")),
+            "login_url": self.get_login_url(),
+            "password_reset_url": self.get_password_reset_url(),
+            "signup_url": self.get_signup_url(),
         })
         return ctx
 
@@ -48,3 +51,12 @@ class LoginView(FormView):
         auth.login(self.request, form.user)
         expiry = settings.ET_REMEMBER_ME_EXPIRY if form.cleaned_data.get("remember") else 0
         self.request.session.set_expiry(expiry)
+
+    def get_login_url(self):
+        raise NotImplementedError
+
+    def get_password_reset_url(self):
+        return None
+
+    def get_signup_url(self):
+        return None

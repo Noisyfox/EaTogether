@@ -1,0 +1,24 @@
+{% load i18n %}
+{% load bootstrap %}
+
+<form method="POST" action="{{ login_url }}" autocapitalize="off" {% if form.is_multipart %}
+      enctype="multipart/form-data"{% endif %}>
+    <legend>{% trans "Log in to an existing account" %}</legend>
+    {% csrf_token %}
+    {{ form|bootstrap }}
+    {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+    {% endif %}
+    <button type="submit" class="btn btn-primary">{% trans "Log in" %}</button>
+    {% if password_reset_url %}
+        <a href="{{ password_reset_url }}" class="btn btn-link">{% trans "Forgot your password?" %}</a>
+    {% endif %}
+</form>
+{% if signup_url %}
+    <p class="login-signup">
+        <small>
+            {% trans "Don't have an account?" %} <strong><a
+                href="{{ signup_url }}">{% trans "Sign up" %}</a></strong>
+        </small>
+    </p>
+{% endif %}
