@@ -3,15 +3,21 @@ import uuid
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.urls import reverse
+from django.views.generic import TemplateView
 
 from ET.models import Owner
 from ET.views import RegisterView, LoginView
 from ET_Owner.forms import OwnerRegisterForm, OwnerLoginForm
+from ET_Owner.mixins import RestaurantRequiredMixin
 
 
 class OwnerRegisterView(RegisterView):
     form_class = OwnerRegisterForm
     template_name = 'ET_Owner/register_test.html'
+
+    def __init__(self, **kwargs):
+        super(OwnerRegisterView, self).__init__(**kwargs)
+        self.success_url = reverse('owner_order_list')
 
     def create_user(self, form, commit=True, **kwargs):
         group = form.get_group()
@@ -34,6 +40,7 @@ class OwnerRegisterView(RegisterView):
             raise
 
         user.groups.add(Group.objects.get(name__exact=group))
+        user.save()
 
         return user
 
@@ -45,8 +52,16 @@ class OwnerLoginView(LoginView):
     form_class = OwnerLoginForm
     template_name = 'ET_Owner/login_test.html'
 
+    def __init__(self, **kwargs):
+        super(OwnerLoginView, self).__init__(**kwargs)
+        self.success_url = reverse('owner_order_list')
+
     def get_login_url(self):
         return reverse('owner_login')
 
     def get_signup_url(self):
         return reverse('owner_register')
+
+
+class OwnerOrderListView(RestaurantRequiredMixin, TemplateView):
+    template_name = 'ET_Cust/homepage.html'

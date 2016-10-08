@@ -37,6 +37,7 @@ class CustomerRegisterView(RegisterView):
             raise
 
         user.groups.add(Group.objects.get(name__exact=group))
+        user.save()
 
         return user
 

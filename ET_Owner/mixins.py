@@ -6,7 +6,10 @@ from ET.mixins import GroupRequiredMixin
 
 class OwnerRequiredMixin(GroupRequiredMixin):
     group_required = 'owner'
-    login_url = reverse('owner_login')
+
+    def __init__(self):
+        super(OwnerRequiredMixin, self).__init__()
+        self.login_url = reverse('owner_login')
 
 
 class RestaurantRequiredMixin(OwnerRequiredMixin):

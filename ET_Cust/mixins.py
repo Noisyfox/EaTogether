@@ -5,4 +5,7 @@ from ET.mixins import GroupRequiredMixin
 
 class CustomerRequiredMixin(GroupRequiredMixin):
     group_required = 'customer'
-    login_url = reverse('cust_login')
+
+    def __init__(self):
+        super(CustomerRequiredMixin, self).__init__()
+        self.login_url = reverse('cust_login')

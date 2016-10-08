@@ -51,6 +51,9 @@ class RegisterView(FormView):
     def get_success_url(self, **kwargs):
         redirect_field_name = self.get_redirect_field_name()
         next_url = self.request.POST.get(redirect_field_name, self.request.GET.get(redirect_field_name))
+
+        if not next_url:
+            next_url = super(RegisterView, self).get_success_url()
         return next_url
 
     def get_redirect_field_name(self):
@@ -105,6 +108,9 @@ class LoginView(FormView):
     def get_success_url(self, **kwargs):
         redirect_field_name = self.get_redirect_field_name()
         next_url = self.request.POST.get(redirect_field_name, self.request.GET.get(redirect_field_name))
+
+        if not next_url:
+            next_url = super(LoginView, self).get_success_url()
         return next_url
 
     def get_redirect_field_name(self):
