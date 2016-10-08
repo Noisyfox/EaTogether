@@ -7,14 +7,20 @@ class Courier(models.Model):
     restaurant = models.ForeignKey('Restaurant', on_delete=models.CASCADE)
 
 
-class Restaurant(models.Model):
+class Owner(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=10, unique=True)
+    money = models.FloatField(default=0)
+
+
+class Restaurant(models.Model):
+    owner = models.OneToOneField(Owner, on_delete=models.CASCADE)
+
+    # Restaurant information
     introduction = models.TextField()
     state = models.SlugField(max_length=3)  # The max length of the state abbr in Australia is 3.
     address = models.TextField()
     logo = models.URLField()
-    money = models.FloatField()
     # Validation infomation.
     id_photo = models.URLField()
     business_license = models.URLField()

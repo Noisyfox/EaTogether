@@ -4,7 +4,7 @@ from django.core.exceptions import ImproperlyConfigured
 from django.utils import six
 from django.utils.translation import ugettext_lazy as _
 
-from ET.models import Customer, Restaurant
+from ET.models import Customer, Owner
 
 
 class RegisterForm(forms.Form):
@@ -44,7 +44,7 @@ class RegisterForm(forms.Form):
         if g == 'customer':
             qs = Customer.objects.filter(phone_number__iexact=phone)
         elif g == 'owner':
-            qs = Restaurant.objects.filter(phone_number__iexact=phone)
+            qs = Owner.objects.filter(phone_number__iexact=phone)
         else:
             return self.cleaned_data['phone_number']
 

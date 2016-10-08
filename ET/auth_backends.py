@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.backends import ModelBackend
 from django.db.models import Q
 
-from ET.models import Customer, Restaurant, Courier
+from ET.models import Customer, Courier, Owner
 
 
 class UniversalAuthenticationBackend(ModelBackend):
@@ -38,8 +38,8 @@ class UniversalAuthenticationBackend(ModelBackend):
     @staticmethod
     def auth_owner(phone_number):
         try:
-            owner = Restaurant.objects.get(phone_number__iexact=phone_number)
-        except Restaurant.DoesNotExist:
+            owner = Owner.objects.get(phone_number__iexact=phone_number)
+        except Owner.DoesNotExist:
             return None
         else:
             return owner.user
