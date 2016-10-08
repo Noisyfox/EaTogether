@@ -9,7 +9,7 @@ DEBUG = True
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
+        "ENGINE": "django.contrib.gis.db.backends.spatialite",
         "NAME": "dev.db",
     }
 }
@@ -128,6 +128,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.admin",
+    "django.contrib.gis",
 
     # theme
     "bootstrapform",
@@ -179,3 +180,5 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 AUTHENTICATION_BACKENDS = [
     'ET.auth_backends.UniversalAuthenticationBackend',
 ]
+
+SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
