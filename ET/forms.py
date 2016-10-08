@@ -4,6 +4,70 @@ from django.core.exceptions import ImproperlyConfigured
 from django.utils import six
 from django.utils.translation import ugettext_lazy as _
 
+from ET.models import Customer, Restaurant
+
+
+class RegisterForm(forms.Form):
+    first_name = forms.CharField(
+        label=_('Given Name'),
+        max_length=20,
+        widget=forms.TextInput(),
+        required=True
+    )
+    last_name = forms.CharField(
+        label=_('Family Name'),
+        max_length=20,
+        widget=forms.TextInput(),
+        required=True
+    )
+    phone_number = forms.CharField(
+        label=_('Phone Number'),
+        max_length=12,
+        required=True
+    )
+    password = forms.CharField(
+        label=_("Password"),
+        widget=forms.PasswordInput(render_value=False)
+    )
+    password_confirm = forms.CharField(
+        label=_("Password (again)"),
+        widget=forms.PasswordInput(render_value=False)
+    )
+    group = None
+
+    def clean_phone_number(self):
+        g = self.get_group()
+        phone = self.cleaned_data['phone_number']
+        if g == 'customer':
+            qs = Customer.objects.filter(phone_number__iexact=phone)
+        elif g == 'owner':
+            qs = Restaurant.objects.filter(phone_number__iexact=phone)
+        else:
+            return self.cleaned_data['phone_number']
+
+        if not qs.exists():
+            return self.cleaned_data["phone_number"]
+        raise forms.ValidationError(_("This phone number is already taken. Please input another."))
+
+    def clean(self):
+        if "password" in self.cleaned_data and "password_confirm" in self.cleaned_data:
+            if self.cleaned_data["password"] != self.cleaned_data["password_confirm"]:
+                raise forms.ValidationError(_("You must type the same password each time."))
+        return self.cleaned_data
+
+    def get_group(self):
+        if self.group is None:
+            raise ImproperlyConfigured(
+                '{0} is missing the group attribute. Define {0}.group.'.format(self.__class__.__name__)
+            )
+        if isinstance(self.group, six.string_types):
+            return self.group
+
+        raise ImproperlyConfigured(
+            '{0}.group_required attribute must be a string. Define {0}.group_required, or override '
+            '{0}.get_required_group().'.format(self.__class__.__name__)
+        )
+
 
 class LoginForm(forms.Form):
     password = forms.CharField(
