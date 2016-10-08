@@ -12,17 +12,20 @@ class RegisterForm(forms.Form):
         label=_('Given Name'),
         max_length=20,
         widget=forms.TextInput(),
+        strip=True,
         required=True
     )
     last_name = forms.CharField(
         label=_('Family Name'),
         max_length=20,
         widget=forms.TextInput(),
+        strip=True,
         required=True
     )
     phone_number = forms.CharField(
         label=_('Phone Number'),
         max_length=12,
+        strip=True,
         required=True
     )
     password = forms.CharField(
@@ -126,7 +129,7 @@ class LoginForm(forms.Form):
 
 
 class LoginPhoneNumberForm(LoginForm):
-    phone_number = forms.CharField(label=_('Phone Number'), max_length=12)
+    phone_number = forms.CharField(label=_('Phone Number'), strip=True, max_length=12)
     authentication_fail_message = _("The phone number and/or password you specified are not correct.")
     field_order = ['phone_number', 'password', 'remember']
     identifier_field = 'phone_number'

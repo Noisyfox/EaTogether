@@ -9,7 +9,7 @@ class Courier(models.Model):
 
 class Restaurant(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=10)
+    phone_number = models.CharField(max_length=10, unique=True)
     introduction = models.TextField()
     state = models.SlugField(max_length=3)  # The max length of the state abbr in Australia is 3.
     address = models.TextField()
@@ -52,8 +52,8 @@ class GroupOrder(models.Model):
 
 class Customer(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=10)
-    balance = models.FloatField()
+    phone_number = models.CharField(max_length=10, unique=True)
+    balance = models.FloatField(default=0)
     favourite_restaurants = models.ManyToManyField(Restaurant, blank=True)
 
 
