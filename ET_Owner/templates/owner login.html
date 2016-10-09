@@ -1,70 +1,74 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>EaTogether - Eat Now, Eat Together</title>
-</head>
+{% extends "site_base.html" %}
 
-<body>
-</body>
+{% load i18n %}
+
+{% block head_title %}EaTogether - Eat Now, Eat Together - Owner Login{% endblock %}
+
+{% block body%}
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+    <div class="Page_title">
+      <p align="center">
+          <a input style="font-family: Calibri; font-size: 300% ; color: #21b124;"> Welcome to EaTogether! </a>
+      </p>
+    </div>
+    <br/>
+    <form method="post" action=".">
+        <p align="center">
+            <input type="text" placeholder="phone number" />
+        </p>
+
+        <p align="center">
+            <input type="password" placeholder="password" />
+        </p>
+
+        <p align="center">
+            <input type="checkbox" value="1"/>
+            <a input style="font-family: Calibri;line-height: 20px">remember the account</a>
+        </p>
+
+        <p align="center">
+             <button type="submit";input style="width: 300px;height: 30px;background-color: #b5ff8a">Login
+             </button>
+        </p>
+    </form>
+
+     <div class="Retrive_Password">
+        <p align="center">
+            <a input style="font-family: Calibri;line-height: 20px"> Don't worried if you </a>
+            <a input style="font-family: Calibri;line-height: 20px" href="javascript:;" >forget password.</a>
+        </p>
+    </div>
+
+    </div class="Register">
+    <p align="center">
+        <a input style="font-family: Calibri;line-height: 20px"> Have a restaurant? </a>
+        <a input style="font-family: Calibri;line-height: 20px" href="javascript:;" >Register now!</a>
+    </p>
+    </div>
+
+{% endblock %}
 
 <pre>
 
 
 
 
-
-
-
-
 </pre>
-<div class="top-banner">
-  <div class="userbar fr">
-   <p align="center"> <a input style="font-family: Calibri; font-size: 300% ; color: #21b124;"> Welcome to EaTogether! </a></p>
-   <pre>
 
-   </pre>
-  </div>
-</div>
 
-<div class="map" id="map">
-  <div class="top">
-    <!-- INPUT ADDRESS OF THE DELIVERY DESTINATION -->
-      <div class="Input Phone Number">
-        <div class="input-container clearfix m-shadow">
-          <p align="center"> <input type="text" id="login_phone_r" placeholder="phone number" class="fl" /></p>
-        </div>
-      </div>
 
-      <div class="Password">
-        <div class="input-container clearfix m-shadow">
-          <p align="center"> <input type="password" id="login_password_r" class="f-text" name="password" placeholder="password" /></p>
-        </div>
-      </div>
 
-      <div class="Remember account">
-        <div>
-          <p align="center"><input type="checkbox" value="1"  name="auto_login_r" id="autologin" class="f-check " />
-          <a input style="font-family: Calibri">remember the account</a></p>
-        </div>
-      </div>
 
-      <div class="Forget Password">
-        <div>
-        <p align="center"><a input style="font-family: Calibri"> Don't worried if you </a>
-        <a input style="font-family: Calibri" href="javascript:;" class="fl" id="register_r">forget password.</a></p>
-        </div>
-      </div>
 
-      <div class="login">
-          <p align="center"><input data-mtevent="login.mobile.submit"  style="width: 300px;height: 30px ;background-color: #b5ff8a" type="submit" class="btn" name="commit" value="Login" /></p>
-      </div>
 
-      </div>
-        <p align="center"><a input style="font-family: Calibri"> Have a restaurant? </a>
-        <a input style="font-family: Calibri" href="javascript:;" class="fl" id="register_r">Register now!</a></p>
-      </div>
-    </div>
-  </div>
-</body>
-</html>
+
+
+
+
+
+
+
+
