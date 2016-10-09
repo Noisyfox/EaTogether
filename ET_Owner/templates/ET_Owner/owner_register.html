@@ -1,5 +1,80 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head_title %}
+    Thia is the owner register page.
+{% endblock %}
+
+{% block body%}
+    <div class="title">
+        <img src="{% static "img_owner/brand_et.png" %}" height="100" class="pull-right"/>
+        <a input style="font-family: Calibri; color:  #21b124" class="pull-right">EaTogether - Eat Now, Eat Together - Owner Register</a>
+        <img src="{% static "img_owner/brand_et.png" %}" height="100" class="pull-right"/>
+    </div>
+    <br/>
+    <br/>
+    <br/>
+    <br/>
+
+    <div class="Page_title">
+      <p align="center">
+          <a input style="font-family: Calibri; font-size: 300% ; color: #21b124;"class="Page_title"> Welcome to EaTogether! </a>
+      </p>
+    </div>
+    <br/>
+    <form method="post" action="../">
+        <p align="center">
+            <input type="text" placeholder="phone number" />
+        </p>
+
+        <p align="center">
+            <input type="password" placeholder="password" />
+        </p>
+
+        <p align="center">
+            <input type="checkbox" value="1"/>
+            <a input style="font-family: Calibri;line-height: 20px">remember the account</a>
+        </p>
+
+        <p align="center">
+             <button type="submit";input style="width: 300px;height: 30px;background-color: #b5ff8a">Login
+             </button>
+        </p>
+    </form>
+
+     <div class="Retrive_Password">
+        <p align="center">
+            <a input style="font-family: Calibri;line-height: 20px"> Don't worried if you </a>
+            <a input style="font-family: Calibri;line-height: 20px" href="javascript:;" >forget password.</a>
+        </p>
+    </div>
+
+    </div class="Register">
+    <p align="center">
+        <a input style="font-family: Calibri;line-height: 20px"> Have a restaurant? </a>
+        <a input style="font-family: Calibri;line-height: 20px" href="javascript:;" >Register now!</a>
+        <br/>
+        <br/>
+        <br/>
+        <br/>
+    </p>
+    </div>
+
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
 <head>
     <meta charset="UTF-8">
     <title>EaTogether - Eat Now, Eat Together - Owner Register</title>
