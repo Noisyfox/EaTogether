@@ -80,7 +80,11 @@ TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
         "DIRS": [
-            os.path.join(PACKAGE_ROOT, "../ET_Cour/templates"),
+            os.path.join(PROJECT_ROOT, "ET", "templates"),
+            os.path.join(PROJECT_ROOT, "ET_Cust", "templates"),
+            os.path.join(PROJECT_ROOT, "ET_Owner", "templates"),
+            os.path.join(PROJECT_ROOT, "ET_Cour", "templates"),
+            os.path.join(PROJECT_ROOT, "ET_Admin", "templates"),
         ],
         "APP_DIRS": True,
         "OPTIONS": {
@@ -108,12 +112,13 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.SessionAuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "ET.middleware.UserAccountScopeMiddleware",
 ]
 
-ROOT_URLCONF = "ET_Cour.urls"
+ROOT_URLCONF = "ET.urls"
 
 # Python dotted path to the WSGI application used by Django's runserver.
-WSGI_APPLICATION = "ET_Cour.wsgi.application"
+WSGI_APPLICATION = "ET.wsgi.application"
 
 INSTALLED_APPS = [
     "django.contrib.auth",
@@ -129,7 +134,11 @@ INSTALLED_APPS = [
     "pinax_theme_bootstrap",
 
     # project
+    "ET",
+    "ET_Admin",
+    "ET_Cour",
     "ET_Cust",
+    "ET_Owner",
 ]
 
 # A sample logging configuration. The only tangible logging
@@ -166,3 +175,7 @@ FIXTURE_DIRS = [
 ]
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+AUTHENTICATION_BACKENDS = [
+    'ET.auth_backends.UniversalAuthenticationBackend',
+]
