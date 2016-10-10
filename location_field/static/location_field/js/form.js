@@ -34,8 +34,6 @@
                 if (l.length > 1) {
                     initial_position = new google.maps.LatLng(l[0], l[1]);
                 }
-            } else {
-
             }
 
             var marker = new google.maps.Marker({
@@ -55,40 +53,41 @@
 
             var no_change = false;
 
+            var addr2loc = function () {
+                no_change = true;
+
+                var lstr = [];
+
+                location_based.each(function () {
+                    var b = $(this);
+
+                    if (b.is('select'))
+                        lstr.push(b.find('option:selected').html());
+                    else
+                        lstr.push(b.val())
+                });
+
+                if (lstr.length > 0 && suffix != '')
+                    lstr.push(suffix);
+
+                lstr.push('Australia');
+                geocode(lstr.join(','), function (l) {
+                    location_coordinate.val(l.lat() + ',' + l.lng());
+                    setTimeout(function () {
+                        no_change = false;
+                    }, 2000);
+                });
+            };
+
             location_based.each(function (i, f) {
-                var f = $(this),
-                    cb = function () {
-                        no_change = true;
-
-                        var lstr = [];
-
-                        location_based.each(function () {
-                            var b = $(this);
-
-                            if (b.is('select'))
-                                lstr.push(b.find('option:selected').html());
-                            else
-                                lstr.push(b.val())
-                        });
-
-                        if (lstr.length > 0 && suffix != '')
-                            lstr.push(suffix);
-
-                        lstr.push('Australia');
-                        geocode(lstr.join(','), function (l) {
-                            location_coordinate.val(l.lat() + ',' + l.lng());
-                            setTimeout(function () {
-                                no_change = false;
-                            }, 2000);
-                        });
-                    };
+                var f = $(this)
 
                 if (f.is('select')) {
-                    f.change(cb);
-                    f.blur(cb);
+                    f.change(addr2loc);
+                    f.blur(addr2loc);
                 }
                 else
-                    f.keyup(cb);
+                    f.keyup(addr2loc);
             });
 
             // Prevents querying Google Maps everytime field changes
@@ -136,6 +135,10 @@
                         }
                     });
                 }
+            }
+
+            if (!initial_position) {
+                addr2loc();
             }
 
             placeMarker(initial_position);

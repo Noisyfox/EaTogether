@@ -81,6 +81,4 @@ class OwnerRestaurantCreateView(OwnerRequiredMixin, FormView):
         """
         initial = super(OwnerRestaurantCreateView, self).get_initial()
 
-        initial['general'] = {'location': '0,0'}
-
         return initial
