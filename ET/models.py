@@ -17,6 +17,12 @@ class Restaurant(models.Model):
     owner = models.OneToOneField(Owner, on_delete=models.CASCADE)
 
     # Restaurant information
+    name = models.CharField(max_length=30)
+
+    # Contact info
+    contact_name = models.CharField(max_length=30)
+    contact_number = models.CharField(max_length=10)
+
     introduction = models.TextField()
     state = models.SlugField(max_length=3)  # The max length of the state abbr in Australia is 3.
     address = models.TextField()

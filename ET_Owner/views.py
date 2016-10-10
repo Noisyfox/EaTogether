@@ -2,13 +2,16 @@ import uuid
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
+from django.contrib.gis import forms
+from django.http import HttpResponse
 from django.urls import reverse
+from django.views.generic import FormView
 from django.views.generic import TemplateView
 
 from ET.models import Owner
 from ET.views import RegisterView, LoginView
-from ET_Owner.forms import OwnerRegisterForm, OwnerLoginForm
-from ET_Owner.mixins import RestaurantRequiredMixin
+from ET_Owner.forms import OwnerRegisterForm, OwnerLoginForm, RestaurantInformationForm
+from ET_Owner.mixins import RestaurantRequiredMixin, OwnerRequiredMixin
 
 
 class OwnerRegisterView(RegisterView):
@@ -65,3 +68,22 @@ class OwnerLoginView(LoginView):
 
 class OwnerOrderListView(RestaurantRequiredMixin, TemplateView):
     template_name = 'ET_Cust/homepage.html'
+
+
+class OwnerRestaurantCreateView(OwnerRequiredMixin, FormView):
+    form_class = RestaurantInformationForm
+    template_name = 'ET_Owner/restaurant_information_test.html'
+
+
+def test_osm_widget(self):
+    class PointForm(forms.Form):
+        p = forms.PointField(widget=forms.OSMWidget)
+
+    geom = self.geometries['point']
+    form = PointForm(data={'p': geom})
+    rendered = form.as_p()
+
+    self.assertIn("OpenStreetMap (Mapnik)", rendered)
+    self.assertIn("id: 'id_p',", rendered)
+
+    return HttpResponse(rendered)

@@ -13,7 +13,10 @@ class OwnerRequiredMixin(GroupRequiredMixin):
 
 
 class RestaurantRequiredMixin(OwnerRequiredMixin):
-    restaurant_create_url = ''
+
+    def __init__(self):
+        super(RestaurantRequiredMixin, self).__init__()
+        self.restaurant_create_url = reverse('owner_edit_restaurant')
 
     def dispatch(self, request, *args, **kwargs):
         if not self.in_group():

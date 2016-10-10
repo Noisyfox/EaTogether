@@ -134,6 +134,8 @@ INSTALLED_APPS = [
     "bootstrapform",
     "pinax_theme_bootstrap",
 
+    "betterforms",
+
     # project
     "ET",
     "ET_Admin",

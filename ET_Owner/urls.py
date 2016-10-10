@@ -8,4 +8,5 @@ urlpatterns = [
     url(r"^$", views.OwnerOrderListView.as_view(), name="owner_order_list"),
     url(r"^login/$", views.OwnerLoginView.as_view(), name='owner_login'),
     url(r"^register/$", views.OwnerRegisterView.as_view(), name='owner_register'),
+    url(r"^restaurant/$", views.OwnerRestaurantCreateView.as_view(), name='owner_edit_restaurant')
 ]

@@ -1,3 +1,7 @@
+from django.utils.translation import ugettext_lazy as _
+from betterforms.multiform import MultiForm
+from django.contrib.gis import forms
+
 from ET.forms import LoginPhoneNumberForm, RegisterForm
 
 GROUP = 'owner'
@@ -9,3 +13,27 @@ class OwnerRegisterForm(RegisterForm):
 
 class OwnerLoginForm(LoginPhoneNumberForm):
     group = GROUP
+
+
+class RestaurantGeneralInformationForm(forms.Form):
+    name = forms.CharField(label=_('Restaurant Name'), strip=True, max_length=30)
+    contact_name = forms.CharField(label=_('Contact Name'), strip=True, max_length=30)
+    contact_number = forms.CharField(label=_('Contact Number'), strip=True, max_length=10)
+    introduction = forms.CharField(widget=forms.Textarea, label=_('Restaurant Introduction'), strip=True,
+                                   max_length=200)
+    location = forms.PointField(
+        widget=forms.OSMWidget(attrs={}),
+    )
+    logo = forms.ImageField(label=_('Logo'))
+
+
+class RestaurantValidInformationForm(forms.Form):
+    name = forms.CharField(label=_('Id'), strip=True, max_length=30)
+    id_number = forms.CharField(label=_('Id Number'), strip=True, max_length=30)
+
+
+class RestaurantInformationForm(MultiForm):
+    form_classes = {
+        'general': RestaurantGeneralInformationForm,
+        'valid': RestaurantValidInformationForm,
+    }
