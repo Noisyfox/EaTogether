@@ -1,5 +1,16 @@
-from django.db import models
+from django.contrib.gis.db import models
 from django.conf import settings
+
+STATES = (
+    ('VIC', 'Victoria '),
+    ('NSW', 'New South Wales'),
+    ('QLD', 'Queensland'),
+    ('SA', 'South Australia'),
+    ('WA', 'Western Australia'),
+    ('NT', 'The Northern Territory'),
+    ('TAS', 'Tasmania'),
+    ('ACT', 'The Australian Capital Territory'),
+)
 
 
 class Courier(models.Model):
@@ -14,6 +25,7 @@ class Owner(models.Model):
 
 
 class Restaurant(models.Model):
+
     owner = models.OneToOneField(Owner, on_delete=models.CASCADE)
 
     # Restaurant information
@@ -24,8 +36,9 @@ class Restaurant(models.Model):
     contact_number = models.CharField(max_length=10)
 
     introduction = models.TextField()
-    state = models.SlugField(max_length=3)  # The max length of the state abbr in Australia is 3.
+    state = models.SlugField(max_length=3, choices=STATES)  # The max length of the state abbr in Australia is 3.
     address = models.TextField()
+    location = models.PointField()
     logo = models.URLField()
     # Validation infomation.
     id_photo = models.URLField()

@@ -2,8 +2,6 @@ import uuid
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from django.contrib.gis import forms
-from django.http import HttpResponse
 from django.urls import reverse
 from django.views.generic import FormView
 from django.views.generic import TemplateView
@@ -74,16 +72,15 @@ class OwnerRestaurantCreateView(OwnerRequiredMixin, FormView):
     form_class = RestaurantInformationForm
     template_name = 'ET_Owner/restaurant_information_test.html'
 
+    def form_valid(self, form):
+        return super().form_valid(form)
 
-def test_osm_widget(self):
-    class PointForm(forms.Form):
-        p = forms.PointField(widget=forms.OSMWidget)
+    def get_initial(self):
+        """
+        Returns the initial data to use for forms on this view.
+        """
+        initial = super(OwnerRestaurantCreateView, self).get_initial()
 
-    geom = self.geometries['point']
-    form = PointForm(data={'p': geom})
-    rendered = form.as_p()
+        initial['general'] = {'location': '0,0'}
 
-    self.assertIn("OpenStreetMap (Mapnik)", rendered)
-    self.assertIn("id: 'id_p',", rendered)
-
-    return HttpResponse(rendered)
+        return initial

@@ -142,6 +142,8 @@ INSTALLED_APPS = [
     "ET_Cour",
     "ET_Cust",
     "ET_Owner",
+
+    "location_field",
 ]
 
 # A sample logging configuration. The only tangible logging
@@ -184,3 +186,5 @@ AUTHENTICATION_BACKENDS = [
 ]
 
 SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
+
+GOOGLE_MAPS_V3_APIKEY = 'AIzaSyD8yC2qzzlufDZva6mc_d1QXi94XiMgu5k'
