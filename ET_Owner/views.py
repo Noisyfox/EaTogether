@@ -3,17 +3,15 @@ import uuid
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
-from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import CreateView
-from django.views.generic import FormView
 from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView
 
 from ET.models import Owner, Food
 from ET.views import RegisterView, LoginView
-from ET_Owner.forms import OwnerRegisterForm, OwnerLoginForm, RestaurantInformationForm, RestaurantValidInformationForm
+from ET_Owner.forms import OwnerRegisterForm, OwnerLoginForm, RestaurantInformationForm
 from ET_Owner.mixins import RestaurantRequiredMixin, OwnerRequiredMixin
 
 

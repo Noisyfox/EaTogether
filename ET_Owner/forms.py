@@ -1,6 +1,6 @@
+from betterforms.multiform import MultiModelForm
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from betterforms.multiform import MultiForm, MultiModelForm
 
 from ET.forms import LoginPhoneNumberForm, RegisterForm
 from ET.models import Restaurant, ValidationInformation
