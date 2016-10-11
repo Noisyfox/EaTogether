@@ -65,9 +65,10 @@ class OwnerOrderListView(RestaurantRequiredMixin, TemplateView):
     template_name = 'ET_Cust/homepage.html'
 
 
-class OwnerRestaurantCreateView(OwnerRequiredMixin, UpdateView):
+class OwnerRestaurantInformationView(OwnerRequiredMixin, UpdateView):
     form_class = RestaurantInformationForm
     template_name = 'ET_Owner/restaurant_information_test.html'
+    success_url = reverse_lazy('owner_restaurant')
 
     def get_object(self, queryset=None):
         try:
@@ -76,7 +77,7 @@ class OwnerRestaurantCreateView(OwnerRequiredMixin, UpdateView):
             return None
 
     def get_form_kwargs(self):
-        kwargs = super(OwnerRestaurantCreateView, self).get_form_kwargs()
+        kwargs = super(OwnerRestaurantInformationView, self).get_form_kwargs()
         if self.object:
             kwargs.update(instance={
                 'general': self.object,
@@ -103,4 +104,4 @@ class OwnerRestaurantCreateView(OwnerRequiredMixin, UpdateView):
 
             return HttpResponseRedirect(self.get_success_url())
         else:
-            return super(OwnerRestaurantCreateView, self).form_valid(form)
+            return super(OwnerRestaurantInformationView, self).form_valid(form)
