@@ -70,7 +70,7 @@ class OwnerOrderListView(RestaurantRequiredMixin, TemplateView):
 class OwnerRestaurantEditView(OwnerRequiredMixin, UpdateView):
     form_class = RestaurantInformationForm
     template_name = 'ET_Owner/restaurant_edit_test.html'
-    success_url = reverse_lazy('owner_restaurant')
+    success_url = reverse_lazy('owner_edit_restaurant')
 
     def get_object(self, queryset=None):
         try:
@@ -104,9 +104,7 @@ class OwnerRestaurantEditView(OwnerRequiredMixin, UpdateView):
 
             self.object = new_obj
 
-            return HttpResponseRedirect(self.get_success_url())
-        else:
-            return super(OwnerRestaurantEditView, self).form_valid(form)
+        return super(OwnerRestaurantEditView, self).form_valid(form)
 
 
 class OwnerMenuView(RestaurantRequiredMixin, ListView):
