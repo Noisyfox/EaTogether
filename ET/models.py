@@ -1,5 +1,7 @@
-from django.contrib.gis.db import models
+from django.db import models
 from django.conf import settings
+
+from location_field.models.spatial import LocationField
 
 
 class Courier(models.Model):
@@ -25,12 +27,17 @@ class Restaurant(models.Model):
     contact_number = models.CharField(max_length=10)
 
     introduction = models.TextField()
-    address = models.TextField()
-    location = models.PointField()
-    logo = models.URLField()
-    # Validation infomation.
-    id_photo = models.URLField()
-    business_license = models.URLField()
+    address = models.CharField(max_length=255)
+    location = LocationField(address_field='address', zoom=13)
+    logo = models.ImageField()
+
+
+class ValidationInformation(models.Model):
+    restaurant = models.OneToOneField(Restaurant, on_delete=models.CASCADE)
+
+    id_number = models.CharField(max_length=50)
+    id_photo = models.ImageField()
+    business_license = models.ImageField()
 
 
 class Food(models.Model):

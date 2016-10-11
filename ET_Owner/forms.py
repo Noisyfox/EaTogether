@@ -1,9 +1,9 @@
 from django import forms
 from django.utils.translation import ugettext_lazy as _
-from betterforms.multiform import MultiForm
+from betterforms.multiform import MultiForm, MultiModelForm
 
 from ET.forms import LoginPhoneNumberForm, RegisterForm
-from location_field.forms.spatial import LocationField
+from ET.models import Restaurant, ValidationInformation
 
 GROUP = 'owner'
 
@@ -16,25 +16,28 @@ class OwnerLoginForm(LoginPhoneNumberForm):
     group = GROUP
 
 
-class RestaurantGeneralInformationForm(forms.Form):
-    name = forms.CharField(label=_('Restaurant Name'), strip=True, max_length=30)
-    contact_name = forms.CharField(label=_('Contact Name'), strip=True, max_length=30)
-    contact_number = forms.CharField(label=_('Contact Number'), strip=True, max_length=10)
-    introduction = forms.CharField(widget=forms.Textarea, label=_('Restaurant Introduction'), strip=True,
-                                   max_length=200)
-
-    address = forms.CharField(label=_('Address'), strip=True, max_length=128)
-
-    location = LocationField(address_field='address', zoom=13)
-    logo = forms.ImageField(label=_('Logo'))
-
-
-class RestaurantValidInformationForm(forms.Form):
-    name = forms.CharField(label=_('Id'), strip=True, max_length=30)
-    id_number = forms.CharField(label=_('Id Number'), strip=True, max_length=30)
+class RestaurantGeneralInformationForm(forms.ModelForm):
+    class Meta:
+        model = Restaurant
+        fields = ['name', 'contact_name', 'contact_number', 'introduction', 'address', 'location', 'logo']
+        labels = {
+            'name': _('Restaurant Name'),
+            'contact_name': _('Contact Name'),
+            'contact_number': _('Contact Number'),
+            'introduction': _('Introduction'),
+            'address': _('Address'),
+            'location': _('Location'),
+            'logo': _('Logo'),
+        }
 
 
-class RestaurantInformationForm(MultiForm):
+class RestaurantValidInformationForm(forms.ModelForm):
+    class Meta:
+        model = ValidationInformation
+        fields = ['id_number', 'id_photo', 'business_license']
+
+
+class RestaurantInformationForm(MultiModelForm):
     form_classes = {
         'general': RestaurantGeneralInformationForm,
         'valid': RestaurantValidInformationForm,

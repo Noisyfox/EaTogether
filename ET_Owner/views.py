@@ -2,13 +2,16 @@ import uuid
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
+from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
 from django.views.generic import FormView
 from django.views.generic import TemplateView
+from django.views.generic import UpdateView
 
 from ET.models import Owner
 from ET.views import RegisterView, LoginView
-from ET_Owner.forms import OwnerRegisterForm, OwnerLoginForm, RestaurantInformationForm
+from ET_Owner.forms import OwnerRegisterForm, OwnerLoginForm, RestaurantInformationForm, RestaurantValidInformationForm
 from ET_Owner.mixins import RestaurantRequiredMixin, OwnerRequiredMixin
 
 
@@ -62,17 +65,42 @@ class OwnerOrderListView(RestaurantRequiredMixin, TemplateView):
     template_name = 'ET_Cust/homepage.html'
 
 
-class OwnerRestaurantCreateView(OwnerRequiredMixin, FormView):
+class OwnerRestaurantCreateView(OwnerRequiredMixin, UpdateView):
     form_class = RestaurantInformationForm
     template_name = 'ET_Owner/restaurant_information_test.html'
 
+    def get_object(self, queryset=None):
+        try:
+            return self.request.user.owner.restaurant
+        except ObjectDoesNotExist:
+            return None
+
+    def get_form_kwargs(self):
+        kwargs = super(OwnerRestaurantCreateView, self).get_form_kwargs()
+        if self.object:
+            kwargs.update(instance={
+                'general': self.object,
+                'valid': self.object.validationinformation,
+            })
+
+        return kwargs
+
     def form_valid(self, form):
-        return super().form_valid(form)
+        if not self.object:
+            new_obj = form.save(commit=False)
+            restaurant = new_obj['general']
+            valid = new_obj['valid']
+            restaurant.owner = self.request.user.owner
+            restaurant.save()
+            try:
+                valid.restaurant = restaurant
+                valid.save()
+            except Exception:
+                restaurant.delete()
+                raise
 
-    def get_initial(self):
-        """
-        Returns the initial data to use for forms on this view.
-        """
-        initial = super(OwnerRestaurantCreateView, self).get_initial()
+            self.object = new_obj
 
-        return initial
+            return HttpResponseRedirect(self.get_success_url())
+        else:
+            return super(OwnerRestaurantCreateView, self).form_valid(form)
