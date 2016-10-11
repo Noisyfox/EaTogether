@@ -16,7 +16,6 @@ class Owner(models.Model):
 
 
 class Restaurant(models.Model):
-
     owner = models.OneToOneField(Owner, on_delete=models.CASCADE)
 
     # Restaurant information
@@ -40,11 +39,26 @@ class ValidationInformation(models.Model):
     business_license = models.ImageField()
 
 
+class RestaurantServiceInfo(models.Model):
+    SERV_STATUS = (
+        ('O', 'Open'),
+        ('C', 'Close'),
+    )
+    restaurant = models.OneToOneField(Restaurant, on_delete=models.CASCADE)
+
+    min_delivery = models.FloatField(default=0)
+    delivery_fee = models.FloatField(default=0)
+
+    announcement = models.TextField(max_length=500)
+
+    service_status = models.CharField(max_length=1, choices=SERV_STATUS, default='C')
+
+
 class Food(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     introduction = models.TextField()
-    picture = models.URLField()
+    picture = models.ImageField()
     price = models.FloatField()
 
 

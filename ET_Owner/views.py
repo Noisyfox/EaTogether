@@ -5,11 +5,13 @@ from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
+from django.views.generic import CreateView
 from django.views.generic import FormView
+from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView
 
-from ET.models import Owner
+from ET.models import Owner, Food
 from ET.views import RegisterView, LoginView
 from ET_Owner.forms import OwnerRegisterForm, OwnerLoginForm, RestaurantInformationForm, RestaurantValidInformationForm
 from ET_Owner.mixins import RestaurantRequiredMixin, OwnerRequiredMixin
@@ -65,9 +67,9 @@ class OwnerOrderListView(RestaurantRequiredMixin, TemplateView):
     template_name = 'ET_Cust/homepage.html'
 
 
-class OwnerRestaurantInformationView(OwnerRequiredMixin, UpdateView):
+class OwnerRestaurantEditView(OwnerRequiredMixin, UpdateView):
     form_class = RestaurantInformationForm
-    template_name = 'ET_Owner/restaurant_information_test.html'
+    template_name = 'ET_Owner/restaurant_edit_test.html'
     success_url = reverse_lazy('owner_restaurant')
 
     def get_object(self, queryset=None):
@@ -77,7 +79,7 @@ class OwnerRestaurantInformationView(OwnerRequiredMixin, UpdateView):
             return None
 
     def get_form_kwargs(self):
-        kwargs = super(OwnerRestaurantInformationView, self).get_form_kwargs()
+        kwargs = super(OwnerRestaurantEditView, self).get_form_kwargs()
         if self.object:
             kwargs.update(instance={
                 'general': self.object,
@@ -104,4 +106,34 @@ class OwnerRestaurantInformationView(OwnerRequiredMixin, UpdateView):
 
             return HttpResponseRedirect(self.get_success_url())
         else:
-            return super(OwnerRestaurantInformationView, self).form_valid(form)
+            return super(OwnerRestaurantEditView, self).form_valid(form)
+
+
+class OwnerMenuView(RestaurantRequiredMixin, ListView):
+    template_name = 'ET_Owner/menu_test.html'
+    allow_empty = True
+    context_object_name = 'foods'
+
+    def get_queryset(self):
+        return Food.objects.filter(restaurant=self.request.user.owner.restaurant)
+
+
+class OwnerFoodCreateView(RestaurantRequiredMixin, CreateView):
+    model = Food
+    fields = ['name', 'introduction', 'picture', 'price']
+    template_name = 'ET_Owner/food_edit_test.html'
+    success_url = reverse_lazy('owner_menu')
+    context_object_name = 'food'
+
+    def form_valid(self, form):
+        food = form.save(commit=False)
+        food.restaurant = self.request.user.owner.restaurant
+        return super(OwnerFoodCreateView, self).form_valid(form)
+
+
+class OwnerFoodEditView(RestaurantRequiredMixin, UpdateView):
+    model = Food
+    fields = ['name', 'introduction', 'picture', 'price']
+    template_name = 'ET_Owner/food_edit_test.html'
+    success_url = reverse_lazy('owner_menu')
+    context_object_name = 'food'
