@@ -1,11 +1,8 @@
-from django.urls import reverse
+from django.urls import reverse_lazy
 
 from ET.mixins import GroupRequiredMixin
 
 
 class CustomerRequiredMixin(GroupRequiredMixin):
     group_required = 'customer'
-
-    def __init__(self):
-        super(CustomerRequiredMixin, self).__init__()
-        self.login_url = reverse('cust_login')
+    login_url = reverse_lazy('cust_login')

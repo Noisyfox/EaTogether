@@ -2,7 +2,7 @@ import uuid
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from django.urls import reverse
+from django.urls import reverse_lazy
 from django.views.generic import FormView
 from django.views.generic import TemplateView
 
@@ -15,10 +15,7 @@ from ET_Owner.mixins import RestaurantRequiredMixin, OwnerRequiredMixin
 class OwnerRegisterView(RegisterView):
     form_class = OwnerRegisterForm
     template_name = 'ET_Owner/register_test.html'
-
-    def __init__(self, **kwargs):
-        super(OwnerRegisterView, self).__init__(**kwargs)
-        self.success_url = reverse('owner_order_list')
+    success_url = reverse_lazy('owner_order_list')
 
     def create_user(self, form, commit=True, **kwargs):
         group = form.get_group()
@@ -46,22 +43,19 @@ class OwnerRegisterView(RegisterView):
         return user
 
     def get_register_url(self):
-        return reverse('owner_register')
+        return reverse_lazy('owner_register')
 
 
 class OwnerLoginView(LoginView):
     form_class = OwnerLoginForm
     template_name = 'ET_Owner/login_test.html'
-
-    def __init__(self, **kwargs):
-        super(OwnerLoginView, self).__init__(**kwargs)
-        self.success_url = reverse('owner_order_list')
+    success_url = reverse_lazy('owner_order_list')
 
     def get_login_url(self):
-        return reverse('owner_login')
+        return reverse_lazy('owner_login')
 
     def get_signup_url(self):
-        return reverse('owner_register')
+        return reverse_lazy('owner_register')
 
 
 class OwnerOrderListView(RestaurantRequiredMixin, TemplateView):

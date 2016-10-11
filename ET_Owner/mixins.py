@@ -1,22 +1,16 @@
 from django.core.exceptions import ObjectDoesNotExist
-from django.urls import reverse
+from django.urls import reverse_lazy
 
 from ET.mixins import GroupRequiredMixin
 
 
 class OwnerRequiredMixin(GroupRequiredMixin):
     group_required = 'owner'
-
-    def __init__(self):
-        super(OwnerRequiredMixin, self).__init__()
-        self.login_url = reverse('owner_login')
+    login_url = reverse_lazy('owner_login')
 
 
 class RestaurantRequiredMixin(OwnerRequiredMixin):
-
-    def __init__(self):
-        super(RestaurantRequiredMixin, self).__init__()
-        self.restaurant_create_url = reverse('owner_edit_restaurant')
+    restaurant_create_url = reverse_lazy('owner_edit_restaurant')
 
     def dispatch(self, request, *args, **kwargs):
         if not self.in_group():

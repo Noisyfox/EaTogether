@@ -5,7 +5,7 @@ from django.contrib.auth.models import Group
 from django.shortcuts import render
 
 # Create your views here.
-from django.urls import reverse
+from django.urls import reverse_lazy
 
 from ET.models import Customer
 from ET.views import LoginView, RegisterView
@@ -42,7 +42,7 @@ class CustomerRegisterView(RegisterView):
         return user
 
     def get_register_url(self):
-        return reverse('cust_register')
+        return reverse_lazy('cust_register')
 
 
 class CustomerLoginView(LoginView):
@@ -50,7 +50,7 @@ class CustomerLoginView(LoginView):
     template_name = 'ET_Cust/login_test.html'
 
     def get_login_url(self):
-        return reverse('cust_login')
+        return reverse_lazy('cust_login')
 
     def get_signup_url(self):
-        return reverse('cust_register')
+        return reverse_lazy('cust_register')
