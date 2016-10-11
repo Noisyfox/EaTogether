@@ -101,5 +101,5 @@ class PersonalOrder(models.Model):
 
 class OrderFood(models.Model):
     personal_order = models.ForeignKey(PersonalOrder, on_delete=models.CASCADE)
-    food = models.ManyToManyField(Food)
+    food = models.ForeignKey(Food)
     count = models.SmallIntegerField()
