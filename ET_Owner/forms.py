@@ -3,7 +3,6 @@ from django.utils.translation import ugettext_lazy as _
 from betterforms.multiform import MultiForm
 
 from ET.forms import LoginPhoneNumberForm, RegisterForm
-from ET.models import STATES
 from location_field.forms.spatial import LocationField
 
 GROUP = 'owner'
@@ -24,10 +23,9 @@ class RestaurantGeneralInformationForm(forms.Form):
     introduction = forms.CharField(widget=forms.Textarea, label=_('Restaurant Introduction'), strip=True,
                                    max_length=200)
 
-    state = forms.ChoiceField(label=_('State'), choices=STATES)
     address = forms.CharField(label=_('Address'), strip=True, max_length=128)
 
-    location = LocationField(based_fields=['state', 'address'], zoom=7)
+    location = LocationField(address_field='address', zoom=13)
     logo = forms.ImageField(label=_('Logo'))
 
 

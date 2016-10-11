@@ -21,7 +21,7 @@ class LocationWidget(widgets.HiddenInput):
     def __init__(self, **kwargs):
         attrs = kwargs.pop('attrs', None)
 
-        self.based_fields = kwargs.pop('based_fields', None)
+        self.address_field = kwargs.pop('address_field', None)
         self.zoom = kwargs.pop('zoom', None) or 7
         self.suffix = kwargs.pop('suffix', '')
 
@@ -54,14 +54,11 @@ class LocationWidget(widgets.HiddenInput):
         else:
             prefix = name[:name.rindex('-') + 1]
 
-        based_fields = ','.join(
-            '#id_' + prefix + (
-                f if isinstance(f, six.string_types) else f.name
-            ) for f in self.based_fields)
+        address_field = '#id_' + prefix + self.address_field
 
         attrs = attrs or {}
         attrs['data-location-widget'] = name
-        attrs['data-based-fields'] = based_fields
+        attrs['data-address-field'] = address_field
         attrs['data-zoom'] = self.zoom
         attrs['data-suffix'] = self.suffix
         attrs['data-map'] = '#map_' + name
