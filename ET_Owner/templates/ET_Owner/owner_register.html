@@ -8,148 +8,53 @@
 {% endblock %}
 
 {% block body%}
-    <div class="title">
-        <img src="{% static "img_owner/brand_et.png" %}" height="100" class="pull-right"/>
-        <a input style="font-family: Calibri; color:  #21b124" class="pull-right">EaTogether - Eat Now, Eat Together - Owner Register</a>
-        <img src="{% static "img_owner/brand_et.png" %}" height="100" class="pull-right"/>
+    <div class="row" style="background: url('{{ STATIC_URL }}img_owner/flower.gif') no-repeat;">
+        <div>
+            <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
+            <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat Now, Eat Together - Owner Login</a>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        </div>
     </div>
-    <br/>
-    <br/>
-    <br/>
-    <br/>
 
     <div class="Page_title">
-      <p align="center">
-          <a input style="font-family: Calibri; font-size: 300% ; color: #21b124;"class="Page_title"> Welcome to EaTogether! </a>
-      </p>
+        <a input style="font-family: Calibri; font-size: 300% ; color: #ffb125; " class="Page_title""> Register Information
+        </a>
     </div>
-    <br/>
+
     <form method="post" action="../">
-        <p align="center">
-            <input type="text" placeholder="phone number" />
-        </p>
-
-        <p align="center">
-            <input type="password" placeholder="password" />
-        </p>
-
-        <p align="center">
-            <input type="checkbox" value="1"/>
-            <a input style="font-family: Calibri;line-height: 20px">remember the account</a>
-        </p>
-
-        <p align="center">
-             <button type="submit";input style="width: 300px;height: 30px;background-color: #b5ff8a">Login
-             </button>
-        </p>
+        <a input style="font-family: Calibri;line-height: 30px"> Name*
+        </a>
+        </br>
+        <input type="text" id="register_given_name_r" name="given_name_r" placeholder="Given Name" />
+        <input type="text" id="register_family_name_r" name="family_name_r" placeholder="Family Name" />
+        </br>
+        <a input style="font-family: Calibri;line-height: 30px"> Phone Number*
+        </a>
+        </br>
+        <input type="text" id="register_phone_r" name="phone_r" placeholder="Phone Number" />
+        <button style="width: 180px; height: 30px ;background-color: #ffea2e" type="submit" class="btn" value="Send Verify SMS" />Send verify code
+        </button>
+        </br>
+        <a input style="font-family: Calibri;line-height: 30px"> Verify Code*
+        </a>
+        </br>
+        <input type="text" id="register_verify_r" name="verify_r" placeholder="Verify Number" />
+        </br>
+        <a input style="font-family: Calibri;line-height: 30px"> Password*
+        </a>
+        </br>
+        <input type="password" id="login_password_r" name="password_r" placeholder="password" />
+        </br>
+        <input style="width: 180px; height: 70px ;background-color: #ec971f;" type="submit" class="btn" name="verify" value="I'm not a robot" />
+        <button type="submit";input style="width: 180px;height: 70px;background-color: #ffea2e">Submit
+        </button>
+        </br>
     </form>
-
-     <div class="Retrive_Password">
-        <p align="center">
-            <a input style="font-family: Calibri;line-height: 20px"> Don't worried if you </a>
-            <a input style="font-family: Calibri;line-height: 20px" href="javascript:;" >forget password.</a>
-        </p>
-    </div>
-
-    </div class="Register">
-    <p align="center">
-        <a input style="font-family: Calibri;line-height: 20px"> Have a restaurant? </a>
-        <a input style="font-family: Calibri;line-height: 20px" href="javascript:;" >Register now!</a>
-        <br/>
-        <br/>
-        <br/>
-        <br/>
-    </p>
-    </div>
-
-
 {% endblock %}
 
 
-
-
-
-
-
-
-
-
-
-<head>
-    <meta charset="UTF-8">
-    <title>EaTogether - Eat Now, Eat Together - Owner Register</title>
-</head>
-
-<body>
-
-<pre>
-
-</pre>
-
-<div class="Top-banner">
-  <div class="Page_title">
-      <a input style="font-family: Calibri; font-size: 300% ; color: #21b124;"> Register Information </a>
-      <pre>
-
-      </pre>
-  </div>
-</div>
-
-<pre>
-
-</pre>
-
-<div class="Register">
-  <div class="Restaurant">
-      <div class="Name">
-          <a input style="font-family: Calibri;line-height: 30px"> Name* </a>
-      </div>
-
-      <div class="Name">
-          <div class="Input_name">
-              <input type="text" id="register_given_name_r" name="given_name_r" placeholder="Given Name" />
-              <input type="text" id="register_family_name_r" name="family_name_r" placeholder="Family Name" />
-          </div>
-      </div>
-
-      <div class="Phone">
-          <a input style="font-family: Calibri;line-height: 30px"> Phone Number* </a>
-      </div>
-
-      <div class="Phone">
-          <div class="Input_phone">
-              <input type="text" id="register_phone_r" name="phone_r" placeholder="Phone Number" />
-              <input style="width: 180px; height: 30px ;background-color: #b5ff8a" type="submit" class="btn"  value="Send Verify SMS" />
-          </div>
-      </div>
-
-      <div class="Verify">
-          <a input style="font-family: Calibri;line-height: 30px"> Verify Code* </a>
-      </div>
-
-      <div class="Verify">
-        <div class="Input_verify_SMS">
-            <input type="text" id="register_verify_SMS" name="verify_SMS" placeholder="Verify Coder" />
-        </div>
-      </div>
-
-      <div class="Password">
-          <a input style="font-family: Calibri;line-height: 30px"> Password* </a>
-      </div>
-
-      <div class="Password">
-          <div class="Input_password">
-              <input type="password" id="login_password_r" name="password_r" placeholder="password" />
-          </div>
-      </div>
-<pre>
-
-</pre>
-      <div class="Submit">
-          <input style="width: 180px; height: 70px ;background-color: #ec971f;" type="submit" class="btn" name="verify" value="I'm not a robot" />
-          <input style="width: 180px; height: 70px ;background-color: #b5ff8a;" type="submit" class="btn" name="commit" value="Submit" />
-      </div>
-  </div>
-</div>
-</body>
-</html>

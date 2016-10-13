@@ -1,0 +1,59 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head_title %}
+    Thia is the owner food edit page.
+{% endblock %}
+
+{% block body%}
+    <div class="row" style="background: url('{{ STATIC_URL }}img_owner/flower.gif') no-repeat;">
+       <div>
+           <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
+           <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat Now, Eat Together - Food Edit</a>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+       </div>
+    </div>
+
+
+
+    < <div class="Page_title">
+        <a input style="font-family: Calibri; font-size: 300% ; color: #ffb125; " class="Page_title""> Edit your food
+        </a>
+    </div>
+
+    <form method="post" action="../">
+        <a input style="font-family: Calibri;line-height: 30px"> Food Name*
+        </a>
+        </br>
+        <input type="text" id="food_name_r" style="width: 300px" name="food_r" placeholder="Food Name" />
+        </br>
+        <a input style="font-family: Calibri;line-height: 30px"> Food Photo*
+        </a>
+        </br>
+        <img class="J-setted-avatar" src="{% static "img_owner/brand_et_piconly.png" %}" height="26"  />
+        <input type="button" style="width: 180px; height: 30px ;background-color: #ffea2e" class="J-upload-avatar btn-normal btn-fixed" value="Upload"/>
+        </br>
+        <a input style="font-family: Calibri;line-height: 30px"> Brief Introduction
+        </a>
+        </br>
+        <input type="text" id="food_name_r"  style="width:300px; height: 100px" name="food_r" placeholder="Enter a brief introduction about your food" />
+        </br>
+        <a input style="font-family: Calibri;line-height: 30px"> Price*
+        </a>
+        </br>
+        <input type="text" style="width: 300px" id="food_name_r" name="food_r" placeholder="Food Price" />
+        </br>
+        </br>
+        <button type="submit";input style="width: 180px;height: 30px;background-color: #ffea2e">Save
+        </button>
+        </br>
+    </form>
+{% endblock %}
+
