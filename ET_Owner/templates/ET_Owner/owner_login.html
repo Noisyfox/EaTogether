@@ -1,28 +1,16 @@
-{% extends "site_base.html" %}
+{% extends "ET_Owner/base.html" %}
 
 {% load i18n %}
 {% load static %}
+{% load bootstrap %}
 
 {% block head_title %}
     Thia is the owner login page.
 {% endblock %}
 
+{% block topbar_label %}Owner Login{% endblock %}
+
 {% block body%}
-    <div class="row" style="background: url('{{ STATIC_URL }}img_owner/flower.gif') no-repeat;">
-       <div>
-           <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
-           <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat Now, Eat Together - Owner Login</a>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-       </div>
-    </div>
-
-
-
     <div class="Page_title">
         <p align="center">
             <a input style="font-family: Calibri; font-size: 300% ; color: #ffb125; " class="Page_title"> Welcome to EaTogether! </a>
@@ -31,19 +19,13 @@
 
     <br/>
 
-    <form method="post" action="../">
-        <p align="center">
-            <input type="text" placeholder="phone number" />
-        </p>
-
-        <p align="center">
-            <input type="password" placeholder="password" />
-        </p>
-
-        <p align="center">
-            <input type="checkbox" value="1"/>
-            <a input style="font-family: Calibri;line-height: 20px">remember the account</a>
-        </p>
+    <form method="POST" action="{{ login_url }}" autocapitalize="off" {% if form.is_multipart %}
+      enctype="multipart/form-data"{% endif %}>
+    {% csrf_token %}
+    {{ form|bootstrap }}
+    {% if redirect_field_value %}
+        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+    {% endif %}
 
         <p align="center">
              <button type="submit";input style="width: 300px;height: 30px;background-color: #ffec5e">Login
@@ -51,23 +33,27 @@
         </p>
     </form>
 
+    {% if password_reset_url %}
      <div class="Retrive_Password">
         <p align="center">
             <a input style="font-family: Calibri;line-height: 20px"> Don't worried if you </a>
-            <a input style="font-family: Calibri;line-height: 20px" href="javascript:;" >forget password.</a>
+            <a input style="font-family: Calibri;line-height: 20px" href="{{ password_reset_url }}" class="btn btn-link">forget password.</a>
         </p>
     </div>
+    {% endif %}
 
+{% if signup_url %}
     <div class="Register">
         <p align="center">
             <a input style="font-family: Calibri;line-height: 20px"> Have a restaurant? </a>
-            <a input style="font-family: Calibri;line-height: 20px" href="javascript:;" >Register now!</a>
+            <a input style="font-family: Calibri;line-height: 20px" href="{{ signup_url }}" >Register now!</a>
             <br/>
             <br/>
             <br/>
             <br/>
         </p>
     </div>
+{% endif %}
 
 
 {% endblock %}

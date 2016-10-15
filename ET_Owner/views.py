@@ -17,7 +17,7 @@ from ET_Owner.mixins import RestaurantRequiredMixin, OwnerRequiredMixin
 
 class OwnerRegisterView(RegisterView):
     form_class = OwnerRegisterForm
-    template_name = 'ET_Owner/register_test.html'
+    template_name = 'ET_Owner/owner_register.html'
     success_url = reverse_lazy('owner_order_list')
 
     def create_user(self, form, commit=True, **kwargs):
@@ -51,7 +51,7 @@ class OwnerRegisterView(RegisterView):
 
 class OwnerLoginView(LoginView):
     form_class = OwnerLoginForm
-    template_name = 'ET_Owner/login_test.html'
+    template_name = 'ET_Owner/owner_login.html'
     success_url = reverse_lazy('owner_order_list')
 
     def get_login_url(self):
@@ -67,7 +67,7 @@ class OwnerOrderListView(RestaurantRequiredMixin, TemplateView):
 
 class OwnerRestaurantEditView(OwnerRequiredMixin, UpdateView):
     form_class = RestaurantInformationForm
-    template_name = 'ET_Owner/restaurant_edit_test.html'
+    template_name = 'ET_Owner/owner_my_restaurant.html'
     success_url = reverse_lazy('owner_edit_restaurant')
 
     def get_object(self, queryset=None):
@@ -117,7 +117,7 @@ class OwnerMenuView(RestaurantRequiredMixin, ListView):
 class OwnerFoodCreateView(RestaurantRequiredMixin, CreateView):
     model = Food
     fields = ['name', 'introduction', 'picture', 'price']
-    template_name = 'ET_Owner/food_edit_test.html'
+    template_name = 'ET_Owner/owner_edit_food.html'
     success_url = reverse_lazy('owner_menu')
     context_object_name = 'food'
 
@@ -130,6 +130,6 @@ class OwnerFoodCreateView(RestaurantRequiredMixin, CreateView):
 class OwnerFoodEditView(RestaurantRequiredMixin, UpdateView):
     model = Food
     fields = ['name', 'introduction', 'picture', 'price']
-    template_name = 'ET_Owner/food_edit_test.html'
+    template_name = 'ET_Owner/owner_edit_food.html'
     success_url = reverse_lazy('owner_menu')
     context_object_name = 'food'
