@@ -1,0 +1,52 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head_title %}Login{% endblock %}
+
+{% block body %}
+    <form>
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" placeholder="Given Name">
+            <input type="text" class="form-control" id="name" placeholder="Family Name">
+        </div>
+        <div class="form-group">
+            <label for="phonenumber">Phone Number:</label>
+            <input type="number" class="form-control" id="phonenumber"  placeholder="Phone Number">
+            <button>Send Verify SMS</button>
+        </div>
+        <div class="form-group">
+            <label for="verifycode">Verify Code:</label>
+            <input type="number" class="form-control" id="verifycode"  placeholder="Verify Code">
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" class="form-control" id="password"  placeholder="Password">
+        </div>
+        <div class="form-group">
+            <div class="row">
+                <div class="col-lg-6">
+                    <h3>I'm not a robot!</h3>
+                </div>
+                <div class="col-lg-6">
+                    <button>Register and EAT！</button>
+                </div>
+            </div>
+
+            <p>More details for saving your time when you check out</p>
+        </div>
+        <div class="form-group">
+            <label>More details for saving your time when you check out</label>
+            <input type="text" class="form-control" id="suburb"  placeholder="Suburb">
+            <input type="text" class="form-control" id="postcode"  placeholder="Postcode">
+            <input type="text" class="form-control" id="address"  placeholder="Address">
+        </div>
+    </form>
+    <ul class="nav nav-pills nav-stacked">
+        <li role="presentation" class="active"><a href="#">Home</a></li>
+        <li role="presentation"><a href="#">Profile</a></li>
+        <li role="presentation"><a href="#">Messages</a></li>
+    </ul>
+{% endblock %}
