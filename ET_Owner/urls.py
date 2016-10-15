@@ -16,4 +16,9 @@ urlpatterns = [
         url("^new/$", views.OwnerFoodCreateView.as_view(), name='owner_create_food'),
         url("^(?P<pk>[0-9]+)/$", views.OwnerFoodEditView.as_view(), name='owner_edit_food'),
     ])),
+    url(r'^courier/', include([
+        url('^$', views.OwnerCourierView.as_view(), name='owner_courier'),
+        url('^new/$', views.OwnerCourierCreateView.as_view(), name='owner_create_courier'),
+        url('^(?P<pk>[0-9]+)/$', views.OwnerCourierCreateView.as_view(), name='owner_edit_courier'),
+    ])),
 ]

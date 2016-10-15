@@ -1,0 +1,25 @@
+{% extends "ET_Owner/base_nav.html" %}
+
+{% load i18n %}
+{% load courier_name_tag %}
+
+{% block body %}
+    <div class="row-no-padding">
+        <div class="container-fluid">
+            <div class="row">
+                <legend>{% block head_title %}{% trans "Delivery Settings" %}{% endblock %}</legend>
+            </div>
+            <div class="row">
+                <a class="btn btn-primary"
+                   href="{% url "owner_create_courier" %}">{% trans "Add Courier" %}</a>
+            </div>
+            <div class="row">
+                {% if couriers %}
+                    {% for courier in couriers %}
+                        <a href="{% url 'owner_edit_courier' courier.pk %}">{{ courier.user.username|courier_name }}</a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

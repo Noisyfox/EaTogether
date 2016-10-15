@@ -4,11 +4,6 @@ from django.conf import settings
 from location_field.models.spatial import LocationField
 
 
-class Courier(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    restaurant = models.ForeignKey('Restaurant', on_delete=models.CASCADE)
-
-
 class Owner(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=10, unique=True)
@@ -34,6 +29,11 @@ class Restaurant(models.Model):
     id_number = models.CharField(max_length=50)
     id_photo = models.ImageField()
     business_license = models.ImageField()
+
+
+class Courier(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
 
 
 class RestaurantServiceInfo(models.Model):

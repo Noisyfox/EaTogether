@@ -38,8 +38,6 @@ class RegisterView(RedirectFormViewMixin, FormView):
 
     def dispatch(self, request, *args, **kwargs):
         self.request = request
-        self.args = args
-        self.kwargs = kwargs
         return super(RegisterView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
