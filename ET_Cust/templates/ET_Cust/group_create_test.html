@@ -1,0 +1,28 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load bootstrap %}
+
+{% block head_title %}{% trans "Create New Group" %}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4">
+            <form id="group_create_form" method="post" action="." autocapitalize="off">
+                {% csrf_token %}
+                {{ form|bootstrap }}
+                <button type="submit" class="btn btn-primary pull-right">{% trans "Submit" %}</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#id_{{ form.identifier_field }}').focus();
+        });
+    </script>
+{% endblock %}

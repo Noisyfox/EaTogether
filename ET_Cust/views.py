@@ -2,14 +2,15 @@ import uuid
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from django.shortcuts import render
+from django.views.generic import CreateView
 
-# Create your views here.
 from django.urls import reverse_lazy
 
 from ET.models import Customer
+from ET.models import Group
 from ET.views import LoginView, RegisterView
 from ET_Cust.forms import CustomerLoginForm, CustomerRegisterForm
+from ET_Cust.mixins import CustomerRequiredMixin
 
 
 class CustomerRegisterView(RegisterView):
@@ -54,3 +55,17 @@ class CustomerLoginView(LoginView):
 
     def get_signup_url(self):
         return reverse_lazy('cust_register')
+
+
+class GroupCreateView(CreateView):
+    model = Group
+    fields = ['destination', 'group_time']
+    template_name = 'ET_Cust/group_create_test.html'
+    # success_url =
+    context_object_name =  'group'
+
+
+
+
+
+
