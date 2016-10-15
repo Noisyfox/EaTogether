@@ -2,7 +2,7 @@
 
 {% load i18n %}
 {% load static %}
-{% load bootstrap %}
+{% load crispy_forms_tags %}
 
 {% block head_title %}
     Thia is the owner food edit page.
@@ -12,17 +12,12 @@
 
 {% block body %}
     <div class="Page_title">
-        <a input style="font-family: Calibri; font-size: 300% ; color: #ffb125; " class="Page_title"">{% if food %}Edit your food{% else %}Create your food{% endif %}
+        <a input style="font-family: Calibri; font-size: 300% ; color: #ffb125; " class="Page_title">{% if food %}Edit
+        your food{% else %}Create your food{% endif %}
         </a>
     </div>
 
-    <form id="signup_form" method="post" action="." autocapitalize="off"
-            {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
-        {% csrf_token %}
-        {{ form|bootstrap }}
-        <button type="submit" style="width: 180px;height: 30px;background-color: #ffea2e">Save
-        </button>
-        </br>
-    </form>
+    {% crispy form %}
+
 {% endblock %}
 

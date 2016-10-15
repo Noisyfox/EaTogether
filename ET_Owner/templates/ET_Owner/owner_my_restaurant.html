@@ -2,7 +2,7 @@
 
 {% load i18n %}
 {% load static %}
-{% load bootstrap %}
+{% load crispy_forms_tags %}
 
 {% block head_title %}
     Thia is the owner restaurant information page.
@@ -13,18 +13,7 @@
 {% block body%}
     <div class="row">
         <div class="col-lg-10">
-            <form id="signup_form" method="post" action="." autocapitalize="off"
-                    {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
-                {% csrf_token %}
-                <legend>{% trans "General Information" %}</legend>
-                {{ form.forms.general|bootstrap }}
-                <br>
-                <legend>{% trans "Sufficient Valid Information" %}</legend>
-                {{ form.forms.valid|bootstrap }}
-                <button type="submit" style="width: 180px;height: 30px;background-color: #ffea2e">Submit
-                </button>
-                </br>
-            </form>
+            {% crispy form %}
         </div>
     </div>
 {% endblock %}

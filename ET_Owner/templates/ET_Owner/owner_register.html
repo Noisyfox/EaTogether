@@ -2,7 +2,7 @@
 
 {% load i18n %}
 {% load static %}
-{% load bootstrap %}
+{% load crispy_forms_tags %}
 
 {% block head_title %}
     Thia is the owner register page.
@@ -17,16 +17,7 @@
         </a>
     </div>
 
-    <form id="signup_form" method="post" action="{{ register_url }}" autocapitalize="off" {% if form.is_multipart %}
-          enctype="multipart/form-data"{% endif %}>
-        {% csrf_token %}
-        {{ form|bootstrap }}
-        {% if redirect_field_value %}
-            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-        {% endif %}
-        <button type="submit" style="width: 180px;height: 70px;background-color: #ffea2e">Submit</button>
-        </br>
-    </form>
+    {% crispy form %}
 {% endblock %}
 
 

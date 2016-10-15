@@ -30,10 +30,7 @@ class Restaurant(models.Model):
     location = LocationField(address_field='address', zoom=13)
     logo = models.ImageField()
 
-
-class ValidationInformation(models.Model):
-    restaurant = models.OneToOneField(Restaurant, on_delete=models.CASCADE)
-
+    # Validation info
     id_number = models.CharField(max_length=50)
     id_photo = models.ImageField()
     business_license = models.ImageField()

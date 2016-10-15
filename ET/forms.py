@@ -1,3 +1,5 @@
+from crispy_forms import helper
+from crispy_forms.layout import Submit, Hidden
 from django import forms
 from django.contrib import auth
 from django.core.exceptions import ImproperlyConfigured
@@ -7,7 +9,27 @@ from django.utils.translation import ugettext_lazy as _
 from ET.models import Customer, Owner
 
 
-class RegisterForm(forms.Form):
+class FormHelper(helper.FormHelper):
+    include_media = False
+
+
+class FormMixin(object):
+    def __init__(self, *args, **kwargs):
+        redirect_field_name = kwargs.pop('redirect_field_name', None)
+        redirect_field_value = kwargs.pop('redirect_field_value', None)
+
+        super(FormMixin, self).__init__(*args, **kwargs)
+        self.helper = FormHelper()
+        self.helper.form_method = 'post'
+        self.helper.form_class = 'form-horizontal'
+        self.helper.label_class = 'col-lg-3'
+        self.helper.field_class = 'col-lg-8'
+
+        if redirect_field_name:
+            self.helper.add_input(Hidden(redirect_field_name, redirect_field_value))
+
+
+class RegisterForm(FormMixin, forms.Form):
     first_name = forms.CharField(
         label=_('Given Name'),
         max_length=20,
@@ -37,6 +59,10 @@ class RegisterForm(forms.Form):
         widget=forms.PasswordInput(render_value=False)
     )
     group = None
+
+    def __init__(self, *args, **kwargs):
+        super(RegisterForm, self).__init__(*args, **kwargs)
+        self.helper.add_input(Submit('register', 'Register'))
 
     def clean_phone_number(self):
         g = self.get_group()
@@ -72,7 +98,7 @@ class RegisterForm(forms.Form):
         )
 
 
-class LoginForm(forms.Form):
+class LoginForm(FormMixin, forms.Form):
     password = forms.CharField(
         label=_("Password"),
         widget=forms.PasswordInput(render_value=False)
@@ -85,6 +111,10 @@ class LoginForm(forms.Form):
     group = None
     identifier_field = None
     authentication_fail_message = _('The information you provided are not correct.')
+
+    def __init__(self, *args, **kwargs):
+        super(LoginForm, self).__init__(*args, **kwargs)
+        self.helper.add_input(Submit('login', 'Login'))
 
     def clean(self):
         if self._errors:

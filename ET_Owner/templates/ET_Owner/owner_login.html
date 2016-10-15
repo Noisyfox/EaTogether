@@ -2,7 +2,7 @@
 
 {% load i18n %}
 {% load static %}
-{% load bootstrap %}
+{% load crispy_forms_tags %}
 
 {% block head_title %}
     Thia is the owner login page.
@@ -10,51 +10,47 @@
 
 {% block topbar_label %}Owner Login{% endblock %}
 
-{% block body%}
+{% block body %}
     <div class="Page_title">
         <p align="center">
-            <a input style="font-family: Calibri; font-size: 300% ; color: #ffb125; " class="Page_title"> Welcome to EaTogether! </a>
+            <a input style="font-family: Calibri; font-size: 300% ; color: #ffb125; " class="Page_title"> Welcome to
+                EaTogether! </a>
         </p>
     </div>
 
     <br/>
 
-    <form method="POST" action="{{ login_url }}" autocapitalize="off" {% if form.is_multipart %}
-      enctype="multipart/form-data"{% endif %}>
-    {% csrf_token %}
-    {{ form|bootstrap }}
-    {% if redirect_field_value %}
-        <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
-    {% endif %}
-
-        <p align="center">
-             <button type="submit";input style="width: 300px;height: 30px;background-color: #ffec5e">Login
-             </button>
-        </p>
-    </form>
+    {% crispy form %}
 
     {% if password_reset_url %}
-     <div class="Retrive_Password">
-        <p align="center">
-            <a input style="font-family: Calibri;line-height: 20px"> Don't worried if you </a>
-            <a input style="font-family: Calibri;line-height: 20px" href="{{ password_reset_url }}" class="btn btn-link">forget password.</a>
-        </p>
-    </div>
+        <div class="Retrive_Password">
+            <p align="center">
+                <a input style="font-family: Calibri;line-height: 20px"> Don't worried if you </a>
+                <a input style="font-family: Calibri;line-height: 20px" href="{{ password_reset_url }}"
+                   class="btn btn-link">forget password.</a>
+            </p>
+        </div>
     {% endif %}
 
-{% if signup_url %}
-    <div class="Register">
-        <p align="center">
-            <a input style="font-family: Calibri;line-height: 20px"> Have a restaurant? </a>
-            <a input style="font-family: Calibri;line-height: 20px" href="{{ signup_url }}" >Register now!</a>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-        </p>
-    </div>
-{% endif %}
-
-
+    {% if signup_url %}
+        <div class="Register">
+            <p align="center">
+                <a input style="font-family: Calibri;line-height: 20px"> Have a restaurant? </a>
+                <a input style="font-family: Calibri;line-height: 20px" href="{{ signup_url }}">Register now!</a>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+            </p>
+        </div>
+    {% endif %}
 {% endblock %}
 
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#id_{{ form.identifier_field }}').focus();
+        });
+    </script>
+{% endblock %}
