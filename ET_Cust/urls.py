@@ -8,4 +8,5 @@ urlpatterns = [
     url(r"^$", TemplateView.as_view(template_name="ET_Cust/homepage.html"), name="home"),
     url(r"^login/$", views.CustomerLoginView.as_view(), name='cust_login'),
     url(r"^register/$", views.CustomerRegisterView.as_view(), name='cust_register'),
+    url(r"^groupcreate/$", views.GroupCreateView.as_view(), name='group_create'),
 ]
