@@ -1,0 +1,123 @@
+
+
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head_title %}Login{% endblock %}
+
+{% block  title %} dsafdasfadfa{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <div class="row" style="border: dashed;">
+            <div class="col-lg-6">
+                Current Selected Place
+                <a herf="#"> Switch Place</a>
+            </div>
+            <div class="col-lg-6">
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Welcome, User!
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Notification (3)</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url "customer account order" %}">My Order</a></li>
+                        <li><a href="{% url "customer account favourite" %}">My Favourites</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url "customer account profile&wallet" %}">Profile & Wallet</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url "customer login" %}">Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row" style="border: dashed; margin-top: 3%;">
+            <div class="col-lg-3">
+                <label>Picture: LOGO</label>
+            </div>
+            <div class="col-lg-9">
+                <form action="." method="post">
+                    {% csrf_token %}
+                    {{ form }}
+                    <input type="submit" value="Search">
+                </form>
+            </div>
+        </div>
+
+        <div class="row" id="sort" style="margin-top: 3%; border-bottom: dashed;">
+            <div class="col-lg-12">
+                <button>Default</button>
+                <button>Distance</button>
+                <button>Popularity</button>
+                <button>Activate</button>
+            </div>
+        </div>
+
+
+        {% if restaurant_list %}
+            {% for restaurant in restaurant_list %}
+                <div class="row" style="border-bottom: dashed; margin-top: 3%;">
+                    <div class="col-lg-3">
+                        <h3>LOGO</h3>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <h6>{{ restaurant.name }}</h6>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p>{{ restaurant.address }}</p>
+                                <p>Distance 1 km</p>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <p>Min. Delivery: ${{ restaurant.restaurantserviceinfo.min_delivery }} Delivery Fee:
+                                    ${{ restaurant.restaurantserviceinfo.delivery_fee }}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <p>Current Group: 5</p>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="row">
+                            <input type="checkbox">
+                        </div>
+                        <div class="row">
+                            <a href="{% url 'cust:cust_restaurant_group_page' restaurant.id %}">Group Now!</a>
+                        </div>
+                        <div class="row">
+                            <p>Monthly Sale: 999</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="row" style="border-bottom: dashed; margin-top: 3%;">
+                <h1>Opps, we can't find this restaurant.</h1>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
+
+
+<div class="row">
+    <nav aria-label="Page navigation">
+        <ul class="pagination">
+            <li><a href="#">First</a></li>
+            <li><a href="#">Previous</a></li>
+            <li><a href="#">2</a></li>
+            <li><a href="#">3</a></li>
+            <li><a href="#">4</a></li>
+            <li><a href="#">Next</a></li>
+            <li><a href="#">Last</a></li>
+        </ul>
+    </nav>
+</div>

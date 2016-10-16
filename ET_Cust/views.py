@@ -1,16 +1,15 @@
 import uuid
-
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.views.generic import CreateView
-
+from django.views.generic.list import ListView
 from django.urls import reverse_lazy
-
-from ET.models import Customer
-from ET.models import Group
+from ET.models import Customer, Group, Restaurant
 from ET.views import LoginView, RegisterView
-from ET_Cust.forms import CustomerLoginForm, CustomerRegisterForm
+from ET_Cust.forms import CustomerLoginForm, CustomerRegisterForm, CustomerSearchRestaurantForm
 from ET_Cust.mixins import CustomerRequiredMixin
+from django.http import HttpResponse
+
 
 
 class CustomerRegisterView(RegisterView):
@@ -57,12 +56,28 @@ class CustomerLoginView(LoginView):
         return reverse_lazy('cust_register')
 
 
-class GroupCreateView(CreateView):
-    model = Group
-    fields = ['destination', 'group_time']
-    template_name = 'ET_Cust/group_create_test.html'
-    # success_url =
-    context_object_name =  'group'
+class CustomerMainPageView(ListView, CustomerRequiredMixin):
+    template_name = 'ET_Cust/customer_main_page.html'
+    model = Restaurant
+    context_object_name = 'restaurant_list'
+
+    def get_context_data(self, **kwargs):
+        context = super(CustomerMainPageView, self).get_context_data(**kwargs)
+        form = CustomerSearchRestaurantForm()
+        context['form'] = form
+        return context
+
+    def post(self, request, *args, **kwargs):
+        form = CustomerSearchRestaurantForm(request.POST)
+        if form.is_valid():
+            self.queryset = Restaurant.objects.filter(name__contains=form.cleaned_data['restaurant'])
+            return self.get(self, request, *args, **kwargs)
+        else:
+            return self.get(self, request, *args, **kwargs)
+
+
+
+
 
 
 
