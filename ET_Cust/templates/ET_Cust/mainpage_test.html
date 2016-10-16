@@ -3,19 +3,16 @@
 {% load i18n %}
 {% load bootstrap %}
 
-{% block head_title %}{% trans "Create New Group" %}{% endblock %}
+{% block head_title %}{% trans "Log in" %}{% endblock %}
 
 {% block body %}
     <div class="row">
         <div class="col-md-4">
-            <form id="group_create_form" method="post" action="." autocapitalize="off">
-                {% csrf_token %}
+            <form>
                 {{ form|bootstrap }}
-                <button type="submit" class="btn btn-primary pull-right">{% trans "Submit" %}</button>
             </form>
         </div>
     </div>
-
 {% endblock %}
 
 {% block scripts %}
