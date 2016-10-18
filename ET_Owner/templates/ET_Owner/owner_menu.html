@@ -1,0 +1,142 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head_title %}
+    Thia is the owner menu page.
+{% endblock %}
+
+{% block body%}
+   <div class="row" style="background: url('{{ STATIC_URL }}img_owner/back_title_2.jpg') no-repeat;">
+       <div>
+           <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
+           <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat Now, Eat Together - My Menu</a>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+       </div>
+    </div>
+
+    <div class="row">
+
+        <div class="col-sm-3">
+            </br>
+            </br>
+            </br>
+            <div class="btn-group-vertical" role="group" aria-label="information list">
+                <ul>
+                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">My Order
+                    </button></a>
+                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">My Restaurant
+                    </button></a>
+                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">My Menu
+                    </button></a>
+                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">Delivery
+                    </button></a>
+                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">Wallet
+                    </button></a>
+                </ul>
+            </div>
+        </div>
+
+        <div class="col-sm-9">
+        </br>
+            <div class="row">
+                <div class="col-sm-3" style="width:220px; height: 200px">
+                    <div class="panel panel-warning" style="border-color: #ffeca4; width:210px; height: 200px">
+                        <div class="panel-heading">
+                            <p style="border-color: #ffe027"align="center" input style="font-family: Calibri;line-height: 30px;font-size: 120%" class="list-group-item-text">Detail</p>
+                        </div>
+                        <div class="panel-body">
+                            <p input style="font-family: Calibri;line-height: 30px;font-size: 120%" class="list-group-item-text">Min.Delivery:</p>
+                            <p input style="font-family: Calibri;line-height: 30px;font-size: 120%" class="list-group-item-text">Delivery Fee:</p>
+                            <c input style="font-family: Calibri;line-height: 30px;font-size: 120%" class="list-group-item-text">Discount:</c>
+                            <c input style="font-family: Calibri;line-height: 30px;font-size: 100%" class="list-group-item-text">Actually, this is what we want, isn't it?</c>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3" style="width:220px; height: 200px">
+                    <div class="panel panel-warning" style="border-color: #ffeca4; width:210px; height: 200px">
+                        <div class="panel-heading">
+                            <p style="border-color: #ffe027"align="center" input style="font-family: Calibri;font-size: 120%" class="list-group-item-text">Announcement</p>
+                        </div>
+                        <div class="panel-body">
+                            <p  style="border-color: #ffe027" input style="font-family: Calibri; font-size: 100%" class="list-group-item-text">There should be something that the owners are really care about.</p>
+                            <button class="btn btn-primary; pull-right" type="button";input style="width: 60px;height: 30px;background-color: #ffe027; border: medium">Edit</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3" style="width:220px; height: 200px">
+                    </br>
+                    <p align="center"input style="font-family: Calibri;line-height: 30px;font-size: 180%" class="list-group-item-text">Now Open</p>
+                    </br>
+                    <button class="btn btn-primary; center-block" type="button";input style="width: 120px;height: 30px;background-color: #ffe027; border: medium">Close Now</button>
+                </div>
+            </div>
+
+            <div class="row" >
+                    <ul class="nav nav-tabs">
+                        <li><img src="{% static "img_owner/brand_et_piconly.png" %}" class="img-circle" alt="Cinque Terre" width="200px" height="200px">
+                            </br><button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-trash"><a> </a></i></button>
+                            <button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-edit"></i></button>
+                        </li>
+
+                        <li><img src="{% static "img_owner/brand_et_piconly.png" %}" class="img-circle" alt="Cinque Terre" width="200px" height="200px">
+                            </br><button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-trash"><a> </a></i></button>
+                            <button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-edit"></i></button>
+                        </li>
+
+                        <li><img src="{% static "img_owner/brand_et_piconly.png" %}" class="img-circle" alt="Cinque Terre" width="200px" height="200px">
+                            </br><button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-trash"><a> </a></i></button>
+                            <button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-edit"></i></button>
+                        </li>
+
+                    <li><img src="{% static "img_owner/brand_et_piconly.png" %}" class="img-circle" alt="Cinque Terre" width="200px" height="200px">
+                            </br><button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-trash"><a> </a></i></button>
+                            <button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-edit"></i></button>
+                        </li>
+
+                        <li><img src="{% static "img_owner/brand_et_piconly.png" %}" class="img-circle" alt="Cinque Terre" width="200px" height="200px">
+                            </br><button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-trash"><a> </a></i></button>
+                            <button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-edit"></i></button>
+                        </li>
+
+                        <li><img src="{% static "img_owner/brand_et_piconly.png" %}" class="img-circle" alt="Cinque Terre" width="200px" height="200px">
+                            </br><button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-trash"><a> </a></i></button>
+                            <button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-edit"></i></button>
+                        </li>
+
+
+                    <li><img src="{% static "img_owner/brand_et_piconly.png" %}" class="img-circle" alt="Cinque Terre" width="200px" height="200px">
+                            </br><button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-trash"><a> </a></i></button>
+                            <button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-edit"></i></button>
+                        </li>
+
+                        <li><img src="{% static "img_owner/brand_et_piconly.png" %}" class="img-circle" alt="Cinque Terre" width="200px" height="200px">
+                            </br><button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-trash"><a> </a></i></button>
+                            <button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-edit"></i></button>
+                        </li>
+
+                        <li><img src="{% static "img_owner/brand_et_piconly.png" %}" class="img-circle" alt="Cinque Terre" width="200px" height="200px">
+                            </br><button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-trash"><a> </a></i></button>
+                            <button class="button button-large button-plain button-borderless" style="border: hidden;background: none"><i class="fa fa-edit"></i></button>
+                        </li>
+
+
+                    </ul>
+
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
+
+

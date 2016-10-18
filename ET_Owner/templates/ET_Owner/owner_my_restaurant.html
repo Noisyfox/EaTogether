@@ -2,16 +2,21 @@
 
 {% load i18n %}
 {% load static %}
+{% load bootstrap %}
 
 {% block head_title %}
     Thia is the owner restaurant information page.
 {% endblock %}
 
 {% block body%}
-    <div class="row" style="background: url('{{ STATIC_URL }}img_owner/flower.gif') no-repeat;">
+    <div class="row" style="background: url('{{ STATIC_URL }}img_owner/back_title_2.jpg') no-repeat;">
        <div>
            <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
            <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat Now, Eat Together - my restaurant information</a>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
            <br/>
            <br/>
            <br/>
@@ -22,23 +27,26 @@
     </div>
 
     <div class="row">
-        <div class="col-lg-2">
-            <div id="nav">
+        <div class="col-sm-3">
+            </br>
+            </br>
+            </br>
+            <div class="btn-group-vertical" role="group" aria-label="information list">
                 <ul>
-                    <li ><a href="?"><button type="button";input style="width: 120px;height: 30px;background-color: #ffea2e">My Order
-                    </button></a></li>
-                    <li ><a href="?"><button type="button";input style="width: 120px;height: 30px;background-color: #ffea2e">My Restaurant
-                    </button></a></li>
-                    <li ><a href="?"><button type="button";input style="width: 120px;height: 30px;background-color: #ffea2e">My Menu
-                    </button></a></li>
-                    <li ><a href="?"><button type="button";input style="width: 120px;height: 30px;background-color: #ffea2e">Delivery
-                    </button></a></li>
-                    <li ><a href="?"><button type="button";input style="width: 120px;height: 30px;background-color: #ffea2e">Wwallet
-                    </button></a></li>
+                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">My Order
+                    </button></a>
+                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">My Restaurant
+                    </button></a>
+                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">My Menu
+                    </button></a>
+                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">Delivery
+                    </button></a>
+                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">Wallet
+                    </button></a>
                 </ul>
             </div>
         </div>
-        <div class="col-lg-10">
+        <div class="col-sm-9">
             <a input style="font-family: Calibri;line-height: 80px; font-size: 150%" > General Information
             </a>
             <form method="post" action="../">
@@ -70,7 +78,7 @@
                             <option value="SA" >SA</option>
                             <option value="WA" >WA</option>
                             <option value="NT" >NT</option>
-                            <option value="TAS" >TAS/option>
+                            <option value="TAS" >TAS</option>
                             <option value="ACT" >ACT</option>
                         </select>
                     </span>
