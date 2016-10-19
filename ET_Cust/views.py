@@ -1,15 +1,17 @@
 import uuid
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
-from django.views.generic import CreateView
+from django.contrib.gis.db.models.functions import Distance
+from django.contrib.gis.geos import GEOSGeometry
+from django.views.generic import FormView
 from django.views.generic.list import ListView
 from django.urls import reverse_lazy
 from ET.models import Customer, Group, Restaurant
 from ET.views import LoginView, RegisterView
-from ET_Cust.forms import CustomerLoginForm, CustomerRegisterForm, CustomerSearchRestaurantForm
+from ET_Cust.forms import CustomerLoginForm, CustomerRegisterForm, CustomerSearchRestaurantForm, \
+    CustomerSearchAddressForm
 from ET_Cust.mixins import CustomerRequiredMixin
 from django.http import HttpResponse
-
 
 
 class CustomerRegisterView(RegisterView):
@@ -56,15 +58,27 @@ class CustomerLoginView(LoginView):
         return reverse_lazy('cust_register')
 
 
-class CustomerMainPageView(ListView, CustomerRequiredMixin):
+class CustomerSearchView(FormView):
+    form_class = CustomerSearchAddressForm
+    template_name = 'ET_Cust/customer_search.html'
+    success_url = reverse_lazy('cust_main_page')
+
+    def form_valid(self, form):
+        self.request.session['address'] = form.cleaned_data['address']
+        self.request.session['location'] = form.cleaned_data['location']
+        return super(CustomerSearchView, self).form_valid(form)
+
+
+class CustomerMainPageView(ListView):
     template_name = 'ET_Cust/customer_main_page.html'
-    model = Restaurant
+    # model = Restaurant
     context_object_name = 'restaurant_list'
 
     def get_context_data(self, **kwargs):
         context = super(CustomerMainPageView, self).get_context_data(**kwargs)
         form = CustomerSearchRestaurantForm()
         context['form'] = form
+        context['address'] = self.request.session['address']
         return context
 
     def post(self, request, *args, **kwargs):
@@ -75,12 +89,10 @@ class CustomerMainPageView(ListView, CustomerRequiredMixin):
         else:
             return self.get(self, request, *args, **kwargs)
 
-
-
-
-
-
-
+    def dispatch(self, request, *args, **kwargs):
+        location_search = GEOSGeometry(self.request.session['location'], srid=4326)
+        self.queryset = Restaurant.objects.annotate(distance=Distance('location', location_search)).order_by('distance')
+        return super(CustomerMainPageView, self).dispatch(request, *args, **kwargs)
 
 
 

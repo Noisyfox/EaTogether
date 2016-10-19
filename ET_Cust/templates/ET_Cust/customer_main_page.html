@@ -12,8 +12,8 @@
     <div class="container-fluid">
         <div class="row" style="border: dashed;">
             <div class="col-lg-6">
-                Current Selected Place
-                <a herf="#"> Switch Place</a>
+                {{ address }}
+                <a href="{% url 'cust_search' %}"> Switch Place</a>
             </div>
             <div class="col-lg-6">
                 <button>Welcome, User!</button>
@@ -36,7 +36,6 @@
         <div class="row" id="sort">
             <div class="col-lg-12">
                 <button>Default</button>
-                <button>Distance</button>
                 <button>Popularity</button>
                 <button>Activate</button>
             </div>
@@ -58,7 +57,6 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <p>{{ restaurant.address }}</p>
-                                <p>Distance 1 km</p>
                             </div>
                         </div>
                         <div class="row">
@@ -69,14 +67,14 @@
                         </div>
                     </div>
                     <div class="col-lg-3">
-                        <p>Current Group: 5</p>
+                        <p>Current Group: {{ restaurant.group_set.count }}</p>
                     </div>
                     <div class="col-lg-3">
                         <div class="row">
                             <input type="checkbox">
                         </div>
                         <div class="row">
-                            <a href="{% url 'cust:cust_restaurant_group_page' restaurant.id %}">Group Now!</a>
+                            <a href="{% url 'cust_restaurant_group_page' restaurant.id %}">Group Now!</a>
                         </div>
                         <div class="row">
                             <p>Monthly Sale: 999</p>
