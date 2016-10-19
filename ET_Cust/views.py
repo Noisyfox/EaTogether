@@ -3,10 +3,10 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import GEOSGeometry
-from django.views.generic import FormView
+from django.views.generic import FormView, CreateView
 from django.views.generic.list import ListView
 from django.urls import reverse_lazy
-from ET.models import Customer, Group, Restaurant
+from ET.models import Customer, Group, Restaurant, Food
 from ET.views import LoginView, RegisterView
 from ET_Cust.forms import CustomerLoginForm, CustomerRegisterForm, CustomerSearchRestaurantForm, \
     CustomerSearchAddressForm
@@ -71,7 +71,7 @@ class CustomerSearchView(FormView):
 
 class CustomerMainPageView(ListView):
     template_name = 'ET_Cust/customer_main_page.html'
-    # model = Restaurant
+    model = Restaurant
     context_object_name = 'restaurant_list'
 
     def get_context_data(self, **kwargs):
@@ -84,7 +84,7 @@ class CustomerMainPageView(ListView):
     def post(self, request, *args, **kwargs):
         form = CustomerSearchRestaurantForm(request.POST)
         if form.is_valid():
-            self.queryset = Restaurant.objects.filter(name__contains=form.cleaned_data['restaurant'])
+            self.queryset = self.queryset.filter(name__contains=form.cleaned_data['restaurant'])
             return self.get(self, request, *args, **kwargs)
         else:
             return self.get(self, request, *args, **kwargs)
@@ -93,6 +93,40 @@ class CustomerMainPageView(ListView):
         location_search = GEOSGeometry(self.request.session['location'], srid=4326)
         self.queryset = Restaurant.objects.annotate(distance=Distance('location', location_search)).order_by('distance')
         return super(CustomerMainPageView, self).dispatch(request, *args, **kwargs)
+
+
+class CustomerRestaurantGroupView(ListView):
+    template_name = 'ET_Cust/customer_restaurant_group_page.html'
+    model = Group
+    context_object_name = 'group_list'
+
+    def get_context_data(self, **kwargs):
+        context = super(CustomerRestaurantGroupView, self).get_context_data(**kwargs)
+        context['restaurant'] = Restaurant.objects.get(pk=self.kwargs['restaurant_id'])
+        context['address'] = self.request.session['address']
+        return context
+
+
+class CustomerCreateGroupView(CreateView):
+    template_name = 'ET_Cust/customer_create_group.html'
+    model = Group
+    fields = ['destination', 'location', 'group_time']
+    # success_url =
+
+
+class CustomerRestaurantMenuView(ListView):
+    template_name = 'ET_Cust/customer_restaurant_menu_page.html'
+    model = Food
+    context_object_name = 'food_list'
+
+    def get_context_data(self, **kwargs):
+        context = super(CustomerRestaurantMenuView, self).get_context_data(**kwargs)
+        context['food_list'] = context['food_list'].filter(restaurant__id=self.kwargs['restaurant_id'])
+        context['restaurant'] = Restaurant.objects.get(pk=self.kwargs['restaurant_id'])
+        # context['address'] = self.request.session['address']
+        return context
+
+
 
 
 

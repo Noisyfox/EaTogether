@@ -63,6 +63,10 @@ class Food(models.Model):
 
 
 class Group(models.Model):
+    STATUS = (
+        ('G', 'Grouping'),
+        ('O', 'Over'),
+    )
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     group_time = models.TimeField()
     create_time = models.DateTimeField()
@@ -74,7 +78,9 @@ class Group(models.Model):
     accept_time = models.DateTimeField()
     delivery_start_time = models.DateTimeField()
     confirm_delivery_time = models.DateTimeField()
-    destination = models.TextField()
+    destination = models.CharField(max_length=255)
+    location = LocationField(address_field='destination', zoom=13)
+    status = models.CharField(max_length=1, choices=STATUS, default='G')
 
     # Order_id actually is not needed in this case.
 

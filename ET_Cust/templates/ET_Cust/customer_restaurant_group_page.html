@@ -12,8 +12,8 @@
     <div class="container-fluid">
         <div class="row" style="border-bottom: dashed;margin-bottom: 1%;">
             <div class="col-lg-6">
-                Current Selected Place
-                <a herf="#">  Switch Place</a>
+                {{ address }}
+                <a href="{% url 'cust_search' %}"> Switch Place</a>
             </div>
             <div class="col-lg-6">
                 <div class="dropdown">
@@ -56,7 +56,7 @@
             <div class="col-lg-8">
                 <div class="row">
                     <div class="col-lg-9">
-                        <h6>Restaurant Name</h6>
+                        <h6>{{ restaurant.name }}</h6>
                     </div>
                     <div class="col-lg-3">
                         <input type="checkbox">
@@ -64,7 +64,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12" style="border-top: dashed; height: 50%;">
-                        <h3>Lalalalalalalalalalalalala</h3>
+                        <h3>{{ restaurant.introduction }}</h3>
                     </div>
                 </div>
             </div>
@@ -75,8 +75,9 @@
                 <div class="row">
                     <div class="col-lg-8">
                         <div class="row" style="border-bottom: dashed;">
-                            <div class="col-lg-6"><button><a href="{% url "customer restaurant page group" %}">Group(7)</a></button></div>
-                            <div class="col-lg-6"><button><a href="{% url "customer restaurant page menu" %}">Menu</a></button></div>
+                            <div class="col-lg-4"><button><a href="{% url "customer restaurant page group" %}">Group(7)</a></button></div>
+                            <div class="col-lg-4"><button><a href="{% url "customer restaurant page menu" %}">Menu</a></button></div>
+                            <div class="col-lg-4"><a href="{% url 'cust_create_group' %}">Create Group</a></div>
                         </div>
                         <div class="row" style="border-bottom: dashed;">
                             <div class="col-lg-4">
@@ -146,15 +147,15 @@
                         <div class="row" style="border-bottom: dashed; padding-top: 10%;">
                             <div class="col-lg-12">
                                 <h6>Announcement</h6>
-                                <p>xxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+                                <p>{{ restaurant.restaurantserviceinfo.announcement }}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
-                                <p>Min Delivery: $10</p>
-                                <p>Delivery Fee: $5</p>
-                                <h6>Activities and Discounts</h6>
-                                <p>xxxxxxxxxxxxxxxxxxxxxx</p>
+                                <p>Min Delivery: {{ restaurant.restaurantserviceinfo.min_delivery }}</p>
+                                <p>Delivery Fee: {{ restaurant.restaurantserviceinfo.delivery_fee }}</p>
+                               <!-- <h6>Activities and Discounts</h6>
+                                <p>xxxxxxxxxxxxxxxxxxxxxx</p> -->
                             </div>
                         </div>
                     </div>

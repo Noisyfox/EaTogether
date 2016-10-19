@@ -12,8 +12,8 @@
     <div class="container-fluid">
         <div class="row" style="border-bottom: dashed; margin-bottom: 1%;">
             <div class="col-lg-6">
-                Current Selected Place
-                <a herf="#">  Switch Place</a>
+                {{ address }}
+                <a href="{% url 'cust_search' %}"> Switch Place</a>
             </div>
             <div class="col-lg-6">
                 <div class="dropdown">
@@ -39,11 +39,11 @@
             <div class="col-lg-6">
                 <label>Picture: LOGO</label>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-9">
                 <div class="input-group">
                             <input type="text" class="form-control" placeholder="Search for...">
                             <span class="input-group-btn">
-        <button class="btn btn-default" type="button">Go!</button>
+        <button class="btn btn-default" type="submit">Go!</button>
       </span>
                         </div>
             </div>
@@ -56,7 +56,7 @@
             <div class="col-lg-8">
                 <div class="row">
                     <div class="col-lg-9">
-                        <h6>Restaurant Name</h6>
+                        <h6>{{ restaurant.name }}</h6>
                     </div>
                     <div class="col-lg-3">
                         <input type="checkbox">
@@ -64,7 +64,7 @@
                 </div>
                 <div class="row">
                     <div class="col-lg-12" style="border-top: dashed; height: 50%;">
-                        <h3>Lalalalalalalalalalalalala</h3>
+                        <h3>{{ restaurant.introduction }}</h3>
                     </div>
                 </div>
             </div>
@@ -79,145 +79,64 @@
                             <div class="col-lg-6"><button><a href="{% url "customer restaurant page menu" %}">Menu</a></button></div>
                         </div>
                         <div class="row" style="border-bottom: dashed;">
-                            <div class="col-lg-4" id="EveryOneFood" style="border-bottom: dashed; border-right: dashed;">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <h3>Food Pic</h3>
+                            {% if food_list %}
+                                {% for food in food_list %}
+                                    <div class="col-lg-4" id="EveryOneFood">
+                                        <div class="row">
+                                            <div class="col-lg-12" style="border: dashed;">
+                                                <h3>Food Pic</h3>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-10">
+                                                <p>{{ food.name }}</p>
+                                                <!-- <p>Monthly Sale</p> -->
+                                                <p>{{ food.price }}</p>
+                                            </div>
+                                            <div class="col-lg-2">
+                                                <button type="button">Add</button>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <p>Food Name</p>
-                                        <p>Monthly Sale</p>
-                                        <p>$5/ea</p>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="number" class="form-control" placeholder="0">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4" id="EveryOneFood" style="border-bottom: dashed; border-right: dashed;">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <h3>Food Pic</h3>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <p>Food Name</p>
-                                        <p>Monthly Sale</p>
-                                        <p>$5/ea</p>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="number" class="form-control" placeholder="0">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4" id="EveryOneFood" style="border-bottom: dashed; border-right: dashed;">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <h3>Food Pic</h3>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <p>Food Name</p>
-                                        <p>Monthly Sale</p>
-                                        <p>$5/ea</p>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="number" class="form-control" placeholder="0">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4" id="EveryOneFood" style="border-bottom: dashed; border-right: dashed;">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <h3>Food Pic</h3>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <p>Food Name</p>
-                                        <p>Monthly Sale</p>
-                                        <p>$5/ea</p>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="number" class="form-control" placeholder="0">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4" id="EveryOneFood" style="border-bottom: dashed; border-right: dashed;">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <h3>Food Pic</h3>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <p>Food Name</p>
-                                        <p>Monthly Sale</p>
-                                        <p>$5/ea</p>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="number" class="form-control" placeholder="0">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4" id="EveryOneFood" style="border-bottom: dashed; border-right: dashed;">
-                                <div class="row">
-                                    <div class="col-lg-12">
-                                        <h3>Food Pic</h3>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-lg-8">
-                                        <p>Food Name</p>
-                                        <p>Monthly Sale</p>
-                                        <p>$5/ea</p>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <input type="number" class="form-control" placeholder="0">
-                                    </div>
-                                </div>
-                            </div>
-                        </div >
+                                {% endfor %}
+                            {% endif %}
+                        </div>
                     </div>
                     <div class="col-lg-4">
                         <div class="row" style="border-bottom: dashed;">
                             <div class="col-lg-12">
                                 <h6>Announcement</h6>
-                                <p>xxxxxxxxxxxxxxxxxxxxxxxxxx</p>
+                                <p>{{ restaurant.restaurantserviceinfo.announcement }}</p>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-12">
                                 <p>Cart</p>
                                 <p>
-                                    <table>
-                                        <thead>
-                                            <tr>
-                                                <th>Food Name</th>
-                                                <th>Count</th>
-                                                <th>Unit</th>
-                                                <th>Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <th>xxxxx</th>
-                                                <th>-2+</th>
-                                                <th>$5</th>
-                                                <th>$10</th>
-                                            </tr>
-                                            <tr>
-                                                <th>xxxxx</th>
-                                                <th>-1+</th>
-                                                <th>$4</th>
-                                                <th>$4</th>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                <table>
+                                    <thead>
+                                    <tr>
+                                        <th>Food Name</th>
+                                        <th>Count</th>
+                                        <th>Unit</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th>xxxxx</th>
+                                        <th>-2+</th>
+                                        <th>$5</th>
+                                        <th>$10</th>
+                                    </tr>
+                                    <tr>
+                                        <th>xxxxx</th>
+                                        <th>-1+</th>
+                                        <th>$4</th>
+                                        <th>$4</th>
+                                    </tr>
+                                    </tbody>
+                                </table>
                                 </p>
                                 <p>Total (without delivery fee): $14</p>
                                 <p>Current propable delivery fee: $1</p>
@@ -236,7 +155,7 @@
 <div class="row">
     <nav aria-label="Page navigation">
         <ul class="pagination">
-            <li><a href="#" >First</a></li>
+            <li><a href="#">First</a></li>
             <li><a href="#">Previous</a></li>
             <li><a href="#">2</a></li>
             <li><a href="#">3</a></li>

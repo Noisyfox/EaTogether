@@ -51,6 +51,7 @@
         <div class="row" id="sort" style="margin-top: 3%; border-bottom: dashed;">
             <div class="col-lg-12">
                 <button>Default</button>
+                <!-- <button>Distance</button> -->
                 <button>Popularity</button>
                 <button>Activate</button>
             </div>
@@ -72,6 +73,7 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <p>{{ restaurant.address }}</p>
+                                <!-- <p>Distance {{ restaurant.distance }}</p> -->
                             </div>
                         </div>
                         <div class="row">
@@ -89,7 +91,7 @@
                             <input type="checkbox">
                         </div>
                         <div class="row">
-                            <a href="{% url 'cust_restaurant_group_page' restaurant.id %}">Group Now!</a>
+                            <a href="{% url 'cust_restaurant_group' restaurant.id %}">Group Now!</a>
                         </div>
                         <div class="row">
                             <p>Monthly Sale: 999</p>
