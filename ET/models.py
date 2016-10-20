@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-
+from django.urls import reverse
 from location_field.models.spatial import LocationField
 
 
@@ -75,14 +75,17 @@ class Group(models.Model):
     # exceed_time = models.DateTimeField()
     # Joined_time can be omitted actually.
 
-    accept_time = models.DateTimeField()
-    delivery_start_time = models.DateTimeField()
-    confirm_delivery_time = models.DateTimeField()
+    accept_time = models.DateTimeField(null=True, blank=True)
+    delivery_start_time = models.DateTimeField(null=True, blank=True)
+    confirm_delivery_time = models.DateTimeField(null=True, blank=True)
     destination = models.CharField(max_length=255)
     location = LocationField(address_field='destination', zoom=13)
     status = models.CharField(max_length=1, choices=STATUS, default='G')
 
     # Order_id actually is not needed in this case.
+
+    def get_absolute_url(self):
+        return reverse('cust_restaurant_menu', kwargs={'restaurant_id': self.restaurant.id, 'group_id': self.pk})
 
 
 class GroupOrder(models.Model):

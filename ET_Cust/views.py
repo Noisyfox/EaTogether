@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import GEOSGeometry
+from django.utils import timezone
 from django.views.generic import FormView, CreateView
 from django.views.generic.list import ListView
 from django.urls import reverse_lazy
@@ -111,7 +112,11 @@ class CustomerCreateGroupView(CreateView):
     template_name = 'ET_Cust/customer_create_group.html'
     model = Group
     fields = ['destination', 'location', 'group_time']
-    # success_url =
+
+    def form_valid(self, form, **kwargs):
+        form.instance.create_time = timezone.now()
+        form.instance.restaurant = Restaurant.objects.get(pk=self.kwargs['restaurant_id'])
+        return super(CustomerCreateGroupView, self).form_valid(form)
 
 
 class CustomerRestaurantMenuView(ListView):
