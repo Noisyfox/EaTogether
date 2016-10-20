@@ -242,3 +242,7 @@ class AssignmentDeleteView(RestaurantRequiredMixin, CourierQueryMixin, DeleteVie
 
     def get_success_url(self):
         return reverse_lazy('owner_courier')
+
+
+class WalletView(RestaurantRequiredMixin, TemplateView):
+    template_name = 'ET_Owner/owner_wallet.html'

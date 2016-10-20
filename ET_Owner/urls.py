@@ -24,4 +24,5 @@ urlpatterns = [
             url('^delete/$', views.AssignmentDeleteView.as_view(), name='owner_delete_courier'),
         ])),
     ])),
+    url(r"^wallet/$", views.WalletView.as_view(), name='owner_wallet'),
 ]
