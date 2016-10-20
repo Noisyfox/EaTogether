@@ -4,7 +4,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from ET.forms import LoginPhoneNumberForm, RegisterForm, FormMixin
-from ET.models import Restaurant, Food
+from ET.models import Restaurant, Food, Courier
 
 GROUP = 'owner'
 
@@ -59,5 +59,33 @@ class FoodEditForm(FormMixin, forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(FoodEditForm, self).__init__(*args, **kwargs)
         self.helper.form_id = 'food_form'
+
+        self.helper.add_input(Submit('save', 'Save'))
+
+
+class CourierEditForm(FormMixin, forms.Form):
+    name = forms.CharField(
+        label=_('Courier Name'),
+        max_length=20,
+        widget=forms.TextInput(),
+        strip=True,
+        required=True
+    )
+    login_id = forms.CharField(
+        label=_('Login Id'),
+        max_length=20,
+        widget=forms.TextInput(),
+        strip=True,
+        required=True
+    )
+    password = forms.CharField(
+        label=_("Password"),
+        widget=forms.TextInput(),
+        required=True
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(CourierEditForm, self).__init__(*args, **kwargs)
+        self.helper.form_id = 'courier_form'
 
         self.helper.add_input(Submit('save', 'Save'))
