@@ -1,0 +1,70 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load bootstrap %}
+
+{% block head_title %}
+    Thia is the owner restaurant information page.
+{% endblock %}
+
+{% block body%}
+    <div class="row" style="background: url('{{ STATIC_URL }}img_owner/back_title_2.jpg') no-repeat;"
+         xmlns="http://www.w3.org/1999/html">
+       <div>
+           <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
+           <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat Now, Eat Together - my restaurant information</a>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+       </div>
+    </div>
+
+    <div class="row">
+         <div class="col-sm-3">
+            </br>
+            </br>
+            </br>
+            <div class="btn-group-vertical" role="group" aria-label="information list">
+                <ul>
+                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">My Order
+                    </button></a>
+                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">My Restaurant
+                    </button></a>
+                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">My Menu
+                    </button></a>
+                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">Delivery
+                    </button></a>
+                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">Wallet
+                    </button></a>
+                </ul>
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <form method="post" action="../">
+                </br>
+                </br>
+                <a input style="font-family: Calibri;line-height: 90px;font-size: 160%"> Congratulation. Your income is:
+                </a>
+                <table>
+                    <tr>
+                        <th>
+                        </th>
+                    </tr>
+                    </table>
+                 <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">Withdraw Now
+                 </button></a>
+            </form>
+        </div>
+    </div>
+
+
+{% endblock %}
+
