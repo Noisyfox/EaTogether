@@ -9,7 +9,7 @@ from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView
 
-from ET.models import Owner, Food, Restaurant, Courier
+from ET.models import Owner, Food, Restaurant, Courier, RestaurantServiceInfo
 from ET.views import RegisterView, LoginView
 from ET_Owner.forms import OwnerRegisterForm, OwnerLoginForm, FoodEditForm, RestaurantEditForm
 from ET_Owner.mixins import RestaurantRequiredMixin, OwnerRequiredMixin
@@ -82,18 +82,31 @@ class OwnerRestaurantEditView(OwnerRequiredMixin, UpdateView):
             restaurant = form.save(commit=False)
             restaurant.owner = self.request.user.owner
 
+            restaurant.save()
+
+            RestaurantServiceInfo(restaurant=restaurant).save()
+
             self.object = restaurant
 
         return super(OwnerRestaurantEditView, self).form_valid(form)
 
 
 class OwnerMenuView(RestaurantRequiredMixin, ListView):
-    template_name = 'ET_Owner/menu_test.html'
+    template_name = 'ET_Owner/owner_menu.html'
     allow_empty = True
     context_object_name = 'foods'
 
     def get_queryset(self):
         return Food.objects.filter(restaurant=self.request.user.owner.restaurant)
+
+    def get_context_data(self, **kwargs):
+        ctx = super().get_context_data(**kwargs)
+
+        ctx['restaurant'] = self.request.user.owner.restaurant
+        ctx['service'], _ = RestaurantServiceInfo.objects.get_or_create(
+            restaurant=self.request.user.owner.restaurant)
+
+        return ctx
 
 
 class OwnerFoodCreateView(RestaurantRequiredMixin, CreateView):
@@ -118,7 +131,7 @@ class OwnerFoodEditView(RestaurantRequiredMixin, UpdateView):
 
 
 class OwnerCourierView(RestaurantRequiredMixin, ListView):
-    template_name = 'ET_Owner/courier_list_test.html'
+    template_name = 'ET_Owner/owner_delivery.html'
     allow_empty = True
     context_object_name = 'couriers'
 

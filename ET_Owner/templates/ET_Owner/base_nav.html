@@ -6,43 +6,56 @@
 {% block body_class %}owner{% endblock %}
 
 {% block topbar_base %}
-    <div class="container" style="background: url('{{ STATIC_URL }}img_owner/flower.gif') no-repeat;">
-       <div>
+    <div class="container" style="background: url('{{ STATIC_URL }}img_owner/back_title_2.jpg') no-repeat;">
+        <div>
            <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
-           <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat Now, Eat Together - {% block topbar_label %}{% endblock %}</a>
+            <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat
+                Now, Eat Together - {% block topbar_label %}{% endblock %}</a>
            <br/>
            <br/>
            <br/>
            <br/>
            <br/>
            <br/>
-       </div>
+           <br/>
+           <br/>
+           <br/>
+           <br/>
+        </div>
     </div>
 {% endblock %}
 
 {% block subnav %}
     <div id="nav">
-        <ul>
-            <li><a href="{% url 'owner_order_list' %}">
-                <button type="button" style="width: 120px;height: 30px;background-color: #ffea2e">My Order
-                </button>
-            </a></li>
-            <li><a href="{% url 'owner_edit_restaurant' %}">
-                <button type="button" style="width: 120px;height: 30px;background-color: #ffea2e">My Restaurant
-                </button>
-            </a></li>
-            <li><a href="{% url 'owner_menu' %}">
-                <button type="button" style="width: 120px;height: 30px;background-color: #ffea2e">My Menu
-                </button>
-            </a></li>
-            <li><a href="{% url 'owner_courier' %}">
-                <button type="button" style="width: 120px;height: 30px;background-color: #ffea2e">Delivery
-                </button>
-            </a></li>
-            <li><a href="?">
-                <button type="button" style="width: 120px;height: 30px;background-color: #ffea2e">Wallet
-                </button>
-            </a></li>
-        </ul>
+        <div class="btn-group-vertical" role="group" aria-label="information list">
+            <ul>
+                <a href="{% url 'owner_order_list' %}">
+                    <button class="btn btn-primary" type="button" ;input
+                            style="width: 120px;height: 30px;background-color: #ffa82f">My Order
+                    </button>
+                </a>
+                <a href="{% url 'owner_edit_restaurant' %}">
+                    <button class="btn btn-primary" type="button" ;input
+                            style="width: 120px;height: 30px;background-color: #ffa82f">My Restaurant
+                    </button>
+                </a>
+                <a href="{% url 'owner_menu' %}">
+                    <button class="btn btn-primary" type="button" ;input
+                            style="width: 120px;height: 30px;background-color: #ffa82f">My Menu
+                    </button>
+                </a>
+                <a href="{% url 'owner_courier' %}">
+                    <button class="btn btn-primary" type="button" ;input
+                            style="width: 120px;height: 30px;background-color: #ffa82f">Delivery
+                    </button>
+                </a>
+                <a href="{% url 'owner_order_list' %}">
+                    <button class="btn btn-primary" type="button" ;input
+                            style="width: 120px;height: 30px;background-color: #ffa82f">Wallet
+                    </button>
+                </a>
+            </ul>
+        </div>
+
     </div>
 {% endblock %}

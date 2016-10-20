@@ -1,82 +1,46 @@
-{% extends "site_base.html" %}
+{% extends "ET_Owner/base_nav.html" %}
 
 {% load i18n %}
 {% load static %}
-{% load bootstrap %}
+{% load courier_name_tag %}
 
 {% block head_title %}
     Thia is the owner restaurant information page.
 {% endblock %}
 
-{% block body%}
-    <div class="row" style="background: url('{{ STATIC_URL }}img_owner/back_title_2.jpg') no-repeat;">
-       <div>
-           <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
-           <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat Now, Eat Together - my restaurant information</a>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-       </div>
-    </div>
-
+{% block body %}
     <div class="row">
-        <div class="col-sm-3">
-            </br>
-            </br>
-            </br>
-            <div class="btn-group-vertical" role="group" aria-label="information list">
-                <ul>
-                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">My Order
-                    </button></a>
-                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">My Restaurant
-                    </button></a>
-                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">My Menu
-                    </button></a>
-                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">Delivery
-                    </button></a>
-                    <a href="?"><button class="btn btn-primary" type="button";input style="width: 120px;height: 30px;background-color: #ffa82f">Wallet
-                    </button></a>
-                </ul>
-                </br>
-                </br>
-                </br>
-            </div>
-        </div>
-        <div class="col-sm-9">
-            </br>
-            <div class="list-group">
-                <li>
-                    <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Courier No.1</h4>
-                    <p class="list-group-item-text">Name:</p>
-                    <p class="list-group-item-text">Account:</p>
-                    <p class="list-group-item-text">Password:</p>
-                    <button class="btn btn-primary; pull-right" type="button";input style="width: 60px;height: 30px;background-color: #ffe027; border: medium">Edit</button>
-                    <button type="button" ;input style="width: 60px;height: 30px;background-color: #c9cfb1" class="btn btn-danger; pull-right">Delete</button>
-                    </br>
-                    </br>
-                    </a>
-                </li>
-                <li>
-                    <a href="#" class="list-group-item">
-                    <h4 class="list-group-item-heading">Courier No.2</h4>
-                    <p class="list-group-item-text">********</p>
+        <div class="col-sm-12">
+            {% if couriers %}
+                <div class="list-group">
+                    {% for courier in couriers %}
+                        <a href="{% url 'owner_edit_courier' courier.pk %}">{{ courier.user.username|courier_name }}</a>
+                        <li>
+                            <a href="#" class="list-group-item">
+                                <h4 class="list-group-item-heading">Courier No.1</h4>
+                                <p class="list-group-item-text">Name:</p>
+                                <p class="list-group-item-text">Account:</p>
+                                <p class="list-group-item-text">Password:</p>
+                                <button class="btn btn-primary; pull-right" type="button" ;input
+                                        style="width: 60px;height: 30px;background-color: #ffe027; border: medium">Edit
+                                </button>
+                                <button type="button" ;input style="width: 60px;height: 30px;background-color: #c9cfb1"
+                                        class="btn btn-danger; pull-right">Delete
+                                </button>
+                                </br>
+                                </br>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div>
+                <a href="{% url "owner_create_courier" %}" style="width: 120px;height: 30px;background-color: #ffe027"
+                   class="btn btn-danger; pull-right">Add Courier
                 </a>
-                </li>
-            </div>
-            <div>                    <button type="button" ;input style="width: 120px;height: 30px;background-color: #ffe027" class="btn btn-danger; pull-right">Add Courier</button>
             </div>
             </br>
         </div>
     </div>
-
-
 {% endblock %}
 
