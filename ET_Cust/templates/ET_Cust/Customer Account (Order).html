@@ -10,12 +10,12 @@
 {% block  title %} dsafdasfadfa{% endblock %}
 {% block body %}
     <div class="container-fluid">
-        <div class="row" style="border: dashed;">
+        <div class="row" style="border: dashed; margin-bottom: 3%;">
             <div class="col-lg-6">
                 <p>Current Selected Place</p>
                 <a herf="#">  Switch Place</a>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6" style="text-align: right;">
                 <div class="dropdown">
                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Welcome, User!
@@ -35,16 +35,16 @@
             </div>
         </div>
 
-        <div class="row" style="border: dashed;">
+        <div class="row" style="border: dashed; margin-bottom: 3%;">
             <div class="col-lg-3" id="restaurant_logo">
                 <h1>Picture: LOGO</h1>
             </div>
-            <div class="col-lg-9" id="search_bar">
+            <div class="col-lg-9" id="search_bar" style="text-align: right;">
                 <input type="text" placeholder="Search..."><button type="submit">Search</button>
             </div>
         </div>
 
-        <div class="row" style="border: dashed;">
+        <div class="row" style="border-left: dashed;">
             <div class="col-lg-2">
                 <ul class="nav nav-pills nav-stacked">
                     <li role="presentation"><a href="{% url "customer account order" %}">My Order</a></li>
