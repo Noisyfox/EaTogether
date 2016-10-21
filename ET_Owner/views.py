@@ -43,11 +43,11 @@ class OwnerRegisterView(RegisterView):
             o = Owner(user=user)
             o.phone_number = form.cleaned_data['phone_number']
             o.save()
+            user.groups.add(Group.objects.get(name__exact=group))
         except Exception:
             user.delete()
             raise
 
-        user.groups.add(Group.objects.get(name__exact=group))
         user.save()
 
         return user
