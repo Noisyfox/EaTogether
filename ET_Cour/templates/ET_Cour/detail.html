@@ -1,10 +1,52 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "site_base.html" %}
 
-</body>
-</html>
+{% load i18n %}
+
+{% load bootstrap %}
+
+{% block head_title %}Order Detail{% endblock %}
+
+{% block body %}
+<div class="row"  style="background-color:lightslategrey">
+<button type="button" class="btn btn-default" aria-label="Left Align" >
+  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+    Back
+</button>
+</div>
+<div class="row">
+<form>
+    <br>
+    &nbsp;Destination  <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
+    <br>
+    &nbsp;Order Time 13:59:59 21/10/2016 Friday
+    <br>
+    <br>
+    <div style = "text-align:right;">
+    <button type="button" class="btn btn-default">Send Notification</button>
+    <hr>
+    </div>
+</form>
+</div>
+    <div style="border:1px solid #ffa82f">
+        &nbsp;Name
+
+    <br>
+        Contact Number
+        <br>
+    0426414426
+        <div style = "text-align:right;">
+            <span class="glyphicon glyphicon-phone-alt fa-2x" aria-hidden="true" ></span>
+    </div>
+    <ul class="list-group">
+  <li class="list-group-item">Food_1*1</li>
+  <li class="list-group-item">Food_2*1</li>
+  <li class="list-group-item">Food_3*1</li>
+    </ul>
+        <div style = "text-align:left;">
+    <button type="button" class="btn btn-default">Undelivered</button>
+
+    <a><button type="button" class="btn btn-default">Delivered</button></a>
+        </div>
+
+    </div>
+{% endblock %}
