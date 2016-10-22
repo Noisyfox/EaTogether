@@ -1,0 +1,426 @@
+/** 
+ * "PayPal Shoppign Cart" Style
+ *
+ * @author flGravity
+ * @created 23/01/2012
+ * @site http://codecanyon.net/user/flGravity
+ *
+ */
+
+.clearfix:after {
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+
+.paypalshop {
+	position: relative;
+	width: 768px; /* paypalshop box width  */
+	height: 492px; /* paypalshop box height */
+	overflow: hidden;
+	padding: 30px 0 30px 0;
+	box-shadow: 0 0 7px #aaa;
+	-moz-box-shadow: 0 0 7px #aaa;
+	-webkit-box-shadow: 0 0 7px #aaa;
+	background-color: #efefef;
+	border: 1px solid #eee;
+}
+
+.paypalshop .shop-logo {
+	position: absolute;
+	top:0; right:0;
+	height: 30px;
+	width: 200px;
+	background: url('icons/logo_message.png') no-repeat left top;
+	z-index: 1;
+	text-indent: -9999px;
+ }
+
+
+/**** product groups ****/
+.paypalshop .shop-groups { 
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	background-color: #ddd;
+	border-bottom: 1px solid #ccc;
+}
+
+.paypalshop .shop-groups li {
+	float: left;
+	border-right: 1px solid #ccc;
+}
+
+.paypalshop .shop-groups a {
+	display: block;
+	line-height: 20px;
+	font-size: 1.1em;
+	min-width: 100px;
+	padding: 5px 10px;
+	text-align: center;
+	color: #777; 
+	font-weight: bold;
+	text-shadow:0 1px 1px #fff;
+}
+
+.paypalshop .shop-groups a:hover {
+	color: #555;
+}
+
+.paypalshop .shop-groups .active-group {
+	background-color: #e5e5e5;
+}
+
+.paypalshop .shop-groups .active-group a {
+	color: #e55775!important;
+}
+
+
+/**** product list ****/
+.paypalshop .shop-products {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+}
+
+.paypalshop .shop-products ul {
+	position: absolute;
+	top: 0px;
+	display: block;
+}
+
+.paypalshop .shop-products .product {
+	float: left;
+	position: relative;
+	width: 180px; /* set product width */
+	height: 210px; /* set product height */
+	margin: 10px 30px;
+	padding: 5px;
+	background-color: #fff;
+	border: 3px solid #e5e5e5;
+}
+
+/* display text overlay on product hover */
+.product .product-image:hover .text-overlay { display: block; }
+.product .product-image .text-overlay {
+	display: none;
+	position: absolute;
+	background-color: #ffffff;
+	background-color: rgba(255,255,255,0.9);
+	color: #444;
+	font-size: 0.95em;
+	top: 0; left: 0;
+	padding: 0 10px;
+	z-index: 5;
+	height: 100%;
+}
+
+.product .product-heading {
+	font-weight: bold;
+	font-size: 1em;
+	color: #666;
+	margin: 0.5em 0;
+}
+
+.product .product-meta {
+	text-transform: uppercase;
+	font-size: 0.8em;
+	margin-bottom: 0.5em;
+	color: #777;
+}
+
+.product .product-buy {
+	position: relative;
+	float: right;
+	background-color: #e55775;
+	padding: 5px 10px;
+	line-height: 1em;
+	font-size: 0.8em;
+	color: #fff;
+	text-align: center;
+	font-weight: bold;
+	z-index: 15;
+	border: 1px solid #eee;
+	margin-left: 1em;
+}
+
+.product .product-buy:hover{
+	background-color: #f45d7d;
+}
+
+.product .product-price {
+	position: absolute;
+	right: -7px; 
+	top: 6px;
+	width: 55px;
+	padding-left: 10px;
+	line-height: 20px;
+	height: 30px;
+	font-size: 1.3em; 
+	color: #fff;
+	font-weight: 200;
+	background: url("icons/price_tag.png") no-repeat left center;
+	z-index: 10;
+}
+
+.product .product-currency {
+	font-size: 0.8em;
+}
+
+
+
+ /**** controls ****/
+.paypalshop .page-scroll {
+	position: absolute;
+	right: 10px;
+	bottom: 2px;
+}
+
+.paypalshop .page-scroll .page-prev,
+.paypalshop .page-scroll .page-next {
+	display: block;
+	float: left;
+	width: 20px;
+	height: 20px;
+}
+
+.paypalshop .page-scroll .page-prev {
+	background: #e55775 url("icons/page_arrows.png") no-repeat 0 -20px;
+}
+
+.paypalshop .page-scroll .page-next {
+	background: #e55775 url("icons/page_arrows.png") no-repeat 0 0;
+}
+
+.paypalshop .page-scroll .page-number {
+	color: #666;
+	float: left;
+	line-height: 20px;
+	font-size: 0.8em;
+	margin: 0 5px;
+}
+
+
+
+/* cart */
+.paypalshop .shop-cart {
+	position: absolute;
+	top: 100%;  left: 0;
+	z-index: 100;
+	/* add opacity */
+	opacity: 0.95;
+	filter: alpha(opacity=95);
+}
+
+/* cart header */
+.paypalshop .cart-header {
+	float: left;
+	color: #444;
+	background-color: #fff;
+	height: 30px;
+	box-shadow: 2px -2px 5px rgba(0,0,0,0.1);
+	-mox-box-shadow:  2px -2px 5px rgba(0,0,0,0.1);
+	-webkit-box-shadow:  2px -2px 5px rgba(0,0,0,0.1);
+}
+
+.paypalshop .cart-header p {
+	line-height: 20px;
+	padding: 5px 10px;
+	padding-left: 40px;
+	margin-left: 10px;
+	background: url("icons/cart_icon.png") no-repeat left center;
+}
+
+.paypalshop .cart-header span {
+	font-weight: bold;
+}
+
+ /* cart list columns */
+.paypalshop .col-number,
+.paypalshop .col-name,
+.paypalshop .col-quantity,
+.paypalshop .col-price,
+.paypalshop .col-remove {
+	display: inline-block;
+	line-height: 20px;
+	vertical-align: middle;
+ }
+ 
+.paypalshop .col-number {
+	width: 30px;
+	margin-left: 5px;
+}
+
+.paypalshop .col-name {
+	width: 180px;
+}
+
+.paypalshop .col-quantity,
+.paypalshop .col-price {
+	width: 60px;
+	text-align: center;
+}
+
+.paypalshop .col-remove {
+	width: 60px;
+	margin-right: 5px;
+	text-align: center;
+}
+
+/* cart content */
+.paypalshop .cart-content {
+	clear: both; 
+	background-color: #fff;
+	border-top: 1px solid #efefef;
+	padding-top: 5px;
+}
+
+/* cart content header */
+.paypalshop .list-header {
+	background-color: #ccc;
+	color: #444;
+	padding: 5px 0;
+}
+
+.paypalshop .list-header span {
+	font-weight: bold;
+}
+
+
+/* cart list */
+.paypalshop .list-wrapper {
+	position: relative;
+	overflow: hidden;
+	top: 0;
+	max-height: 120px; /* visible x 24px */
+}
+
+.paypalshop .list-content {
+	position: relative;
+	top: 0;
+}
+
+
+.paypalshop .list-content .list-group {
+	font-style: italic;
+	font-weight: bold;
+	padding-left: 5px;
+	line-height: 20px;
+	margin: 2px 0;
+}
+
+.paypalshop .list-content p {
+	cursor: pointer;
+	margin: 2px 0;
+}
+
+.paypalshop .list-content p:hover {
+	background-color: #f1f1f1;
+}
+
+.paypalshop .list-content .last-in-list{
+ /* last element in scroll list */
+}
+
+
+
+/* cart list scroll */
+.paypalshop .list-scroll {
+	background-color: #fff;
+	border-top: 1px solid #efefef;
+	font-size: 0.9em;
+	width: 100%;
+	float: right;
+}
+
+
+/* cart list buttons */
+.paypalshop .list-scroll .scroll-up, 
+.paypalshop .list-scroll .scroll-down,
+.paypalshop .list-content .button-delete,
+.paypalshop .list-content .button-subtract,
+.paypalshop .list-content .button-add {
+	display: inline-block;
+	width: 12px; height: 12px;
+	background: url("icons/icons.png") no-repeat;
+	text-indent: -9999px;
+	margin: 3px;
+	border: 2px solid #fff;
+	background-color: #eee;
+	vertical-align: middle;
+}
+
+.paypalshop .list-scroll .scroll-up, 
+.paypalshop .list-scroll .scroll-down {
+	margin: 3px;
+	border: 2px solid #eee;
+	float: right;
+}
+
+
+.paypalshop .list-scroll .scroll-up:hover, 
+.paypalshop .list-scroll .scroll-down:hover {
+	border: 2px solid #fff;
+}
+
+.paypalshop .list-scroll .scroll-up {
+	background-position: -12px 0;
+}
+
+.paypalshop .list-scroll .scroll-down {
+	background-position: 0 0;
+	margin-right: 5px;
+}
+
+.paypalshop .list-content .button-delete {
+	background-position: -48px 0;
+} 
+
+.paypalshop .list-content .button-subtract {
+	background-position: -24px 0;
+}
+.paypalshop .list-content .button-add {
+	background-position: -36px 0;
+}
+
+
+/* cart footer */
+.paypalshop .cart-footer {
+	clear: both; /* clear list scroll */
+	background-color: #fff;
+	padding-top: 20px;
+	text-align: right;
+}
+
+.paypalshop .cart-footer p {
+	border-bottom: 1px solid #efefef;
+	padding: 10px 20px; 
+}
+
+.paypalshop .cart-footer span {
+	font-weight: bold;
+}
+
+.paypalshop .cart-footer a {
+	display: inline-block;
+    background-color: #E55775;
+    border: 1px solid #EEEEEE;
+    color: #FFFFFF;
+    font-weight: bold;
+    padding: 5px 10px;
+    margin: 10px 2px;
+    line-height: 1.3em;
+}
+
+.paypalshop .cart-footer a:hover {
+    background-color: #F45D7D;
+}
+
+.paypalshop a.checkout-button { 
+	margin-right: 10px; 
+}

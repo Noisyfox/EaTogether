@@ -4,6 +4,7 @@ from django.contrib.auth.models import Group as UserGroup
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import GEOSGeometry
 from django.utils import timezone
+from django.views.generic import View
 from django.views.generic import FormView, CreateView
 from django.views.generic.list import ListView
 from django.urls import reverse_lazy
@@ -121,7 +122,7 @@ class CustomerCreateGroupView(CreateView):
 
 
 class CustomerRestaurantMenuView(ListView):
-    template_name = 'ET_Cust/customer_restaurant_menu_page.html'
+    template_name = 'ET_Cust/customer_restaurant_menu_page_test.html'
     model = Food
     context_object_name = 'food_list'
 
@@ -133,6 +134,7 @@ class CustomerRestaurantMenuView(ListView):
         return context
 
 
+# class CustomerRestaurantCheckOutView(View):
 
 
 
