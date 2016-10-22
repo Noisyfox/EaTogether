@@ -9,7 +9,7 @@ DEBUG = True
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
+        "ENGINE": "django.contrib.gis.db.backends.spatialite",
         "NAME": "dev.db",
     }
 }
@@ -112,6 +112,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.SessionAuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "ET.middleware.UserAccountScopeMiddleware",
 ]
 
 ROOT_URLCONF = "ET.urls"
@@ -127,10 +128,13 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.staticfiles",
     "django.contrib.admin",
+    "django.contrib.gis",
 
     # theme
     "bootstrapform",
     "pinax_theme_bootstrap",
+
+    "betterforms",
 
     # project
     "ET",
@@ -138,6 +142,8 @@ INSTALLED_APPS = [
     "ET_Cour",
     "ET_Cust",
     "ET_Owner",
+
+    "location_field",
 ]
 
 # A sample logging configuration. The only tangible logging
@@ -174,3 +180,12 @@ FIXTURE_DIRS = [
 ]
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+AUTHENTICATION_BACKENDS = [
+    'ET.auth_backends.UniversalAuthenticationBackend',
+]
+
+SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
+
+GOOGLE_MAPS_V3_APIKEY = 'AIzaSyD8yC2qzzlufDZva6mc_d1QXi94XiMgu5k'
+GOOGLE_MAPS_LIBRARIES = ['places']

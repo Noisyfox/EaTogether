@@ -1,30 +1,64 @@
 from django.db import models
 from django.conf import settings
 
+from location_field.models.spatial import LocationField
+
 
 class Courier(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     restaurant = models.ForeignKey('Restaurant', on_delete=models.CASCADE)
 
 
-class Restaurant(models.Model):
+class Owner(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=10)
+    phone_number = models.CharField(max_length=10, unique=True)
+    money = models.FloatField(default=0)
+
+
+class Restaurant(models.Model):
+    owner = models.OneToOneField(Owner, on_delete=models.CASCADE)
+
+    # Restaurant information
+    name = models.CharField(max_length=30)
+
+    # Contact info
+    contact_name = models.CharField(max_length=30)
+    contact_number = models.CharField(max_length=10)
+
     introduction = models.TextField()
-    state = models.SlugField(max_length=3)  # The max length of the state abbr in Australia is 3.
-    address = models.TextField()
-    logo = models.URLField()
-    money = models.FloatField()
-    # Validation infomation.
-    id_photo = models.URLField()
-    business_license = models.URLField()
+    address = models.CharField(max_length=255)
+    location = LocationField(address_field='address', zoom=13)
+    logo = models.ImageField()
+
+
+class ValidationInformation(models.Model):
+    restaurant = models.OneToOneField(Restaurant, on_delete=models.CASCADE)
+
+    id_number = models.CharField(max_length=50)
+    id_photo = models.ImageField()
+    business_license = models.ImageField()
+
+
+class RestaurantServiceInfo(models.Model):
+    SERV_STATUS = (
+        ('O', 'Open'),
+        ('C', 'Close'),
+    )
+    restaurant = models.OneToOneField(Restaurant, on_delete=models.CASCADE)
+
+    min_delivery = models.FloatField(default=0)
+    delivery_fee = models.FloatField(default=0)
+
+    announcement = models.TextField(max_length=500)
+
+    service_status = models.CharField(max_length=1, choices=SERV_STATUS, default='C')
 
 
 class Food(models.Model):
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     name = models.CharField(max_length=30)
     introduction = models.TextField()
-    picture = models.URLField()
+    picture = models.ImageField()
     price = models.FloatField()
 
 
@@ -52,8 +86,8 @@ class GroupOrder(models.Model):
 
 class Customer(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=10)
-    balance = models.FloatField()
+    phone_number = models.CharField(max_length=10, unique=True)
+    balance = models.FloatField(default=0)
     favourite_restaurants = models.ManyToManyField(Restaurant, blank=True)
 
 
@@ -67,5 +101,5 @@ class PersonalOrder(models.Model):
 
 class OrderFood(models.Model):
     personal_order = models.ForeignKey(PersonalOrder, on_delete=models.CASCADE)
-    food = models.ManyToManyField(Food)
+    food = models.ForeignKey(Food)
     count = models.SmallIntegerField()

@@ -1,0 +1,28 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load bootstrap %}
+
+{% block head_title %}{% trans "My Restaurant" %}{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-4">
+            <form id="signup_form" method="post" action="." autocapitalize="off"
+                    {% if form.is_multipart %} enctype="multipart/form-data"{% endif %}>
+                {% csrf_token %}
+                <legend>{% trans "General Information" %}</legend>
+                {{ form.forms.general|bootstrap }}
+                <br>
+                <legend>{% trans "Sufficient Valid Information" %}</legend>
+                {{ form.forms.valid|bootstrap }}
+                <button type="submit" class="btn btn-primary">{% trans "Submit" %}</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    {{ form.media }}
+{% endblock %}

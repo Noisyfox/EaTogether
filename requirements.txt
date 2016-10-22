@@ -1,3 +1,7 @@
-Django==1.10
+Django==1.10.2
+django-appconf==1.0.2
+django-betterforms==1.1.4
+django-bootstrap-form==3.2.1
+Pillow==3.4.1
 pinax-theme-bootstrap==7.10.1
-
+six==1.10.0
