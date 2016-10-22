@@ -1,12 +1,16 @@
 from django.conf.urls import url, include
 from django.views.generic import RedirectView
 
+from django.views.generic import TemplateView
+
+from django.contrib import admin
+
 from ET_Owner import views
 
 urlpatterns = [
     url(r'^$', RedirectView.as_view(pattern_name='owner_order_list', permanent=False), name='owner'),
     url(r"^order/", include([
-        url(r"^$", views.OwnerOrderListView.as_view(), name="owner_order_list"),
+        url(r"^$", TemplateView.as_view(template_name="ET_Owner/owner_orders.html"), name="owner_order_list"),
     ])),
     url(r"^login/$", views.OwnerLoginView.as_view(), name='owner_login'),
     url(r"^register/$", views.OwnerRegisterView.as_view(), name='owner_register'),
