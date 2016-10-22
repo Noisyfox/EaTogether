@@ -1,6 +1,6 @@
 import uuid
 from django.contrib.auth import get_user_model
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group as UserGroup
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import GEOSGeometry
 from django.utils import timezone
@@ -18,6 +18,7 @@ from django.http import HttpResponse
 class CustomerRegisterView(RegisterView):
     form_class = CustomerRegisterForm
     template_name = 'ET_Cust/register_test.html'
+    success_url = reverse_lazy('cust_search')
 
     def create_user(self, form, commit=True, **kwargs):
         group = form.get_group()
@@ -39,7 +40,7 @@ class CustomerRegisterView(RegisterView):
             user.delete()
             raise
 
-        user.groups.add(Group.objects.get(name__exact=group))
+        user.groups.add(UserGroup.objects.get(name__exact=group))
         user.save()
 
         return user
