@@ -3,6 +3,7 @@ import uuid
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
@@ -15,7 +16,7 @@ from django.views.generic import UpdateView
 from django.utils.translation import ugettext_lazy as _
 
 from ET.mixins import QueryMixin
-from ET.models import Owner, Food, Restaurant, Courier, RestaurantServiceInfo
+from ET.models import Owner, Food, Restaurant, Courier, RestaurantServiceInfo, GroupOrder
 from ET.views import RegisterView, LoginView
 from ET_Cour.templatetags.courier_name_tag import courier_name
 from ET_Owner.forms import OwnerRegisterForm, OwnerLoginForm, FoodEditForm, RestaurantEditForm, CourierEditForm
@@ -246,3 +247,10 @@ class AssignmentDeleteView(RestaurantRequiredMixin, CourierQueryMixin, DeleteVie
 
 class WalletView(RestaurantRequiredMixin, TemplateView):
     template_name = 'ET_Owner/owner_wallet.html'
+
+
+class OrderListView(RestaurantRequiredMixin, ListView):
+    template_name = 'ET_Owner/owner_orders.html'
+
+    def get_queryset(self):
+        return GroupOrder.objects.filter(group__restaurant=self.request.user.owner.restaurant)
