@@ -6,21 +6,22 @@
 {% block body_class %}owner{% endblock %}
 
 {% block topbar_base %}
-    <div class="container" style="background: url('{{ STATIC_URL }}img_owner/back_title_2.jpg') right bottom no-repeat;background-size: cover;">
+    <div class="container"
+         style="background: url('{{ STATIC_URL }}img_owner/back_title_2.jpg') right bottom no-repeat;background-size: cover;">
         <div>
-           <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
+            <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
             <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat
                 Now, Eat Together - {% block topbar_label %}{% endblock %}</a>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
         </div>
     </div>
 {% endblock %}
@@ -28,72 +29,31 @@
 {% block subnav %}
     <div id="nav">
         <div class="btn-group-vertical" role="group" aria-label="information list">
-            <ul>
-                <a href="{% url 'owner_order_list' %}">
-                    <button type="button"
-                            class="btn btn-primary:hover" style=" width: 200px;height: 50px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%">
-                        <span style="color:#fcf8e3" aria-hidden="true" height="80"
-                                class="glyphicon glyphicon-cutlery" class="pull-left"  />
-                        <a style="font-family: Calibri; font-size: 150%; color: #fcf8e3"> My Order
-                        </a>
-                        </span>
-                    </button>
-{#                    <button class="btn btn-primary" type="button" ;input#}
-{#                            style="width: 120px;height: 50px;background-color: #ffa82f; border-color: transparent">My Order#}
-{#                    </button>#}
-                </a>
-                <a href="{% url 'owner_edit_restaurant' %}">
-                    <button type="button" style=" width: 200px;height: 50px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%"
-                            class="btn btn-primary:hover" >
-                        <img src="{% static "img_owner/brand_et_button.png" %}" height="25"/>
-                        <a style="font-family: Calibri; font-size: 150%; color: #fcf8e3">My Restaurant
-                        </a>
-                        </img>
-                    </button>
-{#                    <button class="btn btn-primary" type="button" ;input#}
-{#                            style="width: 120px;height: 50px;background-color: #ffa82f">My Restaurant#}
-{#                    </button>#}
-                </a>
-                <a href="{% url 'owner_menu' %}">
-                    <button type="button" style=" width: 200px;height: 50px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%"
-                            class="btn btn-primary:hover" >
-                        <span style="color:#fcf8e3" aria-hidden="true" height="80"
-                              class="glyphicon glyphicon-list-alt" class="pull-left" />
-                        <a style="font-family: Calibri; font-size: 150%; color: #fcf8e3"> My Menu
-                        </a>
-                        </span>
-                    </button>
-{#                    <button class="btn btn-primary" type="button" ;input#}
-{#                            style="width: 120px;height: 50px;background-color: #ffa82f">My Menu#}
-{#                    </button>#}
-                </a>
-                <a href="{% url 'owner_courier' %}">
-                    <button type="button" style=" width: 200px;height: 50px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%"
-                            class="btn btn-primary:hover" >
-                        <span style="color:#fcf8e3" aria-hidden="true" height="80"
-                              class="glyphicon glyphicon-shopping-cart" class="pull-left" />
-                        <a style="font-family: Calibri; font-size: 150%; color: #fcf8e3"> Delivery
-                        </a>
-                        </span>
-                    </button>
-{#                    <button class="btn btn-primary" type="button" ;input#}
-{#                            style="width: 120px;height: 50px;background-color: #ffa82f">Delivery#}
-{#                    </button>#}
-                </a>
-                <a href="{% url 'owner_wallet' %}">
-                    <button type="button"  style=" width: 200px;height: 50px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%"
-                            class="btn btn-primary:hover">
-                        <span  style="color:#fcf8e3" aria-hidden="true" height="80"
-                                class="glyphicon glyphicon-usd" class="pull-left"/>
-                        <a style="font-family: Calibri; font-size: 150%; color: #fcf8e3"> Wallet
-                        </a>
-                        </span>
-                    </button>
-{#                    <button class="btn btn-primary" type="button" ;input#}
-{#                            style="width: 120px;height: 50px;background-color: #ffa82f">Wallet#}
-{#                    </button>#}
-                </a>
-            </ul>
+            <a href="{% url 'owner_order_list' %}" class="btn btn-primary"
+               style=" width: 200px;padding: 10px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%;">
+                <span style="color:#fcf8e3" aria-hidden="true" class="glyphicon glyphicon-cutlery"></span>
+                <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3;">My Order</span>
+            </a>
+            <a href="{% url 'owner_edit_restaurant' %}" class="btn btn-primary"
+               style="width: 200px;padding: 10px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%">
+                <img src="{% static "img_owner/brand_et_button.png" %}" height="25"/>
+                <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3">My Restaurant</span>
+            </a>
+            <a href="{% url 'owner_menu' %}" class="btn btn-primary"
+               style="width: 200px;padding: 10px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%">
+                <span style="color:#fcf8e3" aria-hidden="true" class="glyphicon glyphicon-list-alt"></span>
+                <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3"> My Menu </span>
+            </a>
+            <a href="{% url 'owner_courier' %}" class="btn btn-primary"
+               style="width: 200px;padding: 10px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%">
+                <span style="color:#fcf8e3" aria-hidden="true" class="glyphicon glyphicon-shopping-cart"></span>
+                <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3"> Delivery</span>
+            </a>
+            <a href="{% url 'owner_wallet' %}" class="btn btn-primary"
+               style="width: 200px;padding: 10px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%">
+                <span style="color:#fcf8e3" aria-hidden="true" class="glyphicon glyphicon-usd"></span>
+                <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3">Wallet</span>
+            </a>
         </div>
 
     </div>
