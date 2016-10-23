@@ -10,13 +10,13 @@
 {% block  title %} dsafdasfadfa{% endblock %}
 {% block body %}
     <div class="container-fluid">
-        <div class="row" style="border: dashed; margin-bottom: 3%;">
-            <div class="col-lg-6">
-                <p>Current Selected Place</p>
+        <div class="row" style="border-bottom: solid; border-width: 5px; border-color: #f2d798; margin-bottom: 3%;">
+            <div class="col-lg-6" style="padding-bottom: 2%;">
+                Current Selected Place
                 <a herf="#">  Switch Place</a>
             </div>
-            <div class="col-lg-6" style="text-align: right;">
-                <div class="dropdown">
+            <div class="col-lg-6">
+                <div class="dropdown"  style="float:right;">
                     <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Welcome, User!
                         <span class="caret"></span>
@@ -24,18 +24,18 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li><a href="#">Notification (3)</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url "customer account order" %}">My Order</a></li>
-                        <li><a href="{% url "customer account favourite" %}">My Favourites</a></li>
+                        <li><a href="#">My Order</a></li>
+                        <li><a href="#">My Favourites</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url "customer account profile&wallet" %}">Profile & Wallet</a></li>
+                        <li><a href="#">Profile & Wallet</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url "customer login" %}">Logout</a></li>
+                        <li><a href="#">Logout</a></li>
                     </ul>
                 </div>
             </div>
         </div>
 
-        <div class="row" style="border: dashed; margin-bottom: 3%;">
+        <div class="row" style="border-bottom: solid; border-width: 5px; border-color: #f2d798; margin-bottom: 3%;">
             <div class="col-lg-3" id="restaurant_logo">
                 <h1>Picture: LOGO</h1>
             </div>
@@ -44,43 +44,56 @@
             </div>
         </div>
 
-        <div class="row" style="border-left: dashed;">
+        <div class="row" style="margin-bottom: 3%;">
             <div class="col-lg-2">
                 <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation"><a href="{% url "customer account order" %}">My Order</a></li>
-                    <li role="presentation"><a href="{% url "customer account favourite" %}">My Favourites</a></li>
-                    <li role="presentation"><a href="{% url "customer account profile&wallet" %}">Profile&Wallet</a></li>
+                    <li role="presentation"><a href="#">My Order</a></li>
+                    <li role="presentation"><a href="#">My Favourites</a></li>
+                    <li role="presentation"><a href="#">Profile&Wallet</a></li>
                 </ul>
             </div>
             <div class="col-lg-10">
-                <div class="row" style="border-bottom: dashed;">
-                    <div class="col-lg-3" style="border: dashed;">
-                        <h2>Picture:LOGO</h2>
+                <div class="row" style="border-bottom: solid;  border-width: 3px; border-color: #f2d798;">
+                    <div class="col-lg-3">
+                        <div class="thumbnail" style="border-color: #f2d798">
+                            <h2>Picture:LOGO</h2>
+                        </div>
                     </div>
-                    <div class="col-lg-4">
-                        <h2>Restaurant Name</h2>
-                        <p>Order ID: xxxxxxxxxxxxxxxxxxxx</p>
-                        <p>Group ID: xxxxxxxxxxxxxxxxxxxx</p>
+                    <div class="col-lg-4" style="border-left: solid; border-right: solid;border-width: 2px;">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h2>Restaurant Name</h2></div>
+                            <ul class="list-group">
+                                <li class="list-group-item"><p>Order ID: xxxxxxxxxxxxxxxxxxxx</p></li>
+                                <li class="list-group-item"><p><p>Group ID: xxxxxxxxxxxxxxxxxxxx</p></p></li>
+
+                            </ul>
+                        </div>
                     </div>
-                    <div class="col-lg-5">
-                        <p>Contact Number:</p>
-                        <p>Order Time: yyyy-MM-dd hh:mm</p>
+                    <div class="col-lg-4" style="padding-left: 10%;">
+                        <div class="panel panel-default">
+                            <ul class="list-group">
+                                <li class="list-group-item"><p>Contact Number:</p></li>
+                                <li class="list-group-item"><p>Order Time: yyyy-MM-dd hh:mm</p></li>
+
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                <div class="row">
+
+
+                <div class="row" style="padding-top: 2%;">
                     <div class="col-lg-4">
-                        <div class="row" style="border-bottom: dashed">
-                            <div class="col-lg-12" style="border-bottom: dashed">
-                                <table>
-                                    <thead>
+                        <div class="row">
+                            <div class="col-lg-12" style="border-bottom: solid; border-width: 2px; padding-top: 10%;">
+
+                                <div class="panel panel-default">
+                                    <table class="table">
                                         <tr>
                                             <th>Food Name</th>
                                             <th>Count</th>
                                             <th>Unit</th>
                                             <th>Total</th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
                                         <tr>
                                             <th>xxxx</th>
                                             <th>-2+</th>
@@ -93,32 +106,56 @@
                                             <th>$4</th>
                                             <th>$4</th>
                                         </tr>
-                                    </tbody>
-                                </table>
+                                    </table>
+                                </div>
+
+                                {#                                <table>#}
+                                {#                                    <thead>#}
+                                {#                                    <tr>#}
+                                {#                                        <th>Food Name</th>#}
+                                {#                                        <th>Count</th>#}
+                                {#                                        <th>Unit</th>#}
+                                {#                                        <th>Total</th>#}
+                                {#                                    </tr>#}
+                                {#                                    </thead>#}
+                                {#                                    <tbody>#}
+                                {#                                    <tr>#}
+                                {#                                        <th>xxxx</th>#}
+                                {#                                        <th>-2+</th>#}
+                                {#                                        <th>$5</th>#}
+                                {#                                        <th>$10</th>#}
+                                {#                                    </tr>#}
+                                {#                                    <tr>#}
+                                {#                                        <th>xxxx</th>#}
+                                {#                                        <th>-1+</th>#}
+                                {#                                        <th>$4</th>#}
+                                {#                                        <th>$4</th>#}
+                                {#                                    </tr>#}
+                                {#                                    </tbody>#}
+                                {#                                </table>#}
                             </div>
-                            <div class="col-lg-12">
+                            <div class="col-lg-12" style="margin-top: 5%;">
                                 <p>Name: Mr. Who</p>
                                 <p>Contact: xxxxxxxxxxxxxxxx</p>
                             </div>
                         </div>
                         <div class="row"></div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4" style="border-right: solid;">
                         <h3>Group Info</h3>
                         <p>Delivery Destination</p>
                         <p>xxxxxxxxxxxxxxxxxxxxxxxx</p>
                         <p>Delivery Fee: $5</p>
                         <p>Min. Delivery: $10</p>
                         <p>Fee Share Detail</p>
-                        <table>
-                            <thead>
+
+                        <div class="panel panel-default">
+                            <table class="table">
                                 <tr>
                                     <th>Name</th>
                                     <th>Food Prive</th>
                                     <th>Delivery Fee</th>
                                 </tr>
-                            </thead>
-                            <tbody>
                                 <tr>
                                     <th>Mr.xxx</th>
                                     <th>$xx</th>
@@ -134,52 +171,79 @@
                                     <th>$xx</th>
                                     <th>$x</th>
                                 </tr>
-                            </tbody>
-                        </table>
+                            </table>
+                        </div>
+
+{#                        <table>#}
+{#                            <thead>#}
+{#                            <tr>#}
+{#                                <th>Name</th>#}
+{#                                <th>Food Prive</th>#}
+{#                                <th>Delivery Fee</th>#}
+{#                            </tr>#}
+{#                            </thead>#}
+{#                            <tbody>#}
+{#                            <tr>#}
+{#                                <th>Mr.xxx</th>#}
+{#                                <th>$xx</th>#}
+{#                                <th>$x</th>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <th>Mrs.xxx</th>#}
+{#                                <th>$xx</th>#}
+{#                                <th>$x</th>#}
+{#                            </tr>#}
+{#                            <tr>#}
+{#                                <th>You</th>#}
+{#                                <th>$xx</th>#}
+{#                                <th>$x</th>#}
+{#                            </tr>#}
+{#                            </tbody>#}
+{#                        </table>#}
                     </div>
                     <div class="col-lg-4">
                         <table>
                             <tbody>
-                                <tr>
-                                    <th>Group Created</th>
-                                    <th>yyyy-MM-dd hh:mm</th>
-                                </tr>
-                                <tr>
-                                    <th>Group Joined</th>
-                                    <th>yyyy-MM-dd hh:mm</th>
-                                </tr>
-                                <tr>
-                                    <th>Group Time Expired</th>
-                                    <th>yyyy-MM-dd hh:mm</th>
-                                </tr>
-                                <tr>
-                                    <th>Order Accepted by Restaurant</th>
-                                    <th>yyyy-MM-dd hh:mm</th>
-                                </tr>
-                                <tr>
-                                    <th>Delivery Started</th>
-                                    <th>yyyy-MM-dd hh:mm</th>
-                                </tr>
-                                <tr>
-                                    <th>Delivery Confirm</th>
-                                    <th>yyyy-MM-dd hh:mm</th>
-                                </tr>
+                            <tr>
+                                <th>Group Created</th>
+                                <th>yyyy-MM-dd hh:mm</th>
+                            </tr>
+                            <tr>
+                                <th>Group Joined</th>
+                                <th>yyyy-MM-dd hh:mm</th>
+                            </tr>
+                            <tr>
+                                <th>Group Time Expired</th>
+                                <th>yyyy-MM-dd hh:mm</th>
+                            </tr>
+                            <tr>
+                                <th>Order Accepted by Restaurant</th>
+                                <th>yyyy-MM-dd hh:mm</th>
+                            </tr>
+                            <tr>
+                                <th>Delivery Started</th>
+                                <th>yyyy-MM-dd hh:mm</th>
+                            </tr>
+                            <tr>
+                                <th>Delivery Confirm</th>
+                                <th>yyyy-MM-dd hh:mm</th>
+                            </tr>
                             </tbody>
                         </table>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="row" style="border:dashed;">
+                        <div class="row" style="border-top: solid; border-width: 5px; border-color: #f2d798; margin-top: 3%; padding-top: 2%;">
                             <div class="col-lg-3">
                                 <h3>LOGO</h3>
                             </div>
-                            <div class="col-lg-4">
+                            <div class="col-lg-4" style="border-left: solid; border-right: solid; padding-left: 100px;">
                                 <h6>Restaurant Name</h6>
                                 <p>Order ID: xxxxxxx</p>
                                 <p>Group ID: xxxxxxx</p>
                             </div>
-                            <div class="col-lg-5">
+                            <div class="col-lg-5" style="padding-left: 10%;">
                                 <p>Contact Number:</p>
                                 <p>Order Time: yyyy-MM-dd hh:mm</p>
                             </div>
