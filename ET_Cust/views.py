@@ -1,4 +1,6 @@
 import uuid
+
+from crispy_forms.layout import Submit
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as UserGroup
 from django.contrib.gis.db.models.functions import Distance
@@ -7,6 +9,8 @@ from django.utils import timezone
 from django.views.generic import FormView, CreateView
 from django.views.generic.list import ListView
 from django.urls import reverse_lazy
+
+from ET.forms import FormHelper
 from ET.models import Customer, Group, Restaurant, Food
 from ET.views import LoginView, RegisterView
 from ET_Cust.forms import CustomerLoginForm, CustomerRegisterForm, CustomerSearchRestaurantForm, \
@@ -114,6 +118,12 @@ class CustomerCreateGroupView(CreateView):
     model = Group
     fields = ['destination', 'location', 'group_time']
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.helper = FormHelper()
+        form.helper.add_input(Submit('submit', 'Create'))
+        return form
+
     def form_valid(self, form, **kwargs):
         form.instance.create_time = timezone.now()
         form.instance.restaurant = Restaurant.objects.get(pk=self.kwargs['restaurant_id'])
@@ -131,8 +141,3 @@ class CustomerRestaurantMenuView(ListView):
         context['restaurant'] = Restaurant.objects.get(pk=self.kwargs['restaurant_id'])
         # context['address'] = self.request.session['address']
         return context
-
-
-
-
-

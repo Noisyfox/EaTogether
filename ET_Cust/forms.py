@@ -1,4 +1,6 @@
-from ET.forms import LoginPhoneNumberForm, RegisterForm
+from crispy_forms.layout import Submit
+
+from ET.forms import LoginPhoneNumberForm, RegisterForm, FormMixin
 from django import forms
 from location_field.forms.spatial import LocationField
 
@@ -15,11 +17,21 @@ class CustomerLoginForm(LoginPhoneNumberForm):
 
 
 # The form which customers use to search the restaurant near the address input.
-class CustomerSearchAddressForm(forms.Form):
+class CustomerSearchAddressForm(FormMixin, forms.Form):
     address = forms.CharField(max_length=255)
     location = LocationField(address_field='address', zoom=13)
 
+    def __init__(self, *args, **kwargs):
+        super(CustomerSearchAddressForm, self).__init__(*args, **kwargs)
+
+        self.helper.add_input(Submit('search', 'Search'))
+
 
 # The form which customers use to search the certain restaurant.
-class CustomerSearchRestaurantForm(forms.Form):
+class CustomerSearchRestaurantForm(FormMixin, forms.Form):
     restaurant = forms.CharField(max_length=30)
+
+    def __init__(self, *args, **kwargs):
+        super(CustomerSearchRestaurantForm, self).__init__(*args, **kwargs)
+
+        self.helper.add_input(Submit('search', 'Search'))
