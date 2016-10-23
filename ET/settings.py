@@ -1,6 +1,5 @@
 import os
 
-
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
 BASE_DIR = PACKAGE_ROOT
@@ -189,3 +188,5 @@ GOOGLE_MAPS_V3_APIKEY = 'AIzaSyD8yC2qzzlufDZva6mc_d1QXi94XiMgu5k'
 GOOGLE_MAPS_LIBRARIES = ['places']
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+# Change the serializer of the session
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'

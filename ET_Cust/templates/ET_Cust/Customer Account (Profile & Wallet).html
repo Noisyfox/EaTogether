@@ -16,11 +16,26 @@
                 <a herf="#">  Switch Place</a>
             </div>
             <div class="col-lg-6">
-                <button>Welcome, User!</button>
+                <div class="dropdown">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        Welcome, User!
+                        <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                        <li><a href="#">Notification (3)</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url "customer account order" %}">My Order</a></li>
+                        <li><a href="{% url "customer account favourite" %}">My Favourites</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url "customer account profile&wallet" %}">Profile & Wallet</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{% url "customer login" %}">Logout</a></li>
+                    </ul>
+                </div>
             </div>
         </div>
 
-        <div class="row" style="border: dashed;">
+        <div class="row" style="border: dashed; margin-top: 3%;">
             <div class="col-lg-3" id="restaurant_logo">
                 <h1>Picture: LOGO</h1>
             </div>
@@ -29,12 +44,12 @@
             </div>
         </div>
 
-        <div class="row" style="border: dashed;">
-            <div class="col-lg-2">
+        <div class="row" style="border: dashed; margin-top: 3%;">
+            <div class="col-lg-2" style="border-right: dashed;">
                 <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation" class="active"><a href="#">Home</a></li>
-                    <li role="presentation"><a href="#">Profile</a></li>
-                    <li role="presentation"><a href="#">Messages</a></li>
+                    <li role="presentation"><a href="{% url "customer account order" %}">My Order</a></li>
+                    <li role="presentation"><a href="{% url "customer account favourite" %}">My Favourites</a></li>
+                    <li role="presentation"><a href="{% url "customer account profile&wallet" %}">Profile&Wallet</a></li>
                 </ul>
             </div>
             <div class="col-lg-10">
@@ -43,7 +58,7 @@
                         <h1>$99999999 Available</h1>
                         <h4>$15 Under Processing</h4>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-6" style="border-left: dashed;">
                         <button type="submit">Top Up now</button>
                     </div>
                 </div>
