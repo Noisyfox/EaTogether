@@ -126,7 +126,7 @@
                     return;
                 }
 
-                p = places[0];
+                var p = places[0];
                 placeMarker(p.geometry.location);
             });
 
@@ -165,7 +165,7 @@
         }
 
         if (!/__prefix__/.test(name)) {
-            for (key in values) {
+            for (var key in values) {
                 if (/__prefix__/.test(values[key])) {
                     values[key] = values[key].replace(/__prefix__/g, pfx);
                 }

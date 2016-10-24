@@ -4,11 +4,6 @@ from django.urls import reverse
 from location_field.models.spatial import LocationField
 
 
-class Courier(models.Model):
-    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    restaurant = models.ForeignKey('Restaurant', on_delete=models.CASCADE)
-
-
 class Owner(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=10, unique=True)
@@ -30,13 +25,15 @@ class Restaurant(models.Model):
     location = LocationField(address_field='address', zoom=13)
     logo = models.ImageField()
 
-
-class ValidationInformation(models.Model):
-    restaurant = models.OneToOneField(Restaurant, on_delete=models.CASCADE)
-
+    # Validation info
     id_number = models.CharField(max_length=50)
     id_photo = models.ImageField()
     business_license = models.ImageField()
+
+
+class Courier(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
 
 
 class RestaurantServiceInfo(models.Model):
@@ -69,15 +66,11 @@ class Group(models.Model):
     )
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
     group_time = models.TimeField()
-    create_time = models.DateTimeField()
+    create_time = models.DateTimeField(auto_now_add=True)
 
     # Exceed_time can be calculated based on group_time and create_time.
     # exceed_time = models.DateTimeField()
     # Joined_time can be omitted actually.
-
-    accept_time = models.DateTimeField(null=True, blank=True)
-    delivery_start_time = models.DateTimeField(null=True, blank=True)
-    confirm_delivery_time = models.DateTimeField(null=True, blank=True)
     destination = models.CharField(max_length=255)
     location = LocationField(address_field='destination', zoom=13)
     status = models.CharField(max_length=1, choices=STATUS, default='G')
@@ -92,6 +85,11 @@ class GroupOrder(models.Model):
     group = models.OneToOneField(Group, on_delete=models.CASCADE)
     courier = models.ForeignKey(Courier, on_delete=models.CASCADE)
 
+    submit_time = models.DateTimeField(auto_now_add=True)
+    accept_time = models.DateTimeField(null=True, blank=True)
+    delivery_start_time = models.DateTimeField(null=True, blank=True)
+    confirm_delivery_time = models.DateTimeField(null=True, blank=True)
+
 
 class Customer(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -105,7 +103,7 @@ class PersonalOrder(models.Model):
     group = models.ForeignKey(GroupOrder, on_delete=models.CASCADE)
     price = models.FloatField()
     delivery_fee = models.FloatField()
-    order_time = models.DateTimeField()
+    order_time = models.DateTimeField(auto_now_add=True)
 
 
 class OrderFood(models.Model):

@@ -1,0 +1,22 @@
+{% extends "ET_Owner/base.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+    Thia is the courier edit page.
+{% endblock %}
+
+{% block topbar_label %}Courier Edit{% endblock %}
+
+{% block body %}
+    <div class="Page_title">
+        <a style="font-family: Calibri; font-size: 300% ; color: #ffb125; " class="Page_title">{% if courier %}Edit courier{% else %}Create courier{% endif %}
+        </a>
+    </div>
+
+    {% crispy form %}
+
+{% endblock %}
+

@@ -49,7 +49,8 @@ class UniversalAuthenticationBackend(ModelBackend):
         courier_user_id = 'cid_%s_%s' % owner_phone_number, courier_id
         try:
             courier = Courier.objects.get(
-                Q(restaurant__phone_number__iexact=owner_phone_number) & Q(user__username__iexact=courier_user_id))
+                Q(restaurant__owner__phone_number__iexact=owner_phone_number) & Q(
+                    user__username__iexact=courier_user_id))
         except Courier.DoesNotExist:
             return None
         else:

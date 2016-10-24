@@ -28,3 +28,12 @@ class GroupRequiredMixin(AccessMixin):
         if not self.in_group():
             return self.handle_no_permission()
         return super(GroupRequiredMixin, self).dispatch(request, *args, **kwargs)
+
+
+class QueryMixin(object):
+    def do_query(self, request, *args, **kwargs):
+        raise NotImplemented
+
+    def dispatch(self, request, *args, **kwargs):
+        self.do_query(request, *args, **kwargs)
+        return super(QueryMixin, self).dispatch(request, *args, **kwargs)

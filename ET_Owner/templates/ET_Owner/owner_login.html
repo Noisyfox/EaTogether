@@ -1,74 +1,56 @@
-{% extends "site_base.html" %}
+{% extends "ET_Owner/base.html" %}
 
 {% load i18n %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block head_title %}
     Thia is the owner login page.
 {% endblock %}
 
-{% block body%}
-    <div class="row" style="background: url('{{ STATIC_URL }}img_owner/flower.gif') no-repeat;">
-       <div>
-           <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
-           <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat Now, Eat Together - Owner Login</a>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-       </div>
-    </div>
+{% block topbar_label %}Owner Login{% endblock %}
 
-
-
+{% block body %}
     <div class="Page_title">
         <p align="center">
-            <a input style="font-family: Calibri; font-size: 300% ; color: #ffb125; " class="Page_title"> Welcome to EaTogether! </a>
+            <a input style="font-family: Calibri; font-size: 300% ; color: #ffb125; " class="Page_title"> Welcome to
+                EaTogether! </a>
         </p>
     </div>
 
     <br/>
 
-    <form method="post" action="../">
-        <p align="center">
-            <input type="text" placeholder="phone number" />
-        </p>
+    {% crispy form %}
 
-        <p align="center">
-            <input type="password" placeholder="password" />
-        </p>
+    {% if password_reset_url %}
+        <div class="Retrive_Password">
+            <p align="center">
+                <a input style="font-family: Calibri;line-height: 20px"> Don't worried if you </a>
+                <a input style="font-family: Calibri;line-height: 20px" href="{{ password_reset_url }}"
+                   class="btn btn-link">forget password.</a>
+            </p>
+        </div>
+    {% endif %}
 
-        <p align="center">
-            <input type="checkbox" value="1"/>
-            <a input style="font-family: Calibri;line-height: 20px">remember the account</a>
-        </p>
-
-        <p align="center">
-             <button type="submit";input style="width: 300px;height: 30px;background-color: #ffec5e">Login
-             </button>
-        </p>
-    </form>
-
-     <div class="Retrive_Password">
-        <p align="center">
-            <a input style="font-family: Calibri;line-height: 20px"> Don't worried if you </a>
-            <a input style="font-family: Calibri;line-height: 20px" href="javascript:;" >forget password.</a>
-        </p>
-    </div>
-
-    <div class="Register">
-        <p align="center">
-            <a input style="font-family: Calibri;line-height: 20px"> Have a restaurant? </a>
-            <a input style="font-family: Calibri;line-height: 20px" href="javascript:;" >Register now!</a>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-        </p>
-    </div>
-
-
+    {% if signup_url %}
+        <div class="Register">
+            <p align="center">
+                <a input style="font-family: Calibri;line-height: 20px"> Have a restaurant? </a>
+                <a input style="font-family: Calibri;line-height: 20px" href="{{ signup_url }}">Register now!</a>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+            </p>
+        </div>
+    {% endif %}
 {% endblock %}
 
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#id_{{ form.identifier_field }}').focus();
+        });
+    </script>
+{% endblock %}

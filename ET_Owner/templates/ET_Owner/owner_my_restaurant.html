@@ -1,113 +1,24 @@
-{% extends "site_base.html" %}
+{% extends "ET_Owner/base_nav.html" %}
 
 {% load i18n %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block head_title %}
     Thia is the owner restaurant information page.
 {% endblock %}
 
+{% block topbar_label %}my restaurant information{% endblock %}
+
 {% block body%}
-    <div class="row" style="background: url('{{ STATIC_URL }}img_owner/flower.gif') no-repeat;">
-       <div>
-           <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
-           <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat Now, Eat Together - my restaurant information</a>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-           <br/>
-       </div>
-    </div>
-
     <div class="row">
-        <div class="col-lg-2">
-            <div id="nav">
-                <ul>
-                    <li ><a href="?"><button type="button";input style="width: 120px;height: 30px;background-color: #ffea2e">My Order
-                    </button></a></li>
-                    <li ><a href="?"><button type="button";input style="width: 120px;height: 30px;background-color: #ffea2e">My Restaurant
-                    </button></a></li>
-                    <li ><a href="?"><button type="button";input style="width: 120px;height: 30px;background-color: #ffea2e">My Menu
-                    </button></a></li>
-                    <li ><a href="?"><button type="button";input style="width: 120px;height: 30px;background-color: #ffea2e">Delivery
-                    </button></a></li>
-                    <li ><a href="?"><button type="button";input style="width: 120px;height: 30px;background-color: #ffea2e">Wwallet
-                    </button></a></li>
-                </ul>
-            </div>
-        </div>
         <div class="col-lg-10">
-            <a input style="font-family: Calibri;line-height: 80px; font-size: 150%" > General Information
-            </a>
-            <form method="post" action="../">
-                <a input style="font-family: Calibri;line-height: 30px"> Restaurant Name*
-                </a>
-                </br>
-                <input type="text" id="food_name_r" style="width: 300px" name="food_r" placeholder="Restaurant Name" />
-                </br>
-                <a input style="font-family: Calibri;line-height: 30px"> Contact Info*
-                </a>
-                </br>
-                <input type="text" id="food_name_r" style="width: 300px" name="food_r" placeholder="Enter a contact name" />
-                <input type="text" id="food_name_r" style="width: 300px" name="food_r" placeholder="Enter a contact number" />
-                </br>
-                <a input style="font-family: Calibri;line-height: 30px"> Restaurant Introduction*
-                </a>
-                </br>
-                <input type="text" id="food_name_r"  style="width:300px; height: 100px" name="food_r" placeholder="Enter a brief introduction about your food" />
-                </br>
-                <a input style="font-family: Calibri;line-height: 30px"> Location*
-                </a>
-                </br>
-                    <span>
-                        <select name="state" class="ui-select-small">
-                            <option>--</option>
-                            <option value="VIC" >VIC</option>
-                            <option value="NSW" >NSW</option>
-                            <option value="QLD" >QLD</option>
-                            <option value="SA" >SA</option>
-                            <option value="WA" >WA</option>
-                            <option value="NT" >NT</option>
-                            <option value="TAS" >TAS/option>
-                            <option value="ACT" >ACT</option>
-                        </select>
-                    </span>
-                <input type="text" style="width: 300px" name="food_r" placeholder="Address,postcode,suburb" />
-                </br>
-                <img class="J-setted-avatar" src="{% static "img_owner/brand_et_piconly.png" %}" height="26"  />
-                <input type="button" style="width: 180px; height: 30px ;background-color: #ffea2e" class="J-upload-avatar btn-normal btn-fixed" value="Upload"/>
-                </br>
-                </br>
-                </br>
-                <a input style="font-family: Calibri;line-height: 80px; font-size: 150%" > Sufficient Valid Information
-                </a>
-                </br>
-                <a input style="font-family: Calibri;line-height: 30px"> Id*
-                </a>
-                </br>
-                <input type="text" id="food_name_r" style="width: 300px" name="food_r" placeholder=Name" />
-                <input type="text" id="food_name_r" style="width: 300px" name="food_r" placeholder=Passport/ID" />
-                </br>
-                <img class="J-setted-avatar" src="{% static "img_owner/brand_et_piconly.png" %}" height="26"  />
-                <input type="button" style="width: 180px; height: 30px ;background-color: #ffea2e" class="J-upload-avatar btn-normal btn-fixed" value="Upload Passport/ID image"/>
-                </br>
-                <a input style="font-family: Calibri;line-height: 30px"> Business License*
-                </a>
-                </br>
-                <img class="J-setted-avatar" src="{% static "img_owner/brand_et_piconly.png" %}" height="26"  />
-                <input type="button" style="width: 180px; height: 30px ;background-color: #ffea2e" class="J-upload-avatar btn-normal btn-fixed" value="Upload Business License image"/>
-                </br>
-                <button type="submit";input style="width: 180px;height: 30px;background-color: #ffea2e">Save
-                </button>
-                <button type="submit";input style="width: 180px;height: 30px;background-color: #ffea2e">Save & Submit
-                </button>
-                </br>
-            </form>
+            {% crispy form %}
         </div>
     </div>
-
-
 {% endblock %}
 
+{% block scripts %}
+    {{ block.super }}
+    {{ form.media }}
+{% endblock %}
