@@ -35,11 +35,10 @@
                     </div>
                     {% if not order.accepted %}
                         <div class="col-sm-2">
-                            <button type="button"
-                                    style="width: 120px;height: 30px;background-color: #ffe027; border: medium"
-                                    class="btn btn-primary; pull-right"
+                            <a style="width: 120px;height: 30px;background-color: #ffe027; border: medium"
+                               class="btn btn-primary pull-right" href="{% url 'owner_order_accept' order.pk %}"
                             >Accept
-                            </button>
+                            </a>
                         </div>
                     {% endif %}
                 </div>

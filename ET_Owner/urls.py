@@ -11,6 +11,9 @@ urlpatterns = [
     url(r'^$', RedirectView.as_view(pattern_name='owner_order_list', permanent=False), name='owner'),
     url(r"^order/", include([
         url(r"^$", views.OrderListView.as_view(), name="owner_order_list"),
+        url('^(?P<order_id>[0-9]+)/', include([
+            url(r"^accept/$", views.OrderAcceptView.as_view(), name="owner_order_accept"),
+        ])),
     ])),
     url(r"^login/$", views.OwnerLoginView.as_view(), name='owner_login'),
     url(r"^register/$", views.OwnerRegisterView.as_view(), name='owner_register'),

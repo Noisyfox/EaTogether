@@ -5,8 +5,10 @@ from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from django.http import Http404
+from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
+from django.views import View
 from django.views.generic import CreateView
 from django.views.generic import DeleteView
 from django.views.generic import FormView
@@ -14,6 +16,7 @@ from django.views.generic import ListView
 from django.views.generic import TemplateView
 from django.views.generic import UpdateView
 from django.utils.translation import ugettext_lazy as _
+from django.utils import timezone
 
 from ET.mixins import QueryMixin
 from ET.models import Owner, Food, Restaurant, Courier, RestaurantServiceInfo, GroupOrder
@@ -256,3 +259,35 @@ class OrderListView(RestaurantRequiredMixin, ListView):
 
     def get_queryset(self):
         return GroupOrder.objects.filter(group__restaurant=self.request.user.owner.restaurant).order_by('-submit_time')
+
+
+class OrderQueryMixin(QueryMixin):
+    def do_query(self, request, *args, **kwargs):
+        self._order = get_object_or_404(GroupOrder, pk=kwargs['order_id'])
+
+        if self._order.group.restaurant != self.request.user.owner.restaurant:
+            raise PermissionError
+
+    @property
+    def order(self):
+        if not self._order:
+            raise Http404('Unknown order.')
+
+        return self._order
+
+    def get_context_data(self, **kwargs):
+        ctx = super(OrderQueryMixin, self).get_context_data(**kwargs)
+
+        ctx['order'] = self._order
+
+        return ctx
+
+
+class OrderAcceptView(RestaurantRequiredMixin, OrderQueryMixin, View):
+    def get(self, request, *args, **kwargs):
+        if not self.order.accepted:
+            self.order.status = 'A'
+            self.order.accept_time = timezone.now()
+            self.order.save()
+
+        return HttpResponseRedirect(reverse_lazy('owner_order_list'))
