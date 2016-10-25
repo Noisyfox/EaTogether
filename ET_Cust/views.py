@@ -20,6 +20,8 @@ from ET_Cust.mixins import CustomerRequiredMixin
 from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
+from ET_Cust.tasks import on_group_created
+
 
 class CustomerRegisterView(RegisterView):
     form_class = CustomerRegisterForm
@@ -132,8 +134,12 @@ class CustomerCreateGroupView(CustomerRequiredMixin, CreateView):
         return form
 
     def form_valid(self, form, **kwargs):
-        form.instance.create_time = timezone.now()
-        form.instance.restaurant = Restaurant.objects.get(pk=self.kwargs['restaurant_id'])
+        group = form.save(commit=False)
+        group.restaurant = Restaurant.objects.get(pk=self.kwargs['restaurant_id'])
+        group.save()
+
+        on_group_created(group)
+
         return super(CustomerCreateGroupView, self).form_valid(form)
 
 
@@ -225,4 +231,3 @@ class CustomerOrderView(CustomerRequiredMixin, ListView):
         queryset = super(CustomerOrderView, self).get_queryset()
         queryset = queryset.filter(customer_id=self.request.user.customer.id).order_by('-order_time')
         return queryset
-
