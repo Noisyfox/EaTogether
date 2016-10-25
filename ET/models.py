@@ -90,7 +90,7 @@ class GroupOrder(models.Model):
     )
 
     group = models.OneToOneField(Group, on_delete=models.CASCADE)
-    courier = models.ForeignKey(Courier, on_delete=models.SET_NULL, null=True)
+    courier = models.ForeignKey(Courier, on_delete=models.SET_NULL, null=True, blank=True)
 
     status = models.CharField(max_length=1, choices=STATUS, default='W')
 
