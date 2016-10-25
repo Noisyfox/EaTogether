@@ -1,3 +1,5 @@
+import re
+
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
@@ -34,6 +36,14 @@ class Restaurant(models.Model):
 class Courier(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.user.first_name
+
+    @property
+    def account(self):
+        m = re.match(r"^cid_(?P<owner>.+?)_(?P<courier>.+)$", self.user.username)
+        return m.group('courier')
 
 
 class RestaurantServiceInfo(models.Model):

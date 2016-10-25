@@ -1,5 +1,7 @@
 import uuid
 
+from django.db import transaction
+
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group
 from django.core.exceptions import ObjectDoesNotExist
@@ -22,7 +24,8 @@ from ET.mixins import QueryMixin
 from ET.models import Owner, Food, Restaurant, Courier, RestaurantServiceInfo, GroupOrder
 from ET.views import RegisterView, LoginView
 from ET_Cour.templatetags.courier_name_tag import courier_name
-from ET_Owner.forms import OwnerRegisterForm, OwnerLoginForm, FoodEditForm, RestaurantEditForm, CourierEditForm
+from ET_Owner.forms import OwnerRegisterForm, OwnerLoginForm, FoodEditForm, RestaurantEditForm, CourierEditForm, \
+    FoodDeliveryForm
 from ET_Owner.mixins import RestaurantRequiredMixin, OwnerRequiredMixin
 
 
@@ -291,3 +294,35 @@ class OrderAcceptView(RestaurantRequiredMixin, OrderQueryMixin, View):
             self.order.save()
 
         return HttpResponseRedirect(reverse_lazy('owner_order_list'))
+
+
+class OrderDeliveryView(RestaurantRequiredMixin, OrderQueryMixin, FormView):
+    form_class = FoodDeliveryForm
+    template_name = 'ET_Owner/owner_order_delivery.html'
+    success_url = reverse_lazy('owner_order_list')
+
+    def get_form_kwargs(self):
+        init = super().get_form_kwargs()
+
+        init.update({
+            'couriers': Courier.objects.filter(restaurant=self.request.user.owner.restaurant),
+        })
+
+        return init
+
+    def form_valid(self, form):
+        with transaction.atomic():
+            if self.order.delivery_started:
+                form.add_error(field=None, error=_('This order has already been delivered!'))
+                return self.form_invalid(form)
+            courier = form.cleaned_data['courier']
+
+            self.order.status = 'D'
+            self.order.delivery_start_time = timezone.now()
+            self.order.courier = courier
+            for order_p in self.order.personal_orders:
+                order_p.status = 'D'
+                order_p.save()
+            self.order.save()
+
+        return super().form_valid(form)

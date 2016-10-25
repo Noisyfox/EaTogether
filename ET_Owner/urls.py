@@ -13,6 +13,7 @@ urlpatterns = [
         url(r"^$", views.OrderListView.as_view(), name="owner_order_list"),
         url('^(?P<order_id>[0-9]+)/', include([
             url(r"^accept/$", views.OrderAcceptView.as_view(), name="owner_order_accept"),
+            url(r"^delivery/$", views.OrderDeliveryView.as_view(), name="owner_order_delivery"),
         ])),
     ])),
     url(r"^login/$", views.OwnerLoginView.as_view(), name='owner_login'),

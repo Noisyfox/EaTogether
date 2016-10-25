@@ -89,3 +89,16 @@ class CourierEditForm(FormMixin, forms.Form):
         self.helper.form_id = 'courier_form'
 
         self.helper.add_input(Submit('save', 'Save'))
+
+
+class FoodDeliveryForm(FormMixin, forms.Form):
+    courier = forms.ModelChoiceField(Courier.objects.none())
+
+    def __init__(self, *args, **kwargs):
+        couriers = kwargs.pop('couriers')
+        super(FoodDeliveryForm, self).__init__(*args, **kwargs)
+        self.helper.form_id = 'courier_form'
+
+        self.helper.add_input(Submit('start', 'Start Delivery'))
+
+        self.fields['courier'].queryset = couriers

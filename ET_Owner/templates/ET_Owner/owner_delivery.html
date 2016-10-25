@@ -2,7 +2,6 @@
 
 {% load i18n %}
 {% load static %}
-{% load courier_name_tag %}
 
 {% block head_title %}
     Thia is the owner restaurant information page.
@@ -17,7 +16,7 @@
                         <div class="list-group-item">
                             <h4 class="list-group-item-heading">Courier No.{{ forloop.counter }}</h4>
                             <p class="list-group-item-text">Name: {{ courier.user.first_name }}</p>
-                            <p class="list-group-item-text">Account: {{ courier.user.username|courier_name }}</p>
+                            <p class="list-group-item-text">Account: {{ courier.account }}</p>
                             <div class="row">
                                 <a class="btn pull-right" href="{% url 'owner_edit_courier' courier.pk %}"
                                    style="width: 60px;height: 30px;background-color: #ffe027; border: medium">Edit

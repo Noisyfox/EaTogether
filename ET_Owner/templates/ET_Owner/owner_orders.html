@@ -130,11 +130,11 @@
                                         <td>
                                         </td>
                                         <td>
-                                            <button type="button"
-                                                    style="width: 150px;height: 30px;background-color: #ffe027; border: medium"
-                                                    class="btn btn-primary; center-block"
+                                            <a style="width: 150px;height: 30px;background-color: #ffe027; border: medium"
+                                               class="btn btn-primary center-block"
+                                               href="{% url 'owner_order_delivery' order.pk %}"
                                             >Start Delivery
-                                            </button>
+                                            </a>
                                         </td>
                                     </tr>
                                 {% else %}
