@@ -119,12 +119,14 @@
     <script type="text/javascript" src="{% static "shopping_cart/js/jquery.paypalshop.js" %}"></script>
     <script type="text/javascript" src="{% static "shopping_cart/fancybox/jquery.mousewheel-3.0.4.pack.js" %}"></script>
     <script type="text/javascript" src="{% static "shopping_cart/fancybox/jquery.fancybox-1.3.4.js" %}"></script>
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('#ppshop').paypalshop({
                 currencySign: '$',
-                productBuyLimit: '50',
-                paypal: {'business': '30885188@qq.com', 'currency_code': 'AUD'}
+                productBuyLimit: '999',
+                checkoutURL: "{% url 'cust_restaurant_checkout' restaurant.id group %}",
+                CSRF: "{% csrf_token %}"
             });
             /* fancybox */
             $('.fancybox').fancybox({'titlePosition': 'inside'});

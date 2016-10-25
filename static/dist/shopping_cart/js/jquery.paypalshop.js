@@ -29,7 +29,7 @@
             currencySign: '$',
             numberPrecision: 2,
             productBuyLimit: 3,
-            localStorage: true,
+            localStorage: false,
             localStorageName: 'ppshop',
             pageRows: 2,
             pageColumns: 3,
@@ -612,39 +612,14 @@
         
         function processCheckout() {
 
-            /*
-            //static paypal request arguments
-            var pp_settings = {
-                cmd: '_cart',
-                upload: 1,
-                no_note: 0,
-                bn: 'JQPayPalShop_ShoppingCart_EC_US',
-                tax: 0,
-                rm: 2,
-                custom: ''
-            };
-
-            //copy settings.paypal to pp_settings 
-            $.extend(pp_settings, settings.paypal);
-            */
 
             //create form for POST request
             var form = $('<form />');
-            form.attr('action', 'https://www.paypal.com/cgi-bin/webscr');
+            form.attr('action', settings.checkoutURL);
             form.attr('method', 'post');
             form.attr('target', '_blank');
 
-            /*
-            //add paypal variables
-            var arg;
-            for (var key in pp_settings) {
-                arg = $('<input type="hidden" />');
-                arg.attr('name', key);
-                arg.attr('value', pp_settings[key]);
-                //add to form
-                form.append(arg);
-            }
-            */
+            form.append(settings.CSRF)
 
             //now process items in cart
             var item_index = 0;
@@ -653,10 +628,7 @@
             var map = {
                 name: 'item_name',
                 quantity: 'quantity',
-                checkout_price: 'amount',
-                shipping: 'shipping',
-                number: 'item_number',
-                handling: 'handling'
+                checkout_price: 'amount'
             };
 
             for (var g in cart) {
@@ -667,7 +639,7 @@
                     item_index++;
                     //process item
                     for (var k in map) {
-                        arg = $('<input type="text" />');
+                        arg = $('<input type="hidden" />');
                         arg.attr('name', map[k] + '_' + item_index);
                         arg.attr('value', cart[g][i][k]);
                         form.append(arg);
@@ -675,13 +647,19 @@
                 }
             }
 
+            //add item index in this form
+            arg = $('<input type="hidden" />');
+            arg.attr('name', 'item_index');
+            arg.attr('value', item_index);
+            form.append(arg);
+
             //add form to the document
             form.appendTo('body')
             //shop.append(form);
             form.submit();
             
             //remove form
-            //form.remove();
+            form.remove();
         }
 
 

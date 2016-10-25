@@ -1,23 +1,24 @@
 import uuid
-
 from crispy_forms.layout import Submit
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as UserGroup
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import GEOSGeometry
+from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from django.utils import timezone
-from django.views.generic import View
+from django.views.generic import View, TemplateView
 from django.views.generic import FormView, CreateView
 from django.views.generic.list import ListView
 from django.urls import reverse_lazy
-
 from ET.forms import FormHelper
-from ET.models import Customer, Group, Restaurant, Food
+from ET.models import Customer, Group, Restaurant, Food, OrderFood, PersonalOrder
 from ET.views import LoginView, RegisterView
 from ET_Cust.forms import CustomerLoginForm, CustomerRegisterForm, CustomerSearchRestaurantForm, \
     CustomerSearchAddressForm
 from ET_Cust.mixins import CustomerRequiredMixin
 from django.http import HttpResponse
+from django.views.decorators.csrf import csrf_exempt
 
 
 class CustomerRegisterView(RegisterView):
@@ -41,7 +42,7 @@ class CustomerRegisterView(RegisterView):
             c = Customer(user=user)
             c.phone_number = form.cleaned_data['phone_number']
             c.save()
-            user.groups.add(Group.objects.get(name__exact=group))
+            user.groups.add(UserGroup.objects.get(name__exact=group))
         except Exception:
             user.delete()
             raise
@@ -57,6 +58,7 @@ class CustomerRegisterView(RegisterView):
 class CustomerLoginView(LoginView):
     form_class = CustomerLoginForm
     template_name = 'ET_Cust/login_test.html'
+    success_url = reverse_lazy('cust_search')
 
     def get_login_url(self):
         return reverse_lazy('cust_login')
@@ -102,7 +104,7 @@ class CustomerMainPageView(ListView):
         return super(CustomerMainPageView, self).dispatch(request, *args, **kwargs)
 
 
-class CustomerRestaurantGroupView(ListView):
+class CustomerRestaurantGroupView(CustomerRequiredMixin, ListView):
     template_name = 'ET_Cust/customer_restaurant_group_page.html'
     model = Group
     context_object_name = 'group_list'
@@ -113,8 +115,13 @@ class CustomerRestaurantGroupView(ListView):
         context['address'] = self.request.session['address']
         return context
 
+    def get_queryset(self, **kwargs):
+        queryset = super(CustomerRestaurantGroupView, self).get_queryset(**kwargs)
+        queryset = queryset.filter(restaurant=self.kwargs['restaurant_id']).filter(status='G')
+        return queryset
 
-class CustomerCreateGroupView(CreateView):
+
+class CustomerCreateGroupView(CustomerRequiredMixin, CreateView):
     template_name = 'ET_Cust/customer_create_group.html'
     model = Group
     fields = ['destination', 'location', 'group_time']
@@ -131,7 +138,7 @@ class CustomerCreateGroupView(CreateView):
         return super(CustomerCreateGroupView, self).form_valid(form)
 
 
-class CustomerRestaurantMenuView(ListView):
+class CustomerRestaurantMenuView(CustomerRequiredMixin, ListView):
     template_name = 'ET_Cust/customer_restaurant_menu_page_test.html'
     model = Food
     context_object_name = 'food_list'
@@ -140,5 +147,63 @@ class CustomerRestaurantMenuView(ListView):
         context = super(CustomerRestaurantMenuView, self).get_context_data(**kwargs)
         context['food_list'] = context['food_list'].filter(restaurant__id=self.kwargs['restaurant_id'])
         context['restaurant'] = Restaurant.objects.get(pk=self.kwargs['restaurant_id'])
+        context['group'] = self.kwargs['group_id']
         # context['address'] = self.request.session['address']
         return context
+
+
+class CustomerRestaurantCheckOutView(CustomerRequiredMixin, ListView):
+    template_name = 'ET_Cust/customer_restaurant_checkout_page.html'
+    model = OrderFood
+    context_object_name = 'orderfood_list'
+    frozen_price = 0
+    personal_order_id = 0
+
+    def post(self, request, *args, **kwargs):
+        k = int(request.POST['item_index'])
+        order = {}
+        error = {}
+        for k in range(1, k + 1):
+            order['item_name_' + str(k)] = request.POST['item_name_' + str(k)]
+            order['quantity_' + str(k)] = request.POST['quantity_' + str(k)]
+            order['amount_' + str(k)] = request.POST['amount_' + str(k)]
+            self.frozen_price = self.frozen_price + int(order['quantity_' + str(k)]) * int(order['amount_' + str(k)])
+        restaurant = Restaurant.objects.get(pk=kwargs['restaurant_id'])
+        group = Group.objects.get(pk=kwargs['group_id'])
+        # The actual price for the food.
+        price = self.frozen_price
+        order['price'] = price
+        # The price which need to be frozen.
+        self.frozen_price = self.frozen_price + restaurant.restaurantserviceinfo.delivery_fee
+        if self.request.user.customer.available_balance < self.frozen_price:
+            error['top_up_information'] = "You don't have enough balance, please top up first"
+            return render(request, self.template_name, error)
+        else:
+            new_personal_order = PersonalOrder.objects.create(price=price, order_time=timezone.now(),
+                                                              customer_id=self.request.user.customer.id,
+                                                              group_id=group.id)
+            self.request.user.customer.available_balance = self.request.user.customer.available_balance \
+                                                           - self.frozen_price
+            self.request.user.customer.frozen_balance = self.request.user.customer.frozen_balance + self.frozen_price
+            self.request.user.customer.save()
+            self.personal_order_id = new_personal_order.id
+            for k in range(1, k + 1):
+                new_order_food = OrderFood.objects.create(count=order['quantity_' + str(k)],
+                                                          food_id=Food.objects.filter(restaurant=restaurant.id).get(
+                                                              name=order['item_name_' + str(k)]).id,
+                                                          personal_order_id=self.personal_order_id)
+            return self.get(self, request, *args, **kwargs)
+            #return render(request, self.template_name, order)
+
+    def get_queryset(self):
+        queryset = super(CustomerRestaurantCheckOutView, self).get_queryset()
+        queryset = queryset.filter(personal_order_id=self.personal_order_id)
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(CustomerRestaurantCheckOutView, self).get_context_data(**kwargs)
+        context['delivery_fee'] = Restaurant.objects.get(
+            pk=self.kwargs['restaurant_id']).restaurantserviceinfo.delivery_fee
+        context['price'] = self.frozen_price
+        return context
+

@@ -18,7 +18,10 @@ urlpatterns = [
     url(r"^restaurant/(?P<restaurant_id>[0-9]+)/group/(?P<group_id>[0-9]+)/$",
         views.CustomerRestaurantMenuView.as_view(template_name="ET_cust/customer_restaurant_menu_page_test.html"),
         name='cust_restaurant_menu'),
-    # url(r"^restaurant/(?P<restaurant_id>[0-9]+)/group/(?P<group_id>[0-9]+)/checkout/$",
-    #    views.CustomerRestaurantCheckOutView.as_view(template_name="ET_cust/customer_restaurant_checkout_page.html"),
-    #    name='cust_restaurant_checkout'),
+    url(r"^restaurant/(?P<restaurant_id>[0-9]+)/group/(?P<group_id>[0-9]+)/checkout/$",
+        views.CustomerRestaurantCheckOutView.as_view(template_name="ET_cust/customer_restaurant_checkout_page.html"),
+        name='cust_restaurant_checkout'),
+    #     url(r"^restaurant/(?P<restaurant_id>[0-9]+)/group/(?P<group_id>[0-9]+)/checkout/$",
+    #         views.index,
+    #         name='cust_restaurant_checkout'),
 ]
