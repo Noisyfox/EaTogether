@@ -70,7 +70,7 @@ class RegisterView(RedirectFormViewMixin, FormView):
 
     def login_user(self):
         user = self.created_user
-        auth.login(self.request, user)
+        auth.login(self.request, user, backend='ET.auth_backends.UniversalAuthenticationBackend')
         self.request.session.set_expiry(0)
 
     def get_register_url(self):

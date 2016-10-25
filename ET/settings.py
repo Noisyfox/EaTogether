@@ -180,6 +180,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 AUTHENTICATION_BACKENDS = [
     'ET.auth_backends.UniversalAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
