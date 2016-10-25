@@ -10,7 +10,7 @@
 {% block topbar_label %}My Menu{% endblock %}
 
 {% block body %}
-    <div class="row">
+    <div class="row" xmlns="http://www.w3.org/1999/html">
         <div class="row">
             <div class="col-sm-4" style="height: 200px">
                 <div class="panel panel-warning" style="border-color: #ffeca4; height: 200px">
@@ -59,29 +59,42 @@
                 </button>
             </div>
         </div>
-
+        </br>
         <div class="row">
-            <a class="btn btn-primary"
-               href="{% url "owner_create_food" %}">{% trans "New Food" %}</a>
+            <a class="btn btn-primary" style="width: 910px;height: 30px;background-color: #ffe027; border: medium; color: #122b40; font-size: 120%"
+               href="{% url "owner_create_food" %}">{% trans "Click Here To Add New Food " %}
+                <span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
         </div>
         <div class="row">
-            <ul class="nav nav-tabs">
+            <ul class="nav nav-tabs" >
                 {% if foods %}
                     {% for food in foods %}
-                        <a href="{% url 'owner_edit_food' food.pk %}">{{ food.name }}</a>
+                        <div  class="col-sm-3">
+                            <li class="display:inline-block" ><img src="{{ food.picture.url }}" class="img-circle"
+                                                                   alt="Cinque Terre"
+                                                                   width="200px" height="200px">
 
-                        <li><img src="{{ food.picture.url }}" class="img-circle"
-                                 alt="Cinque Terre"
-                                 width="200px" height="200px">
-                            <br/>
-                            <div class="row">
-                                <a class="btn btn-large"
-                                   style="border: hidden;background: none"><i class="fa fa-trash"></i></a>
-                                <a href="{% url 'owner_edit_food' food.pk %}"
-                                   class="btn btn-large"
-                                   style="border: hidden;background: none"><i class="fa fa-edit"></i></a>
-                            </div>
-                        </li>
+                                <div class="row" style="width: 220px">
+                                    <a class="btn btn-large"
+                                       style="border: hidden;background: none"><i class="fa fa-trash" style="color: #c28f29"></i></a>
+                                    <a href="{% url 'owner_edit_food' food.pk %}"
+                                       class="btn btn-large"
+                                       style="border: hidden;background: none"><i class="fa fa-edit" style="color: #c28f29"></i></a>
+                                    </br>
+                                    <div class="show-more-content" style="height: 60px;text-overflow:ellipsis; overflow: hidden; ">
+
+                                        <a style="table-layout: fixed; width: 200px; overflow-wrap: break-word; font-family: Calibri; font-size: 180%; color: #ffb725"
+                                           href="{% url 'owner_edit_food' food.pk %}">{{ food.name }}
+                                            <img src="{% static "img_owner/brand_et_piconly.png" %}" height="25"/>
+                                            </br></a>
+                                    </div>
+                                    <div class="show-more-content" style="height: 60px;text-overflow:ellipsis; overflow: hidden; ">
+                                        <a style="table-layout: fixed; width: 200px; overflow-wrap: break-word; font-family: Calibri; font-size: 120%; color:#c28f29"
+                                           href="{% url 'owner_edit_food' food.pk %}">{{ food.introduction }}</br></a>
+                                    </div>
+                                </div>
+                        </div>
+                        </lidisplay:inline-block>
                     {% endfor %}
                 {% endif %}
             </ul>
