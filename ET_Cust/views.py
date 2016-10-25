@@ -41,11 +41,11 @@ class CustomerRegisterView(RegisterView):
             c = Customer(user=user)
             c.phone_number = form.cleaned_data['phone_number']
             c.save()
-            user.groups.add(Group.objects.get(name__exact=group))
         except Exception:
             user.delete()
             raise
 
+        user.groups.add(UserGroup.objects.get(name__exact=group))
         user.save()
 
         return user
