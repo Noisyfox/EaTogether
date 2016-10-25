@@ -141,6 +141,7 @@ INSTALLED_APPS = [
     "ET_Owner",
 
     "location_field",
+    'djcelery',
 
     # tools
     "mathfilters"
@@ -194,3 +195,10 @@ GOOGLE_MAPS_LIBRARIES = ['places']
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 # Change the serializer of the session
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+# Celery settings
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'

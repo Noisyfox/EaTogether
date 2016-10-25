@@ -11,3 +11,5 @@ pip install -r requirements.txt
 ./manage.py loaddata sites groups
 ./manage.py runserver
 ```
+
+celery -A ET worker -l info
