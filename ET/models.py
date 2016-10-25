@@ -101,7 +101,7 @@ class Customer(models.Model):
 
 class PersonalOrder(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    group = models.ForeignKey(GroupOrder, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
     price = models.FloatField()
     delivery_fee = models.FloatField(null=True, blank=True)
     order_time = models.DateTimeField(auto_now_add=True)

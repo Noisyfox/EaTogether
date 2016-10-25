@@ -21,7 +21,8 @@ urlpatterns = [
     url(r"^restaurant/(?P<restaurant_id>[0-9]+)/group/(?P<group_id>[0-9]+)/checkout/$",
         views.CustomerRestaurantCheckOutView.as_view(template_name="ET_cust/customer_restaurant_checkout_page.html"),
         name='cust_restaurant_checkout'),
-    #     url(r"^restaurant/(?P<restaurant_id>[0-9]+)/group/(?P<group_id>[0-9]+)/checkout/$",
-    #         views.index,
-    #         name='cust_restaurant_checkout'),
+    url(r"^wallet/$",
+        views.CustomerWalletView.as_view(template_name='ET_Cust/Customer Account (Profile & Wallet).html'),
+        name='cust_wallet'),
+    url(r"^order/$", views.CustomerOrderView.as_view(template_name='ET_Cust/Customer Account (Order).html'), name='cust_oder')
 ]

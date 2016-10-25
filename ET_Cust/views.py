@@ -7,7 +7,7 @@ from django.contrib.gis.geos import GEOSGeometry
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.utils import timezone
-from django.views.generic import View, TemplateView
+from django.views.generic import View, TemplateView, DetailView
 from django.views.generic import FormView, CreateView
 from django.views.generic.list import ListView
 from django.urls import reverse_lazy
@@ -193,7 +193,6 @@ class CustomerRestaurantCheckOutView(CustomerRequiredMixin, ListView):
                                                               name=order['item_name_' + str(k)]).id,
                                                           personal_order_id=self.personal_order_id)
             return self.get(self, request, *args, **kwargs)
-            #return render(request, self.template_name, order)
 
     def get_queryset(self):
         queryset = super(CustomerRestaurantCheckOutView, self).get_queryset()
@@ -206,4 +205,25 @@ class CustomerRestaurantCheckOutView(CustomerRequiredMixin, ListView):
             pk=self.kwargs['restaurant_id']).restaurantserviceinfo.delivery_fee
         context['price'] = self.frozen_price
         return context
+
+
+class CustomerWalletView(CustomerRequiredMixin, TemplateView):
+    template_name = 'ET_Cust/Customer Account (Profile & Wallet).html'
+
+    def get_context_data(self, **kwargs):
+        context = super(CustomerWalletView, self).get_context_data(*kwargs)
+        context['customer'] = self.request.user.customer
+        return context
+
+
+class CustomerOrderView(CustomerRequiredMixin, ListView):
+    template_name = 'ET_Cust/Customer Account (Order).html'
+    model = PersonalOrder
+    context_object_name = "order_list"
+    paginate_by = 3
+
+    def get_queryset(self):
+        queryset = super(CustomerOrderView, self).get_queryset()
+        queryset = queryset.filter(customer_id=self.request.user.customer.id).order_by('-order_time')
+        return queryset
 
