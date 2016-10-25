@@ -65,7 +65,7 @@ class Group(models.Model):
         ('O', 'Over'),
     )
     restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
-    group_time = models.TimeField()
+    group_time = models.DurationField()
     create_time = models.DateTimeField(auto_now_add=True)
 
     # Exceed_time can be calculated based on group_time and create_time.
@@ -79,6 +79,10 @@ class Group(models.Model):
 
     def get_absolute_url(self):
         return reverse('cust_restaurant_menu', kwargs={'restaurant_id': self.restaurant.id, 'group_id': self.pk})
+
+    @property
+    def exceed_time(self):
+        return self.create_time + self.group_time
 
 
 class GroupOrder(models.Model):
@@ -98,6 +102,22 @@ class GroupOrder(models.Model):
     accept_time = models.DateTimeField(null=True, blank=True)
     delivery_start_time = models.DateTimeField(null=True, blank=True)
     confirm_delivery_time = models.DateTimeField(null=True, blank=True)
+
+    price_food = models.FloatField(default=0)
+    price_delivery = models.FloatField(default=0)
+    price_total = models.FloatField(default=0)
+
+    @property
+    def accepted(self):
+        return self.status != 'W'
+
+    @property
+    def delivery_started(self):
+        return self.status == 'D' or self.status == 'F'
+
+    @property
+    def personal_orders(self):
+        return self.group.personalorder_set.all()
 
 
 class Customer(models.Model):
@@ -123,8 +143,16 @@ class PersonalOrder(models.Model):
 
     status = models.CharField(max_length=1, choices=STATUS, default='W')
 
+    @property
+    def foods(self):
+        return self.orderfood_set.all()
+
 
 class OrderFood(models.Model):
     personal_order = models.ForeignKey(PersonalOrder, on_delete=models.CASCADE)
     food = models.ForeignKey(Food)
     count = models.SmallIntegerField()
+
+    @property
+    def price(self):
+        return self.food.price * self.count

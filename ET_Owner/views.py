@@ -251,6 +251,8 @@ class WalletView(RestaurantRequiredMixin, TemplateView):
 
 class OrderListView(RestaurantRequiredMixin, ListView):
     template_name = 'ET_Owner/owner_orders.html'
+    context_object_name = 'orders'
+    allow_empty = True
 
     def get_queryset(self):
         return GroupOrder.objects.filter(group__restaurant=self.request.user.owner.restaurant).order_by('-submit_time')
