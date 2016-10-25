@@ -12,7 +12,7 @@ class CourierLoginForm(LoginPhoneNumberForm):
 
     def __init__(self, *args, **kwargs):
         super(CourierLoginForm, self).__init__(*args, **kwargs)
-        self.phone_number.label = _('Owner Phone Number')
+        self.fields['phone_number'].label = _('Owner Phone Number')
 
     def user_credentials(self):
         credentials = super(CourierLoginForm, self).user_credentials()

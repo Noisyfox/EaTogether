@@ -1,0 +1,19 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+
+{% block head_title %}Courier Order{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="list-group">
+            {% for order in orders %}
+                <a href="{% url 'cour_detail' order.pk %}"
+                   class="list-group-item {% if not order.finished %}active{% endif %}">
+                    <h4 class="list-group-item-heading">{{ order.group.destination }}</h4>
+                    <p class="list-group-item-text">Start: {{ order.delivery_start_time }}</p>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

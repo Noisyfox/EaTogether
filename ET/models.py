@@ -146,7 +146,8 @@ class PersonalOrder(models.Model):
     STATUS = (
         ('W', 'Waiting'),
         ('D', 'Delivering'),
-        ('F', 'Finished'),
+        ('F', 'Delivered'),
+        ('U', 'Undelivered'),
     )
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
@@ -160,6 +161,18 @@ class PersonalOrder(models.Model):
     @property
     def foods(self):
         return self.orderfood_set.all()
+
+    @property
+    def finished(self):
+        return self.delivered or self.undelivered
+
+    @property
+    def delivered(self):
+        return self.status == 'F'
+
+    @property
+    def undelivered(self):
+        return self.status == 'U'
 
 
 class OrderFood(models.Model):

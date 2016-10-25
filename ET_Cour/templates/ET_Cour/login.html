@@ -1,0 +1,14 @@
+{% extends "site_base.html" %}
+
+{% load i18n %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Courier Login{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <div class="row">
+            {% crispy form %}
+        </div>
+    </div>
+{% endblock %}
