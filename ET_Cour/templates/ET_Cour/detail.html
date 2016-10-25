@@ -5,46 +5,82 @@
 {% block head_title %}Order Detail{% endblock %}
 
 {% block body %}
-<div class="row"  style="background-color:lightslategrey">
-<button type="button" class="btn btn-default" aria-label="Left Align" >
-  <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-    Back
-</button>
-</div>
-<div class="row">
-<form>
-    <br>
-    &nbsp;Destination  <span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-    <br>
-    &nbsp;Order Time 13:59:59 21/10/2016 Friday
-    <br>
-    <br>
-    <div style = "text-align:right;">
-    <button type="button" class="btn btn-default">Send Notification</button>
-    <hr>
+    <div class="row" style="background-color:lightslategrey">
+        <a class="btn btn-default" aria-label="Left Align" href="{% url 'cour_order' %}">
+            <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+            Back
+        </a>
     </div>
-</form>
-</div>
-    <div style="border:1px solid #ffa82f">
-        &nbsp;Name
-
-    <br>
-        Contact Number
-        <br>
-    0426414426
-        <div style = "text-align:right;">
-            <span class="glyphicon glyphicon-phone-alt fa-2x" aria-hidden="true" ></span>
-    </div>
-    <ul class="list-group">
-  <li class="list-group-item">Food_1*1</li>
-  <li class="list-group-item">Food_2*1</li>
-  <li class="list-group-item">Food_3*1</li>
-    </ul>
-        <div style = "text-align:left;">
-    <button type="button" class="btn btn-default">Undelivered</button>
-
-    <a><button type="button" class="btn btn-default">Delivered</button></a>
+    <div class="row">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-9">
+                    <div class="row">Destination:</div>
+                    <div class="row">
+                        {{ order.group.destination }}
+                    </div>
+                </div>
+                <div class="col-xs-3">
+                    <div style="text-align:right;">
+                        <span class="glyphicon glyphicon-map-marker  fa-2x" aria-hidden="true"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                &nbsp;Delivery Time: {{ order.delivery_start_time }}
+            </div>
+            <br>
+            <div style="text-align:right;">
+                <a class="btn btn-default">Send Notification</a>
+                <hr>
+            </div>
         </div>
+    </div>
+    <div class="list-group">
+        {% for order_p in order.personal_orders %}
+            <div style="border:1px solid #ffa82f" class="list-group-item {% if order_p.finished %}disabled{% endif %}">
+                <div class="container">
+                    <div class="row">
+                        {{ order_p.customer.user.first_name }}
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-9">
+                            <div class="row">
+                                Contact Number:
+                                <br>
+                                {{ order_p.customer.phone_number }}
 
+                            </div>
+                        </div>
+                        <div class="col-xs-3">
+                            <div style="text-align:right;" class="row">
+                                <span class="glyphicon glyphicon glyphicon-earphone fa-2x" aria-hidden="true"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <ul class="list-group">
+                            {% for food in order_p.foods %}
+                                <li class="list-group-item">{{ food.food.name }} * {{ food.count }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <div style="text-align:left;" class="row row-no-margin">
+                        {% if order_p.finished %}
+                            {% if order_p.undelivered %}
+                                <a class="btn btn-danger disabled">Undelivered</a>
+                            {% else %}
+                                <a class="btn btn-default pull-right disabled">Delivered</a>
+                            {% endif %}
+                        {% else %}
+                            <a class="btn btn-danger"
+                               href="{% url 'cour_order_undelivered' order.pk order_p.pk %}">Undelivered</a>
+                            <a class="btn btn-default pull-right"
+                               href="{% url 'cour_order_delivered' order.pk order_p.pk %}">Delivered</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
     </div>
 {% endblock %}
