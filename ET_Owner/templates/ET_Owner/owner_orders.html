@@ -11,84 +11,78 @@
 
 {% block body %}
     <div class="thumbnail" style="border-color: #f2d798">
-        <ul class="list-unstyled">
+        <div class="list-unstyled">
             <div class="row">
                 <div class="col-sm-4">
-                    <li>
-                        <p input style="font-family: Calibri;line-height: 20px; color: #636363; font-size: 120%"
-                        >&nbsp;Order ID:</p>
-                    </li>
+                    <p style="font-family: Calibri;line-height: 20px; color: #636363; font-size: 120%"
+                    >&nbsp;Order ID:</p>
                 </div>
                 <div class="col-sm-4">
-                    <li>
-                        <p input style="font-family: Calibri;line-height: 20px; color: #636363; font-size: 120%"
-                        >&nbsp;Group ID:</p>
-                    </li>
+                    <p style="font-family: Calibri;line-height: 20px; color: #636363; font-size: 120%"
+                    >&nbsp;Group ID:</p>
                 </div>
                 <div class="col-sm-4">
-                    <li>
-                        <p input style="font-family: Calibri;line-height: 20px; color: #636363; font-size: 120%"
-                        >&nbsp;Order Time:</p>
-                    </li>
+                    <p style="font-family: Calibri;line-height: 20px; color: #636363; font-size: 120%"
+                    >&nbsp;Order Time:</p>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-sm-10">
-                    <li>
-                        <p input style="font-family: Calibri;line-height: 20px; color: #636363; font-size: 120%"
-                        >&nbsp;Destination:</p>
-                    </li>
+                    <p style="font-family: Calibri;line-height: 20px; color: #636363; font-size: 120%"
+                    >&nbsp;Destination:</p>
                 </div>
                 <div class="col-sm-2">
-                    <button type="button"style="width: 120px;height: 30px;background-color: #ffe027; border: medium"
+                    <button type="button" style="width: 120px;height: 30px;background-color: #ffe027; border: medium"
                             class="btn btn-primary; pull-right"
                     >Accept
                     </button>
                 </div>
             </div>
 
-        </ul>
-        </br>
-        </br>
+        </div>
+        <br/>
+        <br/>
 
         <div class="row">
             <div style=" border-right: solid; border-width: 1px; border-color: #f2d798"
-                 class="col-sm-4" >
+                 class="col-sm-4">
                 <ul class="list-unstyled">
                     <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
                            class="list-group-item-text"
                     >Customer 1</p>
                     </li>
+                    <li>
+                        <ul>
+                            <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
+                                   class="list-group-item-text"
+                            >Food 1*2:$</p>
+                            </li>
 
-                    <ul>
-                        <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
-                               class="list-group-item-text"
-                        >Food 1*2:$</p>
-                        </li>
-
-                        <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
-                               class="list-group-item-text"
-                        >Food 2*1:$</p>
-                        </li>
-                    </ul>
+                            <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
+                                   class="list-group-item-text"
+                            >Food 2*1:$</p>
+                            </li>
+                        </ul>
+                    </li>
 
                     <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
                            class="list-group-item-text"
                     >Customer 2</p>
                     </li>
+                    <li>
+                        <ul>
+                            <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
+                                   class="list-group-item-text"
+                            >Food 1*2:$</p>
+                            </li>
 
-                    <ul>
-                        <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
-                               class="list-group-item-text"
-                        >Food 1*2:$</p>
-                        </li>
-
-                        <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
-                               class="list-group-item-text"
-                        >Food 2*1:$</p>
-                        </li>
-                    </ul>
+                            <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
+                                   class="list-group-item-text"
+                            >Food 2*1:$</p>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
 
@@ -115,9 +109,9 @@
                            class="list-group-item-text"
                     >Delivery Fee:$</p>
                     </li>
-
-                    <hr style="border-color: #f2d798">
-
+                    <li>
+                        <hr style="border-color: #f2d798">
+                    </li>
                     <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
                            class="list-group-item-text"
                     >Total:$</p>
@@ -126,46 +120,47 @@
             </div>
 
 
-
-
-
-            <div class="col-sm-5" style="padding: 0%">
+            <div class="col-sm-5" style="padding: 0">
                 <div class="container">
                     <table style="width: 29%"
                            class="table table-striped">
                         <tbody>
                         <tr>
-                            <td><a style="font-size: 20%; color: #414141" >Group Created</td>
-                            <td><a style="font-size: 20%; color: #414141%" >hh-mm/dd-mm-yy</td>
+                            <td style="font-size: 20%; color: #414141">Group Created</td>
+                            <td style="font-size: 20%; color: #414141">hh-mm/dd-mm-yy</td>
                         </tr>
 
                         <tr>
-                            <td><a style="font-size: 20%; color: #414141" >Group Time Exceed</td>
-                            <td><a style="font-size: 20%; color: #414141" >xxxx</td>
+                            <td style="font-size: 20%; color: #414141">Group Time Exceed</td>
+                            <td style="font-size: 20%; color: #414141">xxxx</td>
                         </tr>
 
                         <tr>
-                            <td><a style="font-size: 20%; color: #414141" >Order Accepoted</td>
-                            <td><a style="font-size: 20%; color: #414141" >xxx</td>
+                            <td style="font-size: 20%; color: #414141">Order Accepoted</td>
+                            <td style="font-size: 20%; color: #414141">xxx</td>
                         </tr>
 
                         <tr>
-                            <td><a style="font-size: 20%; color: #414141" >Delivery Started</td>
-                            <td><a style="font-size: 20%; color: #414141" >xx</td>
+                            <td style="font-size: 20%; color: #414141">Delivery Started</td>
+                            <td style="font-size: 20%; color: #414141">xx</td>
                         </tr>
 
                         <tr>
-                            <td><a style="font-size: 20%; color: #414141" >Delivery Confirmed</td>
-                            <td><a style="font-size: 20%; color: #414141" >xxx</td>
+                            <td style="font-size: 20%; color: #414141">Delivery Confirmed</td>
+                            <td style="font-size: 20%; color: #414141">xxx</td>
                         </tr>
                         </tbody>
 
                         <tr style="background-color: transparent">
                             <td>
                             </td>
-                            <td><button type="button"style="width: 150px;height: 30px;background-color: #ffe027; border: medium"
+                            <td>
+                                <button type="button"
+                                        style="width: 150px;height: 30px;background-color: #ffe027; border: medium"
                                         class="btn btn-primary; center-block"
-                            >Start Delivery </button></td>
+                                >Start Delivery
+                                </button>
+                            </td>
                         </tr>
                     </table>
 
