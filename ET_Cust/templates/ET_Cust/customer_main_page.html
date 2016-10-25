@@ -60,10 +60,10 @@
                         </div>
                     </div>
                     <div class="col-lg-6"style="border-width: 2px; border-style: solid;border-color: #ffbc34;height: 200px;border-radius: 5%">
-                            <p>Current Group: {{ restaurant.group_set.count }}</p>
-                            <input type="checkbox">
-                            <a href="{% url 'cust_restaurant_group' restaurant.id %}">Group Now!</a>
-                            <p>Monthly Sale: 999</p>
+                        <p>Current Group: {{ restaurant.group_set.count }}</p>
+                        <input type="checkbox">
+                        <a href="{% url 'cust_restaurant_group' restaurant.id %}">Group Now!</a>
+                        <p>Monthly Sale: 999</p>
                     </div>
                 </div>
             {% endfor %}
