@@ -126,6 +126,10 @@ class GroupOrder(models.Model):
         return self.status == 'D' or self.status == 'F'
 
     @property
+    def finished(self):
+        return self.status == 'F'
+
+    @property
     def personal_orders(self):
         return self.group.personalorder_set.all()
 

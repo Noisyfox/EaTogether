@@ -137,14 +137,16 @@
                                             </a>
                                         </td>
                                     </tr>
-                                {% else %}
+                                {% elif not order.finished %}
+                                    <tr style="background-color: transparent">
+                                        <td colspan="2">
+                                            <span>Delivering by {{ order.courier }}</span>
+                                        </td>
+                                    </tr>
                                 {% endif %}
                             {% endif %}
                         </table>
-
                     </div>
-
-
                 </div>
             </div>
         </div>
