@@ -141,6 +141,9 @@ INSTALLED_APPS = [
     "ET_Owner",
 
     "location_field",
+
+    # tools
+    "mathfilters"
 ]
 
 # A sample logging configuration. The only tangible logging

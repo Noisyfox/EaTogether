@@ -4,6 +4,7 @@
 
 {% load i18n %}
 {% load static %}
+{% load mathfilters %}
 
 {% block head_title %}Login{% endblock %}
 
@@ -13,23 +14,24 @@
         <div class="row" style="border: dashed; margin-bottom: 3%;">
             <div class="col-lg-6">
                 <p>Current Selected Place</p>
-                <a herf="#">  Switch Place</a>
+                <a herf="#"> Switch Place</a>
             </div>
             <div class="col-lg-6" style="text-align: right;">
                 <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Welcome, User!
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li><a href="#">Notification (3)</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url "customer account order" %}">My Order</a></li>
-                        <li><a href="{% url "customer account favourite" %}">My Favourites</a></li>
+                        <li><a href="">My Order</a></li>
+                        <li><a href="">My Favourites</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url "customer account profile&wallet" %}">Profile & Wallet</a></li>
+                        <li><a href="">Profile & Wallet</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url "customer login" %}">Logout</a></li>
+                        <li><a href="">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -40,117 +42,84 @@
                 <h1>Picture: LOGO</h1>
             </div>
             <div class="col-lg-9" id="search_bar" style="text-align: right;">
-                <input type="text" placeholder="Search..."><button type="submit">Search</button>
+                <input type="text" placeholder="Search...">
+                <button type="submit">Search</button>
             </div>
         </div>
 
         <div class="row" style="border-left: dashed;">
             <div class="col-lg-2">
                 <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation"><a href="{% url "customer account order" %}">My Order</a></li>
-                    <li role="presentation"><a href="{% url "customer account favourite" %}">My Favourites</a></li>
-                    <li role="presentation"><a href="{% url "customer account profile&wallet" %}">Profile&Wallet</a></li>
+                    <li role="presentation"><a href="">My Order</a></li>
+                    <li role="presentation"><a href="">My Favourites</a></li>
+                    <li role="presentation"><a href="">Profile&Wallet</a></li>
                 </ul>
             </div>
             <div class="col-lg-10">
-                <div class="row" style="border-bottom: dashed;">
-                    <div class="col-lg-3" style="border: dashed;">
-                        <h2>Picture:LOGO</h2>
+                {% for order in order_list %}
+                    <div class="row" style="border-bottom: dashed;">
+                        <div class="col-lg-3" style="border: dashed;">
+                            <h2>Picture:LOGO</h2>
+                        </div>
+                        <div class="col-lg-4">
+                            <h2>{{ order.group.restaurant.name }}</h2>
+                            <p>Order ID: {{ order.id }}</p>
+                            <p>Group ID: {{ order.group.id }}</p>
+                        </div>
+                        <div class="col-lg-5">
+                            <p>Contact Number: {{ order.group.restaurant.contact_number }}</p>
+                            <p>Order Time: {{ order.order_time }}</p>
+                        </div>
                     </div>
-                    <div class="col-lg-4">
-                        <h2>Restaurant Name</h2>
-                        <p>Order ID: xxxxxxxxxxxxxxxxxxxx</p>
-                        <p>Group ID: xxxxxxxxxxxxxxxxxxxx</p>
-                    </div>
-                    <div class="col-lg-5">
-                        <p>Contact Number:</p>
-                        <p>Order Time: yyyy-MM-dd hh:mm</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="row" style="border-bottom: dashed">
-                            <div class="col-lg-12" style="border-bottom: dashed">
-                                <table>
-                                    <thead>
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="row" style="border-bottom: dashed">
+                                <div class="col-lg-12" style="border-bottom: dashed">
+                                    <table>
+                                        <thead>
                                         <tr>
                                             <th>Food Name</th>
                                             <th>Count</th>
                                             <th>Unit</th>
                                             <th>Total</th>
                                         </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <th>xxxx</th>
-                                            <th>-2+</th>
-                                            <th>$5</th>
-                                            <th>$10</th>
-                                        </tr>
-                                        <tr>
-                                            <th>xxxx</th>
-                                            <th>-1+</th>
-                                            <th>$4</th>
-                                            <th>$4</th>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                        </thead>
+                                        <tbody>
+                                        {% for orderfood in order.orderfood_set.all %}
+                                            <tr>
+                                                <th>{{ orderfood.food.name }}</th>
+                                                <th>{{ orderfood.count }}</th>
+                                                <th>{{ orderfood.food.price }}</th>
+                                                <th>{{ orderfood.food.price|mul:orderfood.count }}</th>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-lg-12">
+                                    <p>Name: {{ order.customer.user.first_name }} {{ order.customer.user.last_name }}</p>
+                                    <p>Contact: {{ order.customer.phone_number }}</p>
+                                </div>
                             </div>
-                            <div class="col-lg-12">
-                                <p>Name: Mr. Who</p>
-                                <p>Contact: xxxxxxxxxxxxxxxx</p>
-                            </div>
+                            <div class="row"></div>
                         </div>
-                        <div class="row"></div>
-                    </div>
-                    <div class="col-lg-4">
-                        <h3>Group Info</h3>
-                        <p>Delivery Destination</p>
-                        <p>xxxxxxxxxxxxxxxxxxxxxxxx</p>
-                        <p>Delivery Fee: $5</p>
-                        <p>Min. Delivery: $10</p>
-                        <p>Fee Share Detail</p>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Name</th>
-                                    <th>Food Prive</th>
-                                    <th>Delivery Fee</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th>Mr.xxx</th>
-                                    <th>$xx</th>
-                                    <th>$x</th>
-                                </tr>
-                                <tr>
-                                    <th>Mrs.xxx</th>
-                                    <th>$xx</th>
-                                    <th>$x</th>
-                                </tr>
-                                <tr>
-                                    <th>You</th>
-                                    <th>$xx</th>
-                                    <th>$x</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="col-lg-4">
-                        <table>
-                            <tbody>
+                        <div class="col-lg-4">
+                            <h3>Group Info</h3>
+                            <p>Delivery Destination</p>
+                            <p>{{ order.group.destination }}</p>
+                            <p>Delivery Fee: {{ order.group.restaurant.restaurantserviceinfo.delivery_fee }}</p>
+                            <p>Min. Delivery: {{ order.group.restaurant.restaurantserviceinfo.min_delivery }}</p>
+                        </div>
+                        <div class="col-lg-4">
+                            <table>
+                                <tbody>
                                 <tr>
                                     <th>Group Created</th>
-                                    <th>yyyy-MM-dd hh:mm</th>
-                                </tr>
-                                <tr>
-                                    <th>Group Joined</th>
-                                    <th>yyyy-MM-dd hh:mm</th>
+                                    <th>{{ order.group.create_time }}</th>
                                 </tr>
                                 <tr>
                                     <th>Group Time Expired</th>
-                                    <th>yyyy-MM-dd hh:mm</th>
+                                    <th>{{ order.group.create_time|add:order.group.group_time }}</th>
                                 </tr>
                                 <tr>
                                     <th>Order Accepted by Restaurant</th>
@@ -164,43 +133,47 @@
                                     <th>Delivery Confirm</th>
                                     <th>yyyy-MM-dd hh:mm</th>
                                 </tr>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
+                {% endfor %}
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="row" style="border:dashed;">
-                            <div class="col-lg-3">
-                                <h3>LOGO</h3>
-                            </div>
-                            <div class="col-lg-4">
-                                <h6>Restaurant Name</h6>
-                                <p>Order ID: xxxxxxx</p>
-                                <p>Group ID: xxxxxxx</p>
-                            </div>
-                            <div class="col-lg-5">
-                                <p>Contact Number:</p>
-                                <p>Order Time: yyyy-MM-dd hh:mm</p>
-                            </div>
-                        </div>
                         <div class="row">
                             <nav aria-label="Page navigation">
-                                <ul class="pagination">
-                                    <li><a href="#" >First</a></li>
-                                    <li><a href="#">Previous</a></li>
-                                    <li><a href="#">2</a></li>
-                                    <li><a href="#">3</a></li>
-                                    <li><a href="#">4</a></li>
-                                    <li><a href="#">Next</a></li>
-                                    <li><a href="#">Last</a></li>
-                                </ul>
+                                {% if is_paginated %}
+                                    <ul class="pagination">
+                                        {% if page_obj.has_previous %}
+                                            <li>
+                                                <span><a
+                                                        href="?page={{ page_obj.previous_page_number }}">Previous</a></span>
+                                            </li>
+                                        {% endif %}
+                                        <li class="">
+                                            <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.</span>
+                                        </li>
+                                        {% if page_obj.has_next %}
+                                            <li>
+                                                <span><a href="?page={{ page_obj.next_page_number }}">Next</a></span>
+                                            </li>
+                                        {% endif %}
+                                    </ul>
+                                {% else %}
+                                    <h3>Order:</h3>
+                                    <p>You don't have any order.</p>
+                                {% endif %}
                             </nav>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     </div>
+
+    {% for order in order_list %}
+        {% for eat in order.orderfood_set.all %}
+            {{ eat.food.id }}
+        {% endfor %}
+    {% endfor %}
 {% endblock %}

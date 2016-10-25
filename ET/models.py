@@ -103,7 +103,8 @@ class GroupOrder(models.Model):
 class Customer(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     phone_number = models.CharField(max_length=10, unique=True)
-    balance = models.FloatField(default=0)
+    available_balance = models.FloatField(default=0)
+    frozen_balance = models.FloatField(default=0)
     favourite_restaurants = models.ManyToManyField(Restaurant, blank=True)
 
 
@@ -115,9 +116,9 @@ class PersonalOrder(models.Model):
     )
 
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    group = models.ForeignKey(GroupOrder, on_delete=models.CASCADE)
+    group = models.ForeignKey(Group, on_delete=models.CASCADE)
     price = models.FloatField()
-    delivery_fee = models.FloatField()
+    delivery_fee = models.FloatField(null=True, blank=True)
     order_time = models.DateTimeField(auto_now_add=True)
 
     status = models.CharField(max_length=1, choices=STATUS, default='W')
