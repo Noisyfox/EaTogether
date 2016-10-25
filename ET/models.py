@@ -82,8 +82,17 @@ class Group(models.Model):
 
 
 class GroupOrder(models.Model):
+    STATUS = (
+        ('W', 'Waiting'),
+        ('A', 'Accepted'),
+        ('D', 'Delivering'),
+        ('F', 'Finished'),
+    )
+
     group = models.OneToOneField(Group, on_delete=models.CASCADE)
-    courier = models.ForeignKey(Courier, on_delete=models.CASCADE)
+    courier = models.ForeignKey(Courier, on_delete=models.SET_NULL, null=True)
+
+    status = models.CharField(max_length=1, choices=STATUS, default='W')
 
     submit_time = models.DateTimeField(auto_now_add=True)
     accept_time = models.DateTimeField(null=True, blank=True)
@@ -99,11 +108,19 @@ class Customer(models.Model):
 
 
 class PersonalOrder(models.Model):
+    STATUS = (
+        ('W', 'Waiting'),
+        ('D', 'Delivering'),
+        ('F', 'Finished'),
+    )
+
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     group = models.ForeignKey(GroupOrder, on_delete=models.CASCADE)
     price = models.FloatField()
     delivery_fee = models.FloatField()
     order_time = models.DateTimeField(auto_now_add=True)
+
+    status = models.CharField(max_length=1, choices=STATUS, default='W')
 
 
 class OrderFood(models.Model):
