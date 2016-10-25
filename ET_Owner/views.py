@@ -23,7 +23,6 @@ from django.utils import timezone
 from ET.mixins import QueryMixin
 from ET.models import Owner, Food, Restaurant, Courier, RestaurantServiceInfo, GroupOrder
 from ET.views import RegisterView, LoginView
-from ET_Cour.templatetags.courier_name_tag import courier_name
 from ET_Owner.forms import OwnerRegisterForm, OwnerLoginForm, FoodEditForm, RestaurantEditForm, CourierEditForm, \
     FoodDeliveryForm
 from ET_Owner.mixins import RestaurantRequiredMixin, OwnerRequiredMixin
@@ -215,7 +214,7 @@ class OwnerCourierEditView(RestaurantRequiredMixin, CourierQueryMixin, FormView)
 
         init.update({
             'name': self.courier.user.first_name,
-            'login_id': courier_name(self.courier.user.username)
+            'login_id': self.courier.account
         })
 
         return init
