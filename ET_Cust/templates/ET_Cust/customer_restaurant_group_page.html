@@ -6,48 +6,53 @@
 
 {% block restaurant_content %}
     <div class="col-lg-9">
-        <div class="col-lg-4">
-            <a class="btn btn-primary"
-               style="width:200px; background-color: #ffa312;border-width: 1px; color: #fafeff; border-color:white"
-               href="{% url 'cust_create_group' restaurant.id %}">Menu</a>
-            </br>
-            <a class="btn btn-primary"
-               style="width:200px; background-color: #ffa312;border-width: 1px; color:  #fafeff; border-color:white"
-               href="{% url 'cust_create_group' restaurant.id %}">Create Group</a>
+        <div class="row">
+            <div class="col-sm-9 col-xs-7">
+                <legend>{% trans 'Existing Groups' %}</legend>
+            </div>
+            <div class="col-sm-3 col-xs-5">
+                <a class="btn btn-primary"
+                   style="width:100%; background-color: #ffa312;border-width: 1px; color:  #fafeff; border-color:white"
+                   href="{% url 'cust_create_group' restaurant.id %}">Create Group</a>
+            </div>
         </div>
 
-        <div class="col-lg-4"><a href="#">Group Exist</a></div>
-        </br>
-        {% if group_list %}
-            {% for group in group_list %}
-                <div class="row">
-                    <div class="col-lg-4">
-                        <h3>{{ group.destination }}</h3>
-                    </div>
-                    <div class="col-lg-4">
+        <div class="row">
+            {% if group_list %}
+                <ul class="list-group">
+                    {% for group in group_list %}
+                        <li class="list-group-item container-fluid">
+                            <div class="row">
+                                <div class="col-lg-4">
+                                    <h3>{{ group.destination }}</h3>
+                                </div>
+                                <div class="col-lg-4">
 
-                        <div id="{{ group.id }}">{{ group.personalorder_set.count }}</div>
-                        people
+                                    <div id="{{ group.id }}">{{ group.personalorder_set.count }}</div>
+                                    people
 
-                    </div>
-                    <div class="col-lg-4">
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <p>14 mins remain</p>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <p>14 mins remain</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-12">
+                                            <a href="{% url 'cust_restaurant_menu' restaurant.id group.id %}">Join
+                                                Now!</a>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <a href="{% url 'cust_restaurant_menu' restaurant.id group.id %}">Join
-                                    Now!</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endfor %}
-        {% else %}
-            There is no active group, please create one.
-        {% endif %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                There is no active group, please create one.
+            {% endif %}
+        </div>
     </div>
 
     <div class="col-lg-3">

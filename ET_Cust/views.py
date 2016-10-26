@@ -175,11 +175,11 @@ class CustomerMainPageView(AddressRequiredMixin, ListView):
         else:
             return self.get(self, request, *args, **kwargs)
 
-    def dispatch(self, request, *args, **kwargs):
+    def get_queryset(self):
         location_search = GEOSGeometry(self.location, srid=4326)
-        self.queryset = Restaurant.objects.annotate(distance=Distance('location', location_search)).order_by('distance')
-        self.queryset = self.queryset.annotate(favorite_restaurant=Distance('location', location_search))
-        return super(CustomerMainPageView, self).dispatch(request, *args, **kwargs)
+        qs = Restaurant.objects.annotate(distance=Distance('location', location_search)).order_by('distance')
+        qs = qs.annotate(favorite_restaurant=Distance('location', location_search))
+        return qs
 
 
 class CustomerRestaurantGroupView(CustomerRequiredMixin, RestaurantQueryMixin, ListView):
