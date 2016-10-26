@@ -12,6 +12,9 @@ class Owner(models.Model):
     phone_number = models.CharField(max_length=10, unique=True)
     money = models.FloatField(default=0)
 
+    def __str__(self):
+        return self.phone_number
+
 
 class Restaurant(models.Model):
     owner = models.OneToOneField(Owner, on_delete=models.CASCADE)
@@ -141,6 +144,9 @@ class Customer(models.Model):
     available_balance = models.FloatField(default=0)
     frozen_balance = models.FloatField(default=0)
     favourite_restaurants = models.ManyToManyField(Restaurant, blank=True)
+
+    def __str__(self):
+        return self.phone_number
 
 
 class PersonalOrder(models.Model):

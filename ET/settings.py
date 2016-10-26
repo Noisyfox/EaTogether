@@ -156,6 +156,8 @@ INSTALLED_APPS = [
     "location_field",
     'djcelery',
 
+    'bootstrap3_duration',
+
     # tools
     "mathfilters"
 ]

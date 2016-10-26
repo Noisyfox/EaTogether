@@ -24,6 +24,7 @@ from django.http import HttpResponse
 from django.views.decorators.csrf import csrf_exempt
 
 from ET_Cust.tasks import on_group_created
+from bootstrap3_duration.widgets import DurationPicker
 
 
 class AddressMixin(QueryMixin):
@@ -168,6 +169,7 @@ class CustomerCreateGroupView(CustomerRequiredMixin, AddressMixin, CreateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
+        form.fields['group_time'].widget = DurationPicker()
         form.helper = FormHelper()
         form.helper.add_input(Submit('submit', 'Create'))
         return form
