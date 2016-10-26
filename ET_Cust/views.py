@@ -7,6 +7,7 @@ from django.contrib.gis.geos import GEOSGeometry
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.utils import timezone
+from django.template import RequestContext
 from django.views.generic import View, TemplateView, DetailView
 from django.views.generic import FormView, CreateView
 from django.views.generic.list import ListView
@@ -231,3 +232,14 @@ class CustomerOrderView(CustomerRequiredMixin, ListView):
         queryset = super(CustomerOrderView, self).get_queryset()
         queryset = queryset.filter(customer_id=self.request.user.customer.id).order_by('-order_time')
         return queryset
+
+
+def count_people(request, **kwargs):
+    context = RequestContext(request)
+    group_id = kwargs['group_id']
+    count = 0
+    if group_id:
+        group = Group.objects.get(pk=group_id)
+        if group:
+            count = group.personalorder_set.count()
+    return HttpResponse(count)

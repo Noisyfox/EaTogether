@@ -1,4 +1,4 @@
-/** 
+/**
  * "PayPal Shoppign Cart" jQuery Plugin
  *
  * Author: flGravity
@@ -6,13 +6,13 @@
  * Site: http://codecanyon.net/user/flGravity
  * Version: 2.3
  */
- 
+
 (function ($) {
 
     $.fn.paypalshop = function (s) {
-    
+
         var shop = this;
-        
+
         var settings = {
             /* application settings */
             groupAnimationTime: 500,
@@ -63,10 +63,10 @@
         //DOM elements
         var active_group = null;
         var products = $('.shop-products > ul[id]', shop);
-        
+
         //add groups
         var groups = $('<ul class="shop-groups"/>').appendTo(shop);
-        
+
         //page scroll element
         var page_scroll = {
             prev: $('<a/>', {
@@ -81,10 +81,10 @@
             }),
             pn: $('<span class="page-number"/>')
         };
-        
+
         //add to document
         $('<div class="page-scroll"/>').append(page_scroll.prev, page_scroll.pn, page_scroll.next).appendTo(shop);
-        
+
         //shopping cart elements
         var shop_cart = {
             cart_header: $('<div/>', {
@@ -122,20 +122,16 @@
                 '<a class="clear-button" href="#">Clear</a>' +
                 '<a class="checkout-button" href="#">PayPal Checkout</a>')
         };
-        
+
         //add to document
         shop_cart.list_wrapper.append(shop_cart.list_content);
         shop_cart.cart_content.append(shop_cart.list_header, shop_cart.list_wrapper, shop_cart.list_scroll);
-        shop_cart.self = $('<div class="shop-cart"/>').
-        append(shop_cart.cart_header).
-        append(shop_cart.cart_content).
-        append(shop_cart.cart_footer).
-        appendTo(shop);
+        shop_cart.self = $('<div class="shop-cart"/>').append(shop_cart.cart_header).append(shop_cart.cart_content).append(shop_cart.cart_footer).appendTo(shop);
 
 
         //process product groups
         products.each(function (gid) {
-        
+
             //create groups of products
             var gname = this.id.replace(/_/g, ' ');
             var gbutton = $('<a />', {
@@ -147,51 +143,50 @@
 
             //click handler for product groups
             gbutton.click(function (e) {
-            
+
                 //make clicked group active
                 groups.find('.active-group').removeClass('active-group');
                 $(this).parent().addClass('active-group');
-                
+
                 //hide all groups 
                 products.css('display', 'none');
                 active_group = $('#' + $(this).attr('prod_id'), shop);
-                
+
                 //show only active group
-                active_group.css({top:0, display:'block'});
-                
+                active_group.css({top: 0, display: 'block'});
+
                 //animate products by shifting their top position and tweening opacity
                 active_group.children('li').each(function (i) {
                     $(this).css({
                         'top': parseInt((i + settings.pageColumns) / settings.pageColumns) * settings.groupAnimationShift,
                         'opacity': 0
                     });
-                    $(this).delay(i * settings.groupAnimationStartDelay).
-                    animate({
+                    $(this).delay(i * settings.groupAnimationStartDelay).animate({
                         'top': 0,
                         'opacity': 1
                     }, settings.groupAnimationTime, settings.groupAnimationEasing);
                 });
-                
+
                 //update number of pages
                 active_group.current_page = 1;
                 active_group.pages = Math.ceil(active_group.children('li').length / (settings.pageRows * settings.pageColumns));
-                
+
                 //update page scroll
                 resetPageScroll();
                 e.preventDefault();
-                
+
             }); // - gbutton.click()
 
             //process individual products in every group
             $(this).children('li').each(function (pid) {
                 var product = $(this);
-                
+
                 //assign uniq id to every product within group
                 product.attr('id', '_p0' + pid);
-                
+
                 //add "onclick" handler to product "Buy" button
                 product.find('.product-buy').click(function (e) {
-                
+
                     //check if option is set 	    	 		
                     var option = '';
                     if ($(this).attr('option')) {
@@ -207,10 +202,10 @@
                             option = opt;
                         }
                     }
-					
-					// create product item
+
+                    // create product item
                     var item = {
-                    	//general variables
+                        //general variables
                         group: product.parent().attr('id'),
                         id: product.attr('id'),
                         option: option || 'NA',
@@ -224,24 +219,24 @@
                         number: product.attr('number' + option),
                         handling: product.attr('handling' + option)
                     };
-                    
+
                     // add item to the cart
                     addToCart(item, true);
                     e.preventDefault();
-                    
+
                 }).fadeTo(0, 0.7).hover(hoverHandler(300, 1), hoverHandler(300, settings.buttonsOpacity));
-                
+
                 //update currency sign 
                 if (settings.currencySign) {
                     product.find('.product-currency').html(settings.currencySign);
                 }
-                
+
             });
 
-            
+
             if (gid == 0) {
-            
-            	//first group is active
+
+                //first group is active
                 groups.children('li:eq(0)').addClass('active-group');
                 active_group = $(this);
 
@@ -250,17 +245,17 @@
                 active_group.pages = Math.ceil(active_group.children('li').length / (settings.pageRows * settings.pageColumns));
                 resetPageScroll();
                 updateCartTotals();
-                
+
             } else {
-            
+
                 //hide all other product
                 $(this).hide();
-            
+
             }
-            
+
         }); //end products.each()
-        
-        
+
+
         //restore cart if it was saved in localStorage
         if (settings.localStorage) {
             restoreCartLocally();
@@ -279,8 +274,8 @@
             }
             e.preventDefault();
         });
-		
-		 // add click listeners to page scroll next button
+
+        // add click listeners to page scroll next button
         page_scroll.next.click(function (e) {
             if (active_group.current_page < active_group.pages) {
                 active_group.animate({
@@ -294,8 +289,7 @@
 
 
         // add click listeners for cart "Clear" and "Checkout" buttons
-        $('.clear-button', shop_cart.cart_footer).css('opacity', settings.buttonsOpacity).
-        click(function (e) {
+        $('.clear-button', shop_cart.cart_footer).css('opacity', settings.buttonsOpacity).click(function (e) {
             cart = {};
             updateShoppingCart();
             saveCartLocally();
@@ -303,8 +297,7 @@
             e.preventDefault();
         }).hover(hoverHandler(300, 1), hoverHandler(300, settings.buttonsOpacity));
 
-        $('.checkout-button', shop_cart.cart_footer).css('opacity', settings.buttonsOpacity).
-        click(function (e) {
+        $('.checkout-button', shop_cart.cart_footer).css('opacity', settings.buttonsOpacity).click(function (e) {
             processCheckout();
             e.preventDefault();
         }).hover(hoverHandler(300, 1), hoverHandler(300, settings.buttonsOpacity));
@@ -361,15 +354,14 @@
         });
 
 
-
         /**  FUNCTION DEFINITIONS
          ************************************************************************************/
 
 
         /* 
          Hover handler shortcode
-        */
-        
+         */
+
         function hoverHandler(d, a) {
             return function () {
                 $(this).stop().fadeTo(d, a);
@@ -378,11 +370,11 @@
 
 
         /* 
-        * Function to add new items to cart
-        */
-        
+         * Function to add new items to cart
+         */
+
         function addToCart(item, animate) {
-        
+
             //check if group exists, otherwise create new group
             if (!(item.group in cart)) {
                 cart[item.group] = new Object();
@@ -390,7 +382,7 @@
             }
             var g = cart[item.group];
             var p = item.id + '_' + item.option; //product id + option 
-            
+
             //check if this product is already in cart 
             if (p in g) {
                 if (g[p].quantity + g[p].skip <= settings.productBuyLimit) {
@@ -402,13 +394,13 @@
                 g[p] = item;
                 g.length += 1;
             }
-            
+
             // re-add items to cart
             updateShoppingCart();
-            
+
             // save cart in localStorage
             saveCartLocally();
-            
+
             //animate adding new item to cart
             if (animate) {
                 var sch = shop_cart.cart_header.height();
@@ -418,69 +410,69 @@
                     'top': '-=' + sch
                 }, 200);
             }
-            
+
         }
 
 
         /* 
-        * Function to update quantity and price totals in shopping cart
-        */
-        
+         * Function to update quantity and price totals in shopping cart
+         */
+
         function updateCartTotals() {
-        
+
             // calculate total quantity and price for items
             var items = 0;
             var total = 0;
             for (var g in cart) {
                 for (var i in cart[g]) {
-                    
+
                     if (i == 'length') continue; //skip length property
-                    
+
                     var v = cart[g][i];
                     items += v.quantity;
                     total += settings.priceHandler.call(v);
                 }
             }
-            
+
             //total price
             total = settings.currencySign + total.toFixed(settings.numberPrecision);
             $('.total-items', shop_cart.self).text(items);
             $('.total-price', shop_cart.self).html(total);
-            
+
         }
 
 
         /* 
-        * Function to generate shopping cart content from items in cart
-        */
-        
+         * Function to generate shopping cart content from items in cart
+         */
+
         function updateShoppingCart() {
-        
+
             //update totals in cart
             updateCartTotals();
-            
+
             //clear cart
             shop_cart.list_content.empty();
-            
+
             // process groups in cart
             for (var g in cart) {
-            
+
                 //add header for group
                 var index = 0;
                 shop_cart.list_content.append('<div class="list-group">' + g.replace(/_/g, ' ') + '</div>');
-                
+
                 //process products in groups
                 for (var i in cart[g]) {
-                
-                	//skip length property
-                    if (i == 'length') continue; 
-                    
+
+                    //skip length property
+                    if (i == 'length') continue;
+
                     var v = cart[g][i];
                     var p = $('<p />').attr({
                         'id': v.group + '::' + (v.id + '_' + v.option),
                         'class': (++index == cart[g].length) ? 'last-in-list' : ''
                     });
-                    
+
                     p.append('<span class="col-number">' + index + '.</span>' +
                         '<span class="col-name">' + v.name + '</span>' +
                         '<span class="col-quantity">' +
@@ -509,20 +501,20 @@
                         saveCartLocally();
                         e.preventDefault();
                     });
-                    
+
                 } // process products 
-            
+
             } // process groups
-            
+
         }
 
 
         /* 
-        * Event handler for [+] & [-] buttons next to items in cart
-        */
-        
+         * Event handler for [+] & [-] buttons next to items in cart
+         */
+
         function itemQuantityHandler(p, a) {
-        
+
             //get current quantity from cart
             var filter = /(\w+)::(\w+)/.exec(p.id);
             var cart_item = cart[filter[1]][filter[2]];
@@ -533,58 +525,58 @@
                     cart_item.quantity += cart_item.skip;
                 }
             }
-            
+
             //substract one
             if (a.indexOf('subtract') != -1) {
                 if (cart_item.quantity - cart_item.skip >= cart_item.minimum) {
                     cart_item.quantity -= cart_item.skip;
                 }
             }
-            
+
             //update quantity in shopping cart
             $(p).find('.item-quantity').text(cart_item.quantity);
-            
+
             //update price for item
             $(p).find('.item-price').text(settings.priceHandler.call(cart_item).toFixed(settings.numberPrecision));
-            
+
             //update totals 
             updateCartTotals();
-            
+
         }
 
         /* 
-        * Handler for [x] button to remove item in cart
-        */
-        
+         * Handler for [x] button to remove item in cart
+         */
+
         function itemRemoveHandler(p) {
-            
+
             //look for item in cart
             var filter = /(\w+)::(\w+)/.exec(p.id);
             delete cart[filter[1]][filter[2]];
             cart[filter[1]].length--;
-            
+
             //when length becomes 0 remove group itself
             if (cart[filter[1]].length == 0)
                 delete cart[filter[1]];
-            
+
             //re-add items to cart    
             updateShoppingCart();
-            
+
         }
-        
-        
+
+
         /*
-        * Function that handles page scroll for active product group
-        */
-        
+         * Function that handles page scroll for active product group
+         */
+
         function resetPageScroll() {
-        
+
             //page number / total pages
             var pages = active_group.current_page + '/' + active_group.pages;
             page_scroll.pn.text('Page: ' + pages);
 
             //make scroll arrows inactive when necessary
-            
+
             if (active_group.current_page == 1) {
                 page_scroll.prev.fadeTo(200, 0.2);
                 page_scroll.prev.unbind('mouseleave mouseenter');
@@ -602,14 +594,14 @@
                 page_scroll.next.hover(hoverHandler(500, 1),
                     hoverHandler(500, settings.buttonsOpacity));
             }
-            
+
         }
 
 
         /* 
-        * Function to submit request to PayPal with all items in cart
-        */
-        
+         * Function to submit request to PayPal with all items in cart
+         */
+
         function processCheckout() {
 
 
@@ -623,7 +615,7 @@
 
             //now process items in cart
             var item_index = 0;
-            
+
             //properties map for 'cart' to the paypal variables
             var map = {
                 name: 'item_name',
@@ -655,18 +647,23 @@
 
             //add form to the document
             form.appendTo('body')
-            //shop.append(form);
-            form.submit();
-            
-            //remove form
-            form.remove();
+            if (item_index > 0) {
+                //shop.append(form);
+                form.submit();
+
+                //remove form
+                form.remove();
+            }
+            else{
+                alert("You didn't choose anything.")
+            }
         }
 
 
         /* 
-        * Function to save cart content in localStorage
-        */
-        
+         * Function to save cart content in localStorage
+         */
+
         function saveCartLocally() {
             var can_store = false,
                 can_json = false;
@@ -684,17 +681,17 @@
 
 
         /* 
-        * Function restore saved cart from localStorage
-        */
-        
+         * Function restore saved cart from localStorage
+         */
+
         function restoreCartLocally() {
             if (window.localStorage && window.localStorage.getItem) {
                 var stored_cart = window.localStorage.getItem(settings.localStorageName);
                 if (stored_cart) {
-                	try {
-                    	cart = JSON.parse(stored_cart);
-                    } catch(e) {
-                    	cart = {};
+                    try {
+                        cart = JSON.parse(stored_cart);
+                    } catch (e) {
+                        cart = {};
                     }
                     updateShoppingCart();
                 }
@@ -702,10 +699,10 @@
         }
 
 
-		// return for chaining
+        // return for chaining
         return this;
-        
+
     } // $.fn.paypalshop end
-    
-    
+
+
 })(jQuery);
