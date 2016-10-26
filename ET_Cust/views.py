@@ -232,8 +232,6 @@ class CustomerOrderView(CustomerRequiredMixin, ListView):
         queryset = super(CustomerOrderView, self).get_queryset()
         queryset = queryset.filter(customer_id=self.request.user.customer.id).order_by('-order_time')
         return queryset
-<<<<<<< HEAD
-=======
 
 
 def count_people(request, **kwargs):
@@ -246,4 +244,3 @@ def count_people(request, **kwargs):
             count = group.personalorder_set.count()
     return HttpResponse(count)
 
->>>>>>> origin/lucas_dev
