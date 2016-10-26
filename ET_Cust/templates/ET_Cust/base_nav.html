@@ -1,0 +1,96 @@
+{% extends "theme_bootstrap/subnav_base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block body_class %}owner{% endblock %}
+
+{% block topbar_base %}
+    {% block topbar %}
+        <header>
+            <div class="navbar navbar-default navbar-fixed-top" style="background: white;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            {% block address %}
+                                <h4>
+                                    {{ address }}
+                                    <a href="{% url 'cust_search' %}?stay=1"> Switch Place</a>
+                                </h4>
+                            {% endblock %}
+                        </div>
+                        <div class="col-lg-6">
+                            {% if request.user.is_authenticated %}
+                                <div class="dropdown pull-right">
+                                    <button class="btn btn-default dropdown-toggle"
+                                            type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true"
+                                            aria-expanded="true">
+                                        Welcome, {{ request.user.first_name }}!
+                                        <span class="caret"></span>
+                                        <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26"
+                                             class="pull-right"/>
+                                    </button>
+                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                                        <li><a href="{% url 'cust_order' %}">My Order</a></li>
+                                        <li><a href="{% url 'cust_favorite' %}">My Favourites</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="{% url 'cust_wallet' %}">Wallet</a></li>
+                                        <li role="separator" class="divider"></li>
+                                        <li><a href="">Logout</a></li>
+                                    </ul>
+                                </div>
+                            {% else %}
+                                <ul class="nav navbar-nav pull-right">
+                                    <li><a href="{% url 'cust_login' %}">{% trans "Log in" %}</a></li>
+                                    <li><a href="{% url 'cust_register' %}">{% trans "Sign up" %}</a></li>
+                                </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+    {% endblock %}
+
+    <div class="container"
+         style="background: url('{{ STATIC_URL }}img_owner/back_title_2.jpg') right bottom no-repeat;background-size: cover;">
+        <div>
+            <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
+            <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat
+                Now, Eat Together - {% block topbar_label %}{% endblock %}</a>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+            <br/>
+        </div>
+    </div>
+{% endblock %}
+
+{% block subnav %}
+    <div id="nav">
+        <div class="btn-group-vertical" role="group" aria-label="information list">
+            <a href="{% url 'cust_order' %}" class="btn btn-primary"
+               style=" width: 200px;padding: 10px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%;">
+                <span style="color:#fcf8e3" aria-hidden="true" class="glyphicon glyphicon-cutlery"></span>
+                <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3;">My Order</span>
+            </a>
+            <a href="{% url 'cust_favorite' %}" class="btn btn-primary"
+               style="width: 200px;padding: 10px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%">
+                <img src="{% static "img_owner/brand_et_button.png" %}" height="25"/>
+                <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3">My Favourites</span>
+            </a>
+            <a href="{% url 'cust_wallet' %}" class="btn btn-primary"
+               style="width: 200px;padding: 10px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%">
+                <span style="color:#fcf8e3" aria-hidden="true" class="glyphicon glyphicon-usd"></span>
+                <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3">Wallet</span>
+            </a>
+        </div>
+
+    </div>
+{% endblock %}

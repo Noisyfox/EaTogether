@@ -271,7 +271,7 @@ class CustomerOrderView(CustomerRequiredMixin, AddressMixin, ListView):
         return queryset
 
 
-class CustomerFavoriteView(CustomerRequiredMixin, ListView):
+class CustomerFavoriteView(CustomerRequiredMixin, AddressMixin, ListView):
     template_name = 'ET_Cust/Customer Account (Favourite).html'
     context_object_name = 'restaurant_list'
 
@@ -281,7 +281,7 @@ class CustomerFavoriteView(CustomerRequiredMixin, ListView):
 
     def get_context_data(self, **kwargs):
         context = super(CustomerFavoriteView, self).get_context_data(**kwargs)
-        context['customer'] =  self.request.user.customer
+        context['customer'] = self.request.user.customer
         return context
 
 

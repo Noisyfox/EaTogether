@@ -17,7 +17,7 @@ urlpatterns = [
         ])),
     ])),
     url(r"^wallet/$", views.CustomerWalletView.as_view(), name='cust_wallet'),
-    url(r"^order/$", views.CustomerOrderView.as_view(), name='cust_oder'),
+    url(r"^order/$", views.CustomerOrderView.as_view(), name='cust_order'),
     url(r"^favorite/$", views.CustomerFavoriteView.as_view(), name='cust_favorite'),
 
     # URL used to handle AJAX

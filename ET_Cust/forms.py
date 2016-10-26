@@ -1,9 +1,9 @@
-from crispy_forms.layout import Submit
+from crispy_forms.bootstrap import FieldWithButtons
+from crispy_forms.layout import Submit, Layout
 
 from ET.forms import LoginPhoneNumberForm, RegisterForm, FormMixin
 from django import forms
 from location_field.forms.spatial import LocationField
-
 
 GROUP = 'customer'
 
@@ -34,4 +34,6 @@ class CustomerSearchRestaurantForm(FormMixin, forms.Form):
     def __init__(self, *args, **kwargs):
         super(CustomerSearchRestaurantForm, self).__init__(*args, **kwargs)
 
-        self.helper.add_input(Submit('search', 'Search'))
+        self.helper.layout = Layout(
+            FieldWithButtons('restaurant', Submit('search', 'Search'))
+        )

@@ -1,70 +1,24 @@
 
 
-{% extends "site_base.html" %}
+{% extends "ET_Cust/base_nav.html" %}
 
 {% load i18n %}
 {% load static %}
 
-{% block head_title %}Login{% endblock %}
+{% block head_title %}{% trans 'My Wallet' %}{% endblock %}
 
-{% block  title %} dsafdasfadfa{% endblock %}
+{% block  title %}dsafdasfadfa{% endblock %}
 {% block body %}
     <div class="container-fluid">
-        <div class="row" style="border: dashed;">
-            <div class="col-lg-6">
-                <p>Current Selected Place</p>
-                <a herf="#">  Switch Place</a>
-            </div>
-            <div class="col-lg-6">
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Welcome, User!
-                        <span class="caret"></span>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">Notification (3)</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="">My Order</a></li>
-                        <li><a href="">My Favourites</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="">Profile & Wallet</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="">Logout</a></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
         <div class="row" style="border: dashed; margin-top: 3%;">
-            <div class="col-lg-3" id="restaurant_logo">
-                <h1>Picture: LOGO</h1>
+            <div class="col-lg-6">
+                <h1>{{ customer.available_balance }} Available</h1>
+                <h4>{{ customer.frozen_balance }} Under Processing</h4>
+                {{ k }}
             </div>
-            <div class="col-lg-9" id="search_bar">
-                <input type="text" placeholder="Search..."><button type="submit">Search</button>
-            </div>
-        </div>
-
-        <div class="row" style="border: dashed; margin-top: 3%;">
-            <div class="col-lg-2" style="border-right: dashed;">
-                <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation"><a href="">My Order</a></li>
-                    <li role="presentation"><a href="">My Favourites</a></li>
-                    <li role="presentation"><a href="">Profile&Wallet</a></li>
-                </ul>
-            </div>
-            <div class="col-lg-10">
-                <div class="row">
-                    <div class="col-lg-6">
-                        <h1>{{ customer.available_balance }} Available</h1>
-                        <h4>{{ customer.frozen_balance }} Under Processing</h4>
-                        {{ k }}
-                    </div>
-                    <div class="col-lg-6" style="border-left: dashed;">
-                        <button type="submit">Top Up now</button>
-                    </div>
-                </div>
+            <div class="col-lg-6" style="border-left: dashed;">
+                <button type="submit">Top Up now</button>
             </div>
         </div>
-
     </div>
 {% endblock %}
