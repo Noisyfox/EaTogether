@@ -5,13 +5,26 @@ PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
 BASE_DIR = PACKAGE_ROOT
 
 DEBUG = True
+DEPLOY = False
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.contrib.gis.db.backends.spatialite",
-        "NAME": "dev.db",
+if DEPLOY:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.contrib.gis.db.backends.postgis",
+            'NAME': 'DB NAME',
+            'USER': 'DB USER',
+            'PASSWORD': 'DB PSW',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.contrib.gis.db.backends.spatialite",
+            "NAME": "dev.db",
+        }
+    }
 
 ALLOWED_HOSTS = []
 
@@ -28,7 +41,7 @@ TIME_ZONE = "UTC"
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = "en-us"
 
-SITE_ID = int(os.environ.get("SITE_ID", 1))
+SITE_ID = int(os.environ.get("SITE_ID", 2 if DEPLOY else 1))
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.

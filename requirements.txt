@@ -10,6 +10,7 @@ django-mathfilters==0.4.0
 kombu==3.0.37
 Pillow==3.4.1
 pinax-theme-bootstrap==7.10.1
+psycopg2==2.6.2
 pytz==2016.7
 redis==2.10.5
 six==1.10.0
