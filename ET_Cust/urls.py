@@ -18,9 +18,10 @@ urlpatterns = [
     ])),
     url(r"^wallet/$", views.CustomerWalletView.as_view(), name='cust_wallet'),
     url(r"^order/$", views.CustomerOrderView.as_view(), name='cust_oder'),
+    url(r"^favorite/$", views.CustomerFavoriteView.as_view(), name='cust_favorite'),
 
     # URL used to handle AJAX
     url(r"^count_people/(?P<group_id>[0-9]+)/$", views.count_people, name='count_people'),
-    # url(r"^add_favorite/(?P<restaurant_id>[0-9]+)/$", views.add_favorite, name='add_favorite'),
-    # url(r"^delete_favorite/(?P<restaurant_id>[0-9]+)/$", views.delete_favorite, name='delete_favorite')
+    url(r"^add_favorite/(?P<restaurant_id>[0-9]+)/$", views.AddFavoriteView.as_view(), name='add_favorite'),
+    url(r"^delete_favorite/(?P<restaurant_id>[0-9]+)/$", views.DeleteFavoriteView.as_view(), name='delete_favorite')
 ]

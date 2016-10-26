@@ -122,6 +122,12 @@ class CustomerMainPageView(AddressRequiredMixin, ListView):
         context = super(CustomerMainPageView, self).get_context_data(**kwargs)
         form = CustomerSearchRestaurantForm()
         context['form'] = form
+        try:
+            customer = self.request.user.customer
+        except Exception:
+            pass
+        else:
+            context['customer'] = customer
         return context
 
     def post(self, request, *args, **kwargs):
@@ -135,6 +141,7 @@ class CustomerMainPageView(AddressRequiredMixin, ListView):
     def dispatch(self, request, *args, **kwargs):
         location_search = GEOSGeometry(self.request.session['location'], srid=4326)
         self.queryset = Restaurant.objects.annotate(distance=Distance('location', location_search)).order_by('distance')
+        self.queryset = self.queryset.annotate(favorite_restaurant=Distance('location', location_search))
         return super(CustomerMainPageView, self).dispatch(request, *args, **kwargs)
 
 
@@ -255,13 +262,27 @@ class CustomerWalletView(CustomerRequiredMixin, AddressMixin, TemplateView):
 class CustomerOrderView(CustomerRequiredMixin, AddressMixin, ListView):
     template_name = 'ET_Cust/Customer Account (Order).html'
     model = PersonalOrder
-    context_object_name = "order_list"
+    context_object_name = 'order_list'
     paginate_by = 3
 
     def get_queryset(self):
         queryset = super(CustomerOrderView, self).get_queryset()
         queryset = queryset.filter(customer_id=self.request.user.customer.id).order_by('-order_time')
         return queryset
+
+
+class CustomerFavoriteView(CustomerRequiredMixin, ListView):
+    template_name = 'ET_Cust/Customer Account (Favourite).html'
+    context_object_name = 'restaurant_list'
+
+    def get_queryset(self):
+        queryset = self.request.user.customer.favourite_restaurants.all()
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super(CustomerFavoriteView, self).get_context_data(**kwargs)
+        context['customer'] =  self.request.user.customer
+        return context
 
 
 def count_people(request, **kwargs):
@@ -273,3 +294,29 @@ def count_people(request, **kwargs):
         if group:
             count = group.personalorder_set.count()
     return HttpResponse(count)
+
+
+class AddFavoriteView(View):
+    def get(self, request, *args, **kwargs):
+        restaurant_id = self.kwargs['restaurant_id']
+        restaurant = Restaurant.objects.get(pk=restaurant_id)
+        try:
+            customer = self.request.user.customer
+        except Exception:
+            return HttpResponse("Please log in first.")
+        else:
+            customer.favourite_restaurants.add(restaurant)
+            return HttpResponse("Add to Favorite successfully!")
+
+
+class DeleteFavoriteView(View):
+    def get(self, request, *args, **kwargs):
+        restaurant_id = self.kwargs['restaurant_id']
+        restaurant = Restaurant.objects.get(pk=restaurant_id)
+        try:
+            customer = self.request.user.customer
+        except Exception:
+            return HttpResponse("Please log in first.")
+        else:
+            customer.favourite_restaurants.remove(restaurant)
+            return HttpResponse("Remove from Favorite successfully!")

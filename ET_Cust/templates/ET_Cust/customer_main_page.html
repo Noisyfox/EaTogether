@@ -30,8 +30,19 @@
                     </div>
                     <div class="col-lg-6"style="border-width: 2px; border-style: solid;border-color: #e98520;height: 200px;border-radius: 5%">
                         <p>Current Group: {{ restaurant.group_set.count }}</p>
-                        <a href="{% url 'cust_restaurant_group' restaurant.id %}">Group Now!</a>
-                        <p>Monthly Sale: 999</p>
+                    </div>
+                    <div class="col-lg-3">
+
+                        <div class="row">
+                            <input id="{{ restaurant.id }}" type="checkbox">
+                        </div>
+
+                        <div class="row">
+                            <a href="{% url 'cust_restaurant_group' restaurant.id %}">Group Now!</a>
+                        </div>
+                        <div class="row">
+                            <p>Monthly Sale: 999</p>
+                        </div>
                     </div>
                 </div>
             {% endfor %}
@@ -59,3 +70,47 @@
         </ul>
     </nav>
 </div>
+
+{% block scripts %}
+    {{ block.super }}
+    <script>
+        $(document).ready(function () {
+            check_favorite();
+
+            {% for restaurant in restaurant_list %}
+            $("#{{ restaurant.id }}").change(function () {
+               var url;
+                if ($(this).is(":checked")) {
+                    url = "{% url 'add_favorite' restaurant.id %}";
+                    $.get(url, function (data) {
+                        alert(data)
+                        if (data == "Please log in first."){
+                            $("#{{ restaurant.id }}").attr('checked', false);
+                        }
+                    });
+                }
+                else {
+                    url = "{% url 'delete_favorite' restaurant.id %}";
+                    $.get(url,function (data) {
+                        alert(data)
+                        if (data == "Please log in first."){
+                            $("#{{ restaurant.id }}").attr('checked', false);
+                        }
+                    });
+                }
+            });
+            {% endfor %}
+        });
+
+        function check_favorite() {
+            {% for restaurant in restaurant_list %}
+                {% for customer_all in restaurant.customer_set.all %}
+                    {% if customer_all == customer %}
+                        $("#{{ restaurant.id }}").attr("checked", true);
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        }
+
+    </script>
+{% endblock %}
