@@ -10,35 +10,34 @@
 {% block body %}
     <div class="container-fluid">
         <div class="row" >
-            <div class="col-lg-6">
-                {{ address }}
-                <a href="{% url 'cust_search' %}"> Switch Place</a>
-            </div>
-            <div class="col-lg-6">
-                <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle; pull-right"
-                            type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                        Welcome, User!
-                        <span class="caret"></span>
-                        <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
-                    </button>
-                    <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">Notification (3)</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="#">My Order</a></li>
-                        <li><a href="">My Favourites</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="">Profile & Wallet</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="">Logout</a></li>
-                    </ul>
+            <div class="col-lg-12" style="padding-bottom: 3%; border-bottom: solid; border-color: #e98520; margin-bottom: 3%;">
+                <div class="col-lg-6"><h4>
+                    {{ address }}
+                    <a href="{% url 'cust_search' %}"> Switch Place</a>
+                </h4></div>
+                <div class="col-lg-6">
+                    <div class="dropdown">
+                        <button class="btn btn-default dropdown-toggle; pull-right"
+                                type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            Welcome, User!
+                            <span class="caret"></span>
+                            <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
+                        </button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">My Order</a></li>
+                            <li><a href="#">My Favourites</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="">Profile & Wallet</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="">Logout</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="row">
-            </br>
-            {% crispy form %}
+            <div class="col-lg-12" style="padding-top: 3%; " >{% crispy form %}</div>
         </div>
 
 
@@ -58,7 +57,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6"style="border-width: 2px; border-style: solid;border-color: #ffbc34;height: 200px;border-radius: 5%">
+                    <div class="col-lg-6"style="border-width: 2px; border-style: solid;border-color: #e98520;height: 200px;border-radius: 5%">
                         <p>Current Group: {{ restaurant.group_set.count }}</p>
                         <a href="{% url 'cust_restaurant_group' restaurant.id %}">Group Now!</a>
                         <p>Monthly Sale: 999</p>
@@ -67,7 +66,9 @@
             {% endfor %}
         {% else %}
             <div class="row">
-                <h1>Opps, we can't find this restaurant.</h1>
+                <div class="col-lg-12" style="padding-top: 3%; border-top: solid; border-color: #e98520; margin-top: 3%;">
+                    <h1>Opps, we can't find this restaurant.</h1>
+                </div>
             </div>
         {% endif %}
     </div>
