@@ -13,23 +13,24 @@
         <div class="row" style="border: dashed; margin-bottom: 3%;">
             <div class="col-lg-6">
                 Current Selected Place
-                <a herf="#">  Switch Place</a>
+                <a herf="#"> Switch Place</a>
             </div>
             <div class="col-lg-6">
                 <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Welcome, User!
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li><a href="#">Notification (3)</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url "customer account order" %}">My Order</a></li>
-                        <li><a href="{% url "customer account favourite" %}">My Favourites</a></li>
+                        <li><a href="">My Order</a></li>
+                        <li><a href="">My Favourites</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url "customer account profile&wallet" %}">Profile & Wallet</a></li>
+                        <li><a href="">Profile & Wallet</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url "customer login" %}">Logout</a></li>
+                        <li><a href="">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -56,169 +57,45 @@
         <div class="row" style="border-left: dashed;">
             <div class="col-lg-2" id="right_navigator">
                 <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation"><a href="{% url "customer account order" %}">My Order</a></li>
-                    <li role="presentation"><a href="{% url "customer account favourite" %}">My Favourites</a></li>
-                    <li role="presentation"><a href="{% url "customer account profile&wallet" %}">Profile&Wallet</a></li>
+                    <li role="presentation"><a href="">My Order</a></li>
+                    <li role="presentation"><a href="">My Favourites</a></li>
+                    <li role="presentation"><a href="">Profile&Wallet</a></li>
                 </ul>
             </div>
             <div class="col-lg-10" id="main_content">
                 <div class="row" id="restaurant_list">
-                    <div class="col-lg-6" id="restaurant_1" style="border: dashed;">
-                        <div class="col-lg-4" id="restaurant_picture">
-                            <h3>Picture</h3>
-                        </div>
-                        <div class="col-lg-8" id="restaurant_info">
-                            <div class="row" id="restaurant_name" style="height: 30%;">
-                                <div class="col-lg-9">
-                                    <h6>Restaurant Name</h6>
-                                </div>
-                                <div class="col-lg-3">
-                                    <input type="checkbox">
-                                </div>
+                {% if restaurant_list %}
+                    {% for restaurant in restaurant_list %}
+                        <div class="col-lg-6" id="restaurant_1" style="border: dashed;">
+                            <div class="col-lg-4" id="restaurant_picture">
+                                <h3>Picture</h3>
                             </div>
-                            <div class="row" id="restaurant_location" style="height: 40%;">
-                                <div class="col-lg-12">
-                                    <p>Location</p>
-                                    <p>Distance 1 km</p>
+                            <div class="col-lg-8" id="restaurant_info">
+                                <div class="row" id="restaurant_name" style="height: 30%;">
+                                    <div class="col-lg-9">
+                                        <h6>{{ restaurant.name }}</h6>
+                                    </div>
+                                    <div class="col-lg-3">
+                                        <input id="{{ restaurant.id }}" type="checkbox">
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row" style="height: 30%;">
-                                <div class="col-lg-12">
-                                    <p>Min Delivery: $10   Delivery Fee: $5</p>
+                                <div class="row" id="restaurant_location" style="height: 40%;">
+                                    <div class="col-lg-12">
+                                        <p>{{ restaurant.address }}</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6" id="restaurant_2" style="border: dashed;">
-                        <div class="col-lg-4" id="restaurant_picture">
-                            <h3>Picture</h3>
-                        </div>
-                        <div class="col-lg-8" id="restaurant_info">
-                            <div class="row" id="restaurant_name" style="height: 30%;">
-                                <div class="col-lg-9">
-                                    <h6>Restaurant Name</h6>
-                                </div>
-                                <div class="col-lg-3">
-                                    <input type="checkbox">
-                                </div>
-                            </div>
-                            <div class="row" id="restaurant_location" style="height: 40%;">
-                                <div class="col-lg-12">
-                                    <p>Location</p>
-                                    <p>Distance 1 km</p>
-                                </div>
-                            </div>
-                            <div class="row" style="height: 30%;">
-                                <div class="col-lg-12">
-                                    <p>Min Delivery: $10   Delivery Fee: $5</p>
+                                <div class="row" style="height: 30%;">
+                                    <div class="col-lg-12">
+                                        <p>Min Delivery: ${{ restaurant.restaurantserviceinfo.min_delivery }} Delivery
+                                            Fee: ${{ restaurant.restaurantserviceinfo.delivery_fee }} </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-lg-6" id="restaurant_3" style="border: dashed;">
-                        <div class="col-lg-4" id="restaurant_picture">
-                            <h3>Picture</h3>
-                        </div>
-                        <div class="col-lg-8" id="restaurant_info">
-                            <div class="row" id="restaurant_name" style="height: 30%;">
-                                <div class="col-lg-9">
-                                    <h6>Restaurant Name</h6>
-                                </div>
-                                <div class="col-lg-3">
-                                    <input type="checkbox">
-                                </div>
-                            </div>
-                            <div class="row" id="restaurant_location" style="height: 40%;">
-                                <div class="col-lg-12">
-                                    <p>Location</p>
-                                    <p>Distance 1 km</p>
-                                </div>
-                            </div>
-                            <div class="row" style="height: 30%;">
-                                <div class="col-lg-12">
-                                    <p>Min Delivery: $10   Delivery Fee: $5</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6" id="restaurant_4" style="border: dashed;">
-                        <div class="col-lg-4" id="restaurant_picture">
-                            <h3>Picture</h3>
-                        </div>
-                        <div class="col-lg-8" id="restaurant_info">
-                            <div class="row" id="restaurant_name" style="height: 30%;">
-                                <div class="col-lg-9">
-                                    <h6>Restaurant Name</h6>
-                                </div>
-                                <div class="col-lg-3">
-                                    <input type="checkbox">
-                                </div>
-                            </div>
-                            <div class="row" id="restaurant_location" style="height: 40%;">
-                                <div class="col-lg-12">
-                                    <p>Location</p>
-                                    <p>Distance 1 km</p>
-                                </div>
-                            </div>
-                            <div class="row" style="height: 30%;">
-                                <div class="col-lg-12">
-                                    <p>Min Delivery: $10   Delivery Fee: $5</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6" id="restaurant_5" style="border: dashed;">
-                        <div class="col-lg-4" id="restaurant_picture">
-                            <h3>Picture</h3>
-                        </div>
-                        <div class="col-lg-8" id="restaurant_info">
-                            <div class="row" id="restaurant_name" style="height: 30%;">
-                                <div class="col-lg-9">
-                                    <h6>Restaurant Name</h6>
-                                </div>
-                                <div class="col-lg-3">
-                                    <input type="checkbox">
-                                </div>
-                            </div>
-                            <div class="row" id="restaurant_location" style="height: 40%;">
-                                <div class="col-lg-12">
-                                    <p>Location</p>
-                                    <p>Distance 1 km</p>
-                                </div>
-                            </div>
-                            <div class="row" style="height: 30%;">
-                                <div class="col-lg-12">
-                                    <p>Min Delivery: $10   Delivery Fee: $5</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-6" id="restaurant_6" style="border: dashed;">
-                        <div class="col-lg-4" id="restaurant_picture">
-                            <h3>Picture</h3>
-                        </div>
-                        <div class="col-lg-8" id="restaurant_info">
-                            <div class="row" id="restaurant_name" style="height: 30%;">
-                                <div class="col-lg-9">
-                                    <h6>Restaurant Name</h6>
-                                </div>
-                                <div class="col-lg-3">
-                                    <input type="checkbox">
-                                </div>
-                            </div>
-                            <div class="row" id="restaurant_location" style="height: 40%;">
-                                <div class="col-lg-12">
-                                    <p>Location</p>
-                                    <p>Distance 1 km</p>
-                                </div>
-                            </div>
-                            <div class="row" style="height: 30%;">
-                                <div class="col-lg-12">
-                                    <p>Min Delivery: $10   Delivery Fee: $5</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {% endfor %}
+                {% else %}
+                <p>You haven't add any favorite restaurant.</p>
+                {% endif %}
                 </div>
             </div>
         </div>
@@ -230,7 +107,7 @@
 <div class="row">
     <nav aria-label="Page navigation">
         <ul class="pagination">
-            <li><a href="#" >First</a></li>
+            <li><a href="#">First</a></li>
             <li><a href="#">Previous</a></li>
             <li><a href="#">2</a></li>
             <li><a href="#">3</a></li>
@@ -240,3 +117,46 @@
         </ul>
     </nav>
 </div>
+
+{% block scripts %}
+    {{ block.super }}
+    <script>
+        $(document).ready(function () {
+            check_favorite();
+
+            {% for restaurant in restaurant_list %}
+            $("#{{ restaurant.id }}").change(function () {
+               var url;
+                if ($(this).is(":checked")) {
+                    url = "{% url 'add_favorite' restaurant.id %}";
+                    $.get(url, function (data) {
+                        alert(data)
+                        if (data == "Please log in first."){
+                            $("#{{ restaurant.id }}").attr('checked', false);
+                        }
+                    });
+                }
+                else {
+                    url = "{% url 'delete_favorite' restaurant.id %}";
+                    $.get(url,function (data) {
+                        alert(data)
+                        if (data == "Please log in first."){
+                            $("#{{ restaurant.id }}").attr('checked', false);
+                        }
+                    });
+                }
+            });
+            {% endfor %}
+        });
+
+        function check_favorite() {
+            {% for restaurant in restaurant_list %}
+                {% for customer_all in restaurant.customer_set.all %}
+                    {% if customer_all == customer %}
+                        $("#{{ restaurant.id }}").attr("checked", true);
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        }
+    </script>
+{% endblock %}

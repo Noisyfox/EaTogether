@@ -18,7 +18,8 @@
             </div>
             <div class="col-lg-6">
                 <div class="dropdown">
-                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                         Welcome, User!
                         <span class="caret"></span>
                     </button>
@@ -84,9 +85,11 @@
                         <p>Current Group: {{ restaurant.group_set.count }}</p>
                     </div>
                     <div class="col-lg-3">
+
                         <div class="row">
-                            <input type="checkbox">
+                            <input id="{{ restaurant.id }}" type="checkbox">
                         </div>
+
                         <div class="row">
                             <a href="{% url 'cust_restaurant_group' restaurant.id %}">Group Now!</a>
                         </div>
@@ -118,3 +121,47 @@
         </ul>
     </nav>
 </div>
+
+{% block scripts %}
+    {{ block.super }}
+    <script>
+        $(document).ready(function () {
+            check_favorite();
+
+            {% for restaurant in restaurant_list %}
+            $("#{{ restaurant.id }}").change(function () {
+               var url;
+                if ($(this).is(":checked")) {
+                    url = "{% url 'add_favorite' restaurant.id %}";
+                    $.get(url, function (data) {
+                        alert(data)
+                        if (data == "Please log in first."){
+                            $("#{{ restaurant.id }}").attr('checked', false);
+                        }
+                    });
+                }
+                else {
+                    url = "{% url 'delete_favorite' restaurant.id %}";
+                    $.get(url,function (data) {
+                        alert(data)
+                        if (data == "Please log in first."){
+                            $("#{{ restaurant.id }}").attr('checked', false);
+                        }
+                    });
+                }
+            });
+            {% endfor %}
+        });
+
+        function check_favorite() {
+            {% for restaurant in restaurant_list %}
+                {% for customer_all in restaurant.customer_set.all %}
+                    {% if customer_all == customer %}
+                        $("#{{ restaurant.id }}").attr("checked", true);
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        }
+
+    </script>
+{% endblock %}
