@@ -11,7 +11,7 @@
             <div class="navbar navbar-default navbar-fixed-top" style="background: white;">
                 <div class="container">
                     <div class="row">
-                        <div class="col-lg-6">
+                        <div class="col-lg-8">
                             {% block address %}
                                 <h4>
                                     {{ address }}
@@ -19,7 +19,7 @@
                                 </h4>
                             {% endblock %}
                         </div>
-                        <div class="col-lg-6">
+                        <div class="col-lg-4">
                             {% if request.user.is_authenticated %}
                                 <div class="dropdown pull-right">
                                     <button class="btn btn-default dropdown-toggle"
