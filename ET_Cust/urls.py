@@ -24,5 +24,8 @@ urlpatterns = [
     url(r"^wallet/$",
         views.CustomerWalletView.as_view(template_name='ET_Cust/Customer Account (Profile & Wallet).html'),
         name='cust_wallet'),
-    url(r"^order/$", views.CustomerOrderView.as_view(template_name='ET_Cust/Customer Account (Order).html'), name='cust_oder')
+    url(r"^order/$", views.CustomerOrderView.as_view(template_name='ET_Cust/Customer Account (Order).html'), name='cust_oder'),
+
+    # URL used to handle AJAX
+    url(r"^count_people/(?P<group_id>[0-9]+)/$", views.count_people, name='count_people')
 ]

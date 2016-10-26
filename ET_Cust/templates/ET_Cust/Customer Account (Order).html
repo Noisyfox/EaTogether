@@ -392,9 +392,4 @@
         </div>
     </div>
 
-    {% for order in order_list %}
-        {% for eat in order.orderfood_set.all %}
-            {{ eat.food.id }}
-        {% endfor %}
-    {% endfor %}
 {% endblock %}
