@@ -16,7 +16,7 @@
             {% for restaurant in restaurant_list %}
                 <div class="row">
                     <div class="col-lg-3">
-                        <img src="{% static "img_owner/brand_et_piconly.png" %}" height="200px" class="pull-right"/>
+                        <img src="{{ restaurant.logo.url }}" height="200px" class="pull-right"/>
                     </div>
                     <div class="col-lg-3">
                         <div class="row">

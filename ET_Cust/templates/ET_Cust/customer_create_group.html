@@ -1,45 +1,11 @@
-{% extends "ET_Cust/base.html" %}
+{% extends "ET_Cust/base_restaurant.html" %}
 
 {% load i18n %}
 {% load static %}
 {% load crispy_forms_tags %}
 
-{% block head_title %}Login{% endblock %}
-
-{% block  title %} dsafdasfadfa{% endblock %}
-{% block body %}
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-lg-4">
-                <a><img src="{% static "img_owner/brand_et_piconly.png" %}" height="200px" class="pull-right"/>
-                </a>
-            </div>
-            <div class="col-lg-4">
-                <div class="row">
-                    <div class="col-lg-12;show-more-content"
-                         style="height: 300px; width: 360px; text-overflow:ellipsis; overflow: hidden">
-                        <span style="font-size: 230%; color: #ffb725">{{ restaurant.name }}</span>
-                        <p>{{ restaurant.address }}</p>
-                        <span style="font-size: 150%; color: #bd881b">{{ restaurant.introduction }}</span>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-4">
-                <div class="row">
-                    <span style="color: #ffb725; font-size: 200%">Delivery Info. of Restaurant:</span>
-                    <div class="col-lg-12">
-                        <p>{{ restaurant.restaurantserviceinfo.announcement }}</p>
-                        <p>Min Delivery: {{ restaurant.restaurantserviceinfo.min_delivery }}$</p>
-                        <p>Delivery Fee: {{ restaurant.restaurantserviceinfo.delivery_fee }}$</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </br>
-        <div class="row">{% crispy form %}</div>
-    </div>
-
-    </div>
+{% block restaurant_content %}
+    {% crispy form %}
 {% endblock %}
 
 {% block scripts %}

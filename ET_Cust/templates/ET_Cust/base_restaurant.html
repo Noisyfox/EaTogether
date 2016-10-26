@@ -1,0 +1,51 @@
+{% extends "ET_Cust/base.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head_title %}{{ restaurant.name }}{% endblock %}
+
+{% block  title %} dsafdasfadfa{% endblock %}
+{% block body %}
+    <div class="row">
+        <div class="col-lg-3">
+            <img src="{{ restaurant.logo.url }}" height="200px" class="pull-right"/>
+        </div>
+        <div class="col-lg-6"
+             style="text-overflow:ellipsis; overflow: hidden">
+            <span style="font-size: 230%; color: #ffb725">{{ restaurant.name }}</span>
+            <p>{{ restaurant.address }}</p>
+            <span style="font-size: 150%; color: #bd881b">{{ restaurant.introduction }}</span>
+        </div>
+        {% with restaurant.restaurantserviceinfo as service %}
+            <div class="col-lg-3" style="height: 200px">
+                <div class="panel panel-warning" style="border-color: #ffeca4; height: 200px">
+                    <div class="panel-heading">
+                        <p style="border-color: #ffe027;font-family: Calibri;line-height: 30px;font-size: 120%"
+                           align="center" class="list-group-item-text">Delivery Detail</p>
+                    </div>
+                    <div class="panel-body">
+                        <p style="font-family: Calibri;line-height: 30px;font-size: 120%"
+                           class="list-group-item-text">Min. Delivery: {{ service.min_delivery }}$</p>
+                        <p style="font-family: Calibri;line-height: 30px;font-size: 120%"
+                           class="list-group-item-text">Delivery Fee: {{ service.delivery_fee }}$</p>
+                        <c style="font-family: Calibri;line-height: 30px;font-size: 120%"
+                           class="list-group-item-text">Discount:
+                        </c>
+                        <c style="font-family: Calibri;line-height: 30px;font-size: 100%"
+                           class="list-group-item-text">Actually, this is what we want, isn't it?
+                        </c>
+                    </div>
+                </div>
+            </div>
+        {% endwith %}
+    </div>
+
+    <div class="row">
+        <hr/>
+    </div>
+
+    <div class="row">
+        {% block restaurant_content %}{% endblock %}
+    </div>
+{% endblock %}
