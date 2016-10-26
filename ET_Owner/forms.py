@@ -1,9 +1,10 @@
-from betterforms.multiform import MultiModelForm
+from crispy_forms.bootstrap import FormActions
+from crispy_forms.layout import Submit, Layout, Fieldset
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
-from ET.forms import LoginPhoneNumberForm, RegisterForm
-from ET.models import Restaurant, ValidationInformation
+from ET.forms import LoginPhoneNumberForm, RegisterForm, FormMixin
+from ET.models import Restaurant, Food, Courier
 
 GROUP = 'owner'
 
@@ -16,10 +17,11 @@ class OwnerLoginForm(LoginPhoneNumberForm):
     group = GROUP
 
 
-class RestaurantGeneralInformationForm(forms.ModelForm):
+class RestaurantEditForm(FormMixin, forms.ModelForm):
     class Meta:
         model = Restaurant
-        fields = ['name', 'contact_name', 'contact_number', 'introduction', 'address', 'location', 'logo']
+        fields = ['name', 'contact_name', 'contact_number', 'introduction', 'address', 'location', 'logo',
+                  'id_number', 'id_photo', 'business_license']
         labels = {
             'name': _('Restaurant Name'),
             'contact_name': _('Contact Name'),
@@ -30,15 +32,73 @@ class RestaurantGeneralInformationForm(forms.ModelForm):
             'logo': _('Logo'),
         }
 
+    def __init__(self, *args, **kwargs):
+        super(RestaurantEditForm, self).__init__(*args, **kwargs)
+        self.helper.form_id = 'restaurant_form'
 
-class RestaurantValidInformationForm(forms.ModelForm):
+        self.helper.layout = Layout(
+            Fieldset(
+                'General Information',
+                'name', 'contact_name', 'contact_number', 'introduction', 'address', 'location', 'logo',
+            ),
+            Fieldset(
+                'Sufficient Valid Information',
+                'id_number', 'id_photo', 'business_license'
+            ),
+            FormActions(
+                Submit('save', 'Save')
+            )
+        )
+
+
+class FoodEditForm(FormMixin, forms.ModelForm):
     class Meta:
-        model = ValidationInformation
-        fields = ['id_number', 'id_photo', 'business_license']
+        model = Food
+        fields = ['name', 'introduction', 'picture', 'price']
+
+    def __init__(self, *args, **kwargs):
+        super(FoodEditForm, self).__init__(*args, **kwargs)
+        self.helper.form_id = 'food_form'
+
+        self.helper.add_input(Submit('save', 'Save'))
 
 
-class RestaurantInformationForm(MultiModelForm):
-    form_classes = {
-        'general': RestaurantGeneralInformationForm,
-        'valid': RestaurantValidInformationForm,
-    }
+class CourierEditForm(FormMixin, forms.Form):
+    name = forms.CharField(
+        label=_('Courier Name'),
+        max_length=20,
+        widget=forms.TextInput(),
+        strip=True,
+        required=True
+    )
+    login_id = forms.CharField(
+        label=_('Login Id'),
+        max_length=20,
+        widget=forms.TextInput(),
+        strip=True,
+        required=True
+    )
+    password = forms.CharField(
+        label=_("Password"),
+        widget=forms.TextInput(),
+        required=True
+    )
+
+    def __init__(self, *args, **kwargs):
+        super(CourierEditForm, self).__init__(*args, **kwargs)
+        self.helper.form_id = 'courier_form'
+
+        self.helper.add_input(Submit('save', 'Save'))
+
+
+class FoodDeliveryForm(FormMixin, forms.Form):
+    courier = forms.ModelChoiceField(Courier.objects.none())
+
+    def __init__(self, *args, **kwargs):
+        couriers = kwargs.pop('couriers')
+        super(FoodDeliveryForm, self).__init__(*args, **kwargs)
+        self.helper.form_id = 'courier_form'
+
+        self.helper.add_input(Submit('start', 'Start Delivery'))
+
+        self.fields['courier'].queryset = couriers

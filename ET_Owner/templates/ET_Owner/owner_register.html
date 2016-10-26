@@ -1,60 +1,31 @@
-{% extends "site_base.html" %}
+{% extends "ET_Owner/base.html" %}
 
 {% load i18n %}
 {% load static %}
+{% load crispy_forms_tags %}
 
 {% block head_title %}
     Thia is the owner register page.
 {% endblock %}
 
-{% block body%}
-    <div class="row" style="background: url('{{ STATIC_URL }}img_owner/flower.gif') no-repeat;">
-        <div>
-            <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
-            <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat Now, Eat Together - Owner Login</a>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-        </div>
-    </div>
+{% block topbar_label %}Owner Register{% endblock %}
 
+{% block body %}
     <div class="Page_title">
-        <a input style="font-family: Calibri; font-size: 300% ; color: #ffb125; " class="Page_title""> Register Information
+        <a input style="font-family: Calibri; font-size: 300% ; color: #ffb125; " class="Page_title""> Register
+        Information
         </a>
     </div>
 
-    <form method="post" action="../">
-        <a input style="font-family: Calibri;line-height: 30px"> Name*
-        </a>
-        </br>
-        <input type="text" id="register_given_name_r" name="given_name_r" placeholder="Given Name" />
-        <input type="text" id="register_family_name_r" name="family_name_r" placeholder="Family Name" />
-        </br>
-        <a input style="font-family: Calibri;line-height: 30px"> Phone Number*
-        </a>
-        </br>
-        <input type="text" id="register_phone_r" name="phone_r" placeholder="Phone Number" />
-        <button style="width: 180px; height: 30px ;background-color: #ffea2e" type="submit" class="btn" value="Send Verify SMS" />Send verify code
-        </button>
-        </br>
-        <a input style="font-family: Calibri;line-height: 30px"> Verify Code*
-        </a>
-        </br>
-        <input type="text" id="register_verify_r" name="verify_r" placeholder="Verify Number" />
-        </br>
-        <a input style="font-family: Calibri;line-height: 30px"> Password*
-        </a>
-        </br>
-        <input type="password" id="login_password_r" name="password_r" placeholder="password" />
-        </br>
-        <input style="width: 180px; height: 70px ;background-color: #ec971f;" type="submit" class="btn" name="verify" value="I'm not a robot" />
-        <button type="submit";input style="width: 180px;height: 70px;background-color: #ffea2e">Submit
-        </button>
-        </br>
-    </form>
+    {% crispy form %}
 {% endblock %}
 
 
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#id_first_name').focus();
+        });
+    </script>
+{% endblock %}

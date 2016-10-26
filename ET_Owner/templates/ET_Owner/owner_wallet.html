@@ -1,0 +1,30 @@
+{% extends "ET_Owner/base_nav.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head_title %}
+    Thia is the owner wallet page.
+{% endblock %}
+
+{% block topbar_label %}My Wallet{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-lg-12">
+            <p style="font-family: Calibri;line-height: 90px;font-size: 160%"> Congratulations. Your income is: {{ user.owner.money }}$.
+            </p>
+            <table>
+                <tr>
+                    <th>
+                    </th>
+                </tr>
+            </table>
+            <a href="?" class="btn btn-primary" style="width: 120px;height: 30px;background-color: #ffa82f">Withdraw Now
+            </a>
+        </div>
+    </div>
+
+
+{% endblock %}
+

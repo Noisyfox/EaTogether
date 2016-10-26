@@ -24,12 +24,12 @@
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                         <li><a href="#">Notification (3)</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url "customer account order" %}">My Order</a></li>
-                        <li><a href="{% url "customer account favourite" %}">My Favourites</a></li>
+                        <li><a href="">My Order</a></li>
+                        <li><a href="">My Favourites</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url "customer account profile&wallet" %}">Profile & Wallet</a></li>
+                        <li><a href="">Profile & Wallet</a></li>
                         <li role="separator" class="divider"></li>
-                        <li><a href="{% url "customer login" %}">Logout</a></li>
+                        <li><a href="">Logout</a></li>
                     </ul>
                 </div>
             </div>
@@ -47,16 +47,17 @@
         <div class="row" style="border: dashed; margin-top: 3%;">
             <div class="col-lg-2" style="border-right: dashed;">
                 <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation"><a href="{% url "customer account order" %}">My Order</a></li>
-                    <li role="presentation"><a href="{% url "customer account favourite" %}">My Favourites</a></li>
-                    <li role="presentation"><a href="{% url "customer account profile&wallet" %}">Profile&Wallet</a></li>
+                    <li role="presentation"><a href="">My Order</a></li>
+                    <li role="presentation"><a href="">My Favourites</a></li>
+                    <li role="presentation"><a href="">Profile&Wallet</a></li>
                 </ul>
             </div>
             <div class="col-lg-10">
                 <div class="row">
                     <div class="col-lg-6">
-                        <h1>$99999999 Available</h1>
-                        <h4>$15 Under Processing</h4>
+                        <h1>{{ customer.available_balance }} Available</h1>
+                        <h4>{{ customer.frozen_balance }} Under Processing</h4>
+                        {{ k }}
                     </div>
                     <div class="col-lg-6" style="border-left: dashed;">
                         <button type="submit">Top Up now</button>

@@ -5,9 +5,32 @@ from django.shortcuts import redirect
 from django.views.generic import FormView
 
 
-class RegisterView(FormView):
-    form_kwargs = {}
+class RedirectFormViewMixin(object):
     redirect_field_name = 'next'
+
+    def get_form_kwargs(self):
+        redirect_field_name = self.get_redirect_field_name()
+        kwargs = super(RedirectFormViewMixin, self).get_form_kwargs()
+        kwargs.update({
+            "redirect_field_name": redirect_field_name,
+            "redirect_field_value": self.request.POST.get(redirect_field_name,
+                                                          self.request.GET.get(redirect_field_name, "")), })
+        return kwargs
+
+    def get_redirect_field_name(self):
+        return self.redirect_field_name
+
+    def get_success_url(self, **kwargs):
+        redirect_field_name = self.get_redirect_field_name()
+        next_url = self.request.POST.get(redirect_field_name, self.request.GET.get(redirect_field_name))
+
+        if not next_url:
+            next_url = super(RedirectFormViewMixin, self).get_success_url(**kwargs)
+        return next_url
+
+
+class RegisterView(RedirectFormViewMixin, FormView):
+    form_kwargs = {}
 
     def __init__(self, **kwargs):
         self.created_user = None
@@ -15,17 +38,11 @@ class RegisterView(FormView):
 
     def dispatch(self, request, *args, **kwargs):
         self.request = request
-        self.args = args
-        self.kwargs = kwargs
         return super(RegisterView, self).dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         ctx = super(RegisterView, self).get_context_data(**kwargs)
-        redirect_field_name = self.get_redirect_field_name()
         ctx.update({
-            "redirect_field_name": redirect_field_name,
-            "redirect_field_value": self.request.POST.get(redirect_field_name,
-                                                          self.request.GET.get(redirect_field_name, "")),
             "register_url": self.get_register_url(),
         })
         return ctx
@@ -48,42 +65,26 @@ class RegisterView(FormView):
 
         return redirect(success_url)
 
-    def get_success_url(self, **kwargs):
-        redirect_field_name = self.get_redirect_field_name()
-        next_url = self.request.POST.get(redirect_field_name, self.request.GET.get(redirect_field_name))
-
-        if not next_url:
-            next_url = super(RegisterView, self).get_success_url()
-        return next_url
-
-    def get_redirect_field_name(self):
-        return self.redirect_field_name
-
     def create_user(self, form, commit=True, **kwargs):
         raise NotImplementedError
 
     def login_user(self):
         user = self.created_user
-        auth.login(self.request, user)
+        auth.login(self.request, user, backend='ET.auth_backends.UniversalAuthenticationBackend')
         self.request.session.set_expiry(0)
 
     def get_register_url(self):
         raise NotImplementedError
 
 
-class LoginView(FormView):
+class LoginView(RedirectFormViewMixin, FormView):
     # template_name = 'account/login.html'
     # form_class = None
     form_kwargs = {}
-    redirect_field_name = 'next'
 
     def get_context_data(self, **kwargs):
         ctx = super(LoginView, self).get_context_data(**kwargs)
-        redirect_field_name = self.get_redirect_field_name()
         ctx.update({
-            "redirect_field_name": redirect_field_name,
-            "redirect_field_value": self.request.POST.get(redirect_field_name,
-                                                          self.request.GET.get(redirect_field_name, "")),
             "login_url": self.get_login_url(),
             "password_reset_url": self.get_password_reset_url(),
             "signup_url": self.get_signup_url(),
@@ -104,17 +105,6 @@ class LoginView(FormView):
             )
 
         return redirect(success_url)
-
-    def get_success_url(self, **kwargs):
-        redirect_field_name = self.get_redirect_field_name()
-        next_url = self.request.POST.get(redirect_field_name, self.request.GET.get(redirect_field_name))
-
-        if not next_url:
-            next_url = super(LoginView, self).get_success_url()
-        return next_url
-
-    def get_redirect_field_name(self):
-        return self.redirect_field_name
 
     def login_user(self, form):
         auth.login(self.request, form.user)

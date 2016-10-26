@@ -1,0 +1,158 @@
+{% extends "ET_Owner/base_nav.html" %}
+
+{% load i18n %}
+{% load static %}
+
+{% block head_title %}
+    Thia is the owner orders page.
+{% endblock %}
+
+{% block topbar_label %}Orders From Customers{% endblock %}
+
+{% block body %}
+    {% for order in orders %}
+        <div class="thumbnail" style="border-color: #f2d798">
+            <div class="list-unstyled">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p style="font-family: Calibri;line-height: 20px; color: #636363; font-size: 120%"
+                        >&nbsp;Order ID:</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p style="font-family: Calibri;line-height: 20px; color: #636363; font-size: 120%"
+                        >&nbsp;Group ID:</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p style="font-family: Calibri;line-height: 20px; color: #636363; font-size: 120%"
+                        >&nbsp;Order Time: {{ order.submit_time }}</p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-sm-10">
+                        <p style="font-family: Calibri;line-height: 20px; color: #636363; font-size: 120%"
+                        >&nbsp;Destination: {{ order.group.destination }}</p>
+                    </div>
+                    {% if not order.accepted %}
+                        <div class="col-sm-2">
+                            <a style="width: 120px;height: 30px;background-color: #ffe027; border: medium"
+                               class="btn btn-primary pull-right" href="{% url 'owner_order_accept' order.pk %}"
+                            >Accept
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+
+            </div>
+            <br/>
+            <br/>
+
+            <div class="row">
+                <div style=" border-right: solid; border-width: 1px; border-color: #f2d798"
+                     class="col-sm-4">
+                    <ul class="list-unstyled">
+                        {% for order_p in order.personal_orders %}
+                            <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
+                                   class="list-group-item-text">User {{ order_p.customer.phone_number }}</p>
+                            </li>
+                            <li>
+                                <ul>
+                                    {% for food in order_p.foods %}
+                                        <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
+                                               class="list-group-item-text"
+                                        >{{ food.food.name }} * {{ food.count }}: {{ food.price }}$</p>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+
+
+                <div style="border-right: solid; border-width: 1px; border-color: #f2d798"
+                     class="col-sm-3">
+                    <ul class="list-unstyled">
+                        <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
+                               class="list-group-item-text"
+                        >Total(without discount): {{ order.price_food }}$</p>
+                        </li>
+
+                        <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
+                               class="list-group-item-text"
+                        >Delivery Fee: {{ order.price_delivery }}$</p>
+                        </li>
+                        <li>
+                            <hr style="border-color: #f2d798">
+                        </li>
+                        <li><p style="font-family: Calibri;line-height: 30px;font-size: 120%"
+                               class="list-group-item-text"
+                        >Total: {{ order.price_total }}$</p>
+                        </li>
+                    </ul>
+                </div>
+
+
+                <div class="col-sm-5" style="padding: 0">
+                    <div class="container">
+                        <table style="width: 29%"
+                               class="table table-striped">
+                            <tbody>
+                            <tr>
+                                <td style="font-size: 20%; color: #414141">Group Created</td>
+                                <td style="font-size: 20%; color: #414141">{{ order.group.create_time }}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-size: 20%; color: #414141">Group Time Exceed</td>
+                                <td style="font-size: 20%; color: #414141">{{ order.group.exceed_time }}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-size: 20%; color: #414141">Order Accepted</td>
+                                <td style="font-size: 20%; color: #414141">{{ order.accept_time|default_if_none:'N/A' }}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-size: 20%; color: #414141">Delivery Started</td>
+                                <td style="font-size: 20%; color: #414141">{{ order.delivery_start_time|default_if_none:'N/A' }}</td>
+                            </tr>
+
+                            <tr>
+                                <td style="font-size: 20%; color: #414141">Delivery Confirmed</td>
+                                <td style="font-size: 20%; color: #414141">{{ order.confirm_delivery_time|default_if_none:'N/A' }}</td>
+                            </tr>
+                            </tbody>
+
+                            {% if order.accepted %}
+                                {% if not order.delivery_started %}
+                                    <tr style="background-color: transparent">
+                                        <td>
+                                        </td>
+                                        <td>
+                                            <a style="width: 150px;height: 30px;background-color: #ffe027; border: medium"
+                                               class="btn btn-primary center-block"
+                                               href="{% url 'owner_order_delivery' order.pk %}"
+                                            >Start Delivery
+                                            </a>
+                                        </td>
+                                    </tr>
+                                {% elif not order.finished %}
+                                    <tr style="background-color: transparent">
+                                        <td colspan="2">
+                                            <span>Delivering by {{ order.courier }}</span>
+                                        </td>
+                                    </tr>
+                                {% endif %}
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+
+
+{% endblock %}
+
+

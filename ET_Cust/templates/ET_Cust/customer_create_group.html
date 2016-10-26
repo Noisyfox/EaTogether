@@ -4,7 +4,7 @@
 
 {% load i18n %}
 {% load static %}
-{% load bootstrap %}
+{% load crispy_forms_tags %}
 
 {% block head_title %}Login{% endblock %}
 
@@ -52,11 +52,7 @@
             </div>
         </div>
 
-        <form action="." method="post">
-            {% csrf_token %}
-            {{ form|bootstrap}}
-            <input type="submit" value="Create">
-        </form>
+        {% crispy form %}
     </div>
 {% endblock %}
 

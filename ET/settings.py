@@ -5,13 +5,26 @@ PACKAGE_ROOT = os.path.abspath(os.path.dirname(__file__))
 BASE_DIR = PACKAGE_ROOT
 
 DEBUG = True
+DEPLOY = False
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.contrib.gis.db.backends.spatialite",
-        "NAME": "dev.db",
+if DEPLOY:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.contrib.gis.db.backends.postgis",
+            'NAME': 'DB NAME',
+            'USER': 'DB USER',
+            'PASSWORD': 'DB PSW',
+            'HOST': 'localhost',
+            'PORT': '',
+        }
     }
-}
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.contrib.gis.db.backends.spatialite",
+            "NAME": "dev.db",
+        }
+    }
 
 ALLOWED_HOSTS = []
 
@@ -28,7 +41,7 @@ TIME_ZONE = "UTC"
 # http://www.i18nguy.com/unicode/language-identifiers.html
 LANGUAGE_CODE = "en-us"
 
-SITE_ID = int(os.environ.get("SITE_ID", 1))
+SITE_ID = int(os.environ.get("SITE_ID", 2 if DEPLOY else 1))
 
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
@@ -130,10 +143,8 @@ INSTALLED_APPS = [
     "django.contrib.gis",
 
     # theme
-    "bootstrapform",
     "pinax_theme_bootstrap",
-
-    "betterforms",
+    'crispy_forms',
 
     # project
     "ET",
@@ -143,6 +154,10 @@ INSTALLED_APPS = [
     "ET_Owner",
 
     "location_field",
+    'djcelery',
+
+    # tools
+    "mathfilters"
 ]
 
 # A sample logging configuration. The only tangible logging
@@ -182,6 +197,7 @@ EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 AUTHENTICATION_BACKENDS = [
     'ET.auth_backends.UniversalAuthenticationBackend',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
@@ -189,5 +205,13 @@ SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
 GOOGLE_MAPS_V3_APIKEY = 'AIzaSyD8yC2qzzlufDZva6mc_d1QXi94XiMgu5k'
 GOOGLE_MAPS_LIBRARIES = ['places']
 
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
 # Change the serializer of the session
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+# Celery settings
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
+BROKER_URL = 'redis://localhost:6379/0'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
