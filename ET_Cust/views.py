@@ -4,8 +4,9 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as UserGroup
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import GEOSGeometry
+from django.http import Http404
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.utils.decorators import method_decorator
 from django.utils import timezone
 from django.template import RequestContext
@@ -50,6 +51,25 @@ class AddressRequiredMixin(AddressMixin):
             return HttpResponseRedirect(reverse_lazy('cust_search'))
 
         return super(AddressRequiredMixin, self).get(request, *args, **kwargs)
+
+
+class RestaurantQueryMixin(QueryMixin):
+    _restaurant = None
+
+    def do_query(self, request, *args, **kwargs):
+        self._restaurant = get_object_or_404(Restaurant, pk=kwargs['restaurant_id'])
+
+    def get_context_data(self, **kwargs):
+        context = super(RestaurantQueryMixin, self).get_context_data(**kwargs)
+        context['restaurant'] = self._restaurant
+        return context
+
+    @property
+    def restaurant(self):
+        if not self._restaurant:
+            raise Http404('Unknown restaurant.')
+
+        return self._restaurant
 
 
 class CustomerRegisterView(RegisterView):
@@ -146,23 +166,18 @@ class CustomerMainPageView(AddressRequiredMixin, ListView):
         return super(CustomerMainPageView, self).dispatch(request, *args, **kwargs)
 
 
-class CustomerRestaurantGroupView(CustomerRequiredMixin, AddressMixin, ListView):
+class CustomerRestaurantGroupView(CustomerRequiredMixin, RestaurantQueryMixin, AddressMixin, ListView):
     template_name = 'ET_Cust/customer_restaurant_group_page.html'
     model = Group
     context_object_name = 'group_list'
 
-    def get_context_data(self, **kwargs):
-        context = super(CustomerRestaurantGroupView, self).get_context_data(**kwargs)
-        context['restaurant'] = Restaurant.objects.get(pk=self.kwargs['restaurant_id'])
-        return context
-
     def get_queryset(self, **kwargs):
         queryset = super(CustomerRestaurantGroupView, self).get_queryset(**kwargs)
-        queryset = queryset.filter(restaurant=self.kwargs['restaurant_id']).filter(status='G')
+        queryset = queryset.filter(restaurant=self.restaurant).filter(status='G')
         return queryset
 
 
-class CustomerCreateGroupView(CustomerRequiredMixin, AddressMixin, CreateView):
+class CustomerCreateGroupView(CustomerRequiredMixin, RestaurantQueryMixin, AddressMixin, CreateView):
     template_name = 'ET_Cust/customer_create_group.html'
     model = Group
     fields = ['destination', 'location', 'group_time']
@@ -176,7 +191,7 @@ class CustomerCreateGroupView(CustomerRequiredMixin, AddressMixin, CreateView):
 
     def form_valid(self, form, **kwargs):
         group = form.save(commit=False)
-        group.restaurant = Restaurant.objects.get(pk=self.kwargs['restaurant_id'])
+        group.restaurant = self.restaurant
         group.save()
 
         on_group_created(group)
@@ -184,20 +199,19 @@ class CustomerCreateGroupView(CustomerRequiredMixin, AddressMixin, CreateView):
         return super(CustomerCreateGroupView, self).form_valid(form)
 
 
-class CustomerRestaurantMenuView(CustomerRequiredMixin, AddressMixin, ListView):
+class CustomerRestaurantMenuView(CustomerRequiredMixin, RestaurantQueryMixin, AddressMixin, ListView):
     template_name = 'ET_Cust/customer_restaurant_menu_page.html'
     model = Food
     context_object_name = 'food_list'
 
     def get_context_data(self, **kwargs):
         context = super(CustomerRestaurantMenuView, self).get_context_data(**kwargs)
-        context['food_list'] = context['food_list'].filter(restaurant__id=self.kwargs['restaurant_id'])
-        context['restaurant'] = Restaurant.objects.get(pk=self.kwargs['restaurant_id'])
+        context['food_list'] = context['food_list'].filter(restaurant=self.restaurant)
         context['group'] = self.kwargs['group_id']
         return context
 
 
-class CustomerRestaurantCheckOutView(CustomerRequiredMixin, AddressMixin, ListView):
+class CustomerRestaurantCheckOutView(CustomerRequiredMixin, RestaurantQueryMixin, AddressMixin, ListView):
     template_name = 'ET_Cust/customer_restaurant_checkout_page.html'
     model = OrderFood
     context_object_name = 'orderfood_list'
@@ -213,13 +227,12 @@ class CustomerRestaurantCheckOutView(CustomerRequiredMixin, AddressMixin, ListVi
             order['quantity_' + str(k)] = request.POST['quantity_' + str(k)]
             order['amount_' + str(k)] = request.POST['amount_' + str(k)]
             self.frozen_price = self.frozen_price + int(order['quantity_' + str(k)]) * int(order['amount_' + str(k)])
-        restaurant = Restaurant.objects.get(pk=kwargs['restaurant_id'])
         group = Group.objects.get(pk=kwargs['group_id'])
         # The actual price for the food.
         price = self.frozen_price
         order['price'] = price
         # The price which need to be frozen.
-        self.frozen_price = self.frozen_price + restaurant.restaurantserviceinfo.delivery_fee
+        self.frozen_price = self.frozen_price + self.restaurant.restaurantserviceinfo.delivery_fee
         if self.request.user.customer.available_balance < self.frozen_price:
             error['top_up_information'] = "You don't have enough balance, please top up first"
             return render(request, self.template_name, error)
@@ -234,7 +247,7 @@ class CustomerRestaurantCheckOutView(CustomerRequiredMixin, AddressMixin, ListVi
             self.personal_order_id = new_personal_order.id
             for k in range(1, k + 1):
                 new_order_food = OrderFood.objects.create(count=order['quantity_' + str(k)],
-                                                          food_id=Food.objects.filter(restaurant=restaurant.id).get(
+                                                          food_id=Food.objects.filter(restaurant=self.restaurant).get(
                                                               name=order['item_name_' + str(k)]).id,
                                                           personal_order_id=self.personal_order_id)
             return self.get(self, request, *args, **kwargs)
@@ -246,8 +259,7 @@ class CustomerRestaurantCheckOutView(CustomerRequiredMixin, AddressMixin, ListVi
 
     def get_context_data(self, **kwargs):
         context = super(CustomerRestaurantCheckOutView, self).get_context_data(**kwargs)
-        context['delivery_fee'] = Restaurant.objects.get(
-            pk=self.kwargs['restaurant_id']).restaurantserviceinfo.delivery_fee
+        context['delivery_fee'] = self.restaurant.restaurantserviceinfo.delivery_fee
         context['price'] = self.frozen_price
         return context
 
