@@ -30,19 +30,33 @@ from bootstrap3_duration.widgets import DurationPicker
 
 class AddressMixin(QueryMixin):
     _address = None
+    _location = None
 
     def do_query(self, request, *args, **kwargs):
-        if 'address' in request.session:
+        if 'address' in request.session and 'location' in request.session:
             self._address = request.session['address']
+            self._location = request.session['location']
 
     def get_context_data(self, **kwargs):
         context = super(AddressMixin, self).get_context_data(**kwargs)
         context['address'] = self._address
+        context['location'] = self._location
         return context
 
     @property
     def address(self):
         return self._address
+
+    @property
+    def location(self):
+        return self._location
+
+    def set_address(self, address, location):
+        self._address = address
+        self._location = location
+
+        self.request.session['address'] = address
+        self.request.session['location'] = location
 
 
 class AddressRequiredMixin(AddressMixin):
@@ -53,10 +67,12 @@ class AddressRequiredMixin(AddressMixin):
         return super(AddressRequiredMixin, self).get(request, *args, **kwargs)
 
 
-class RestaurantQueryMixin(QueryMixin):
+class RestaurantQueryMixin(AddressMixin):
     _restaurant = None
 
     def do_query(self, request, *args, **kwargs):
+        super(RestaurantQueryMixin, self).do_query(request, *args, **kwargs)
+
         self._restaurant = get_object_or_404(Restaurant, pk=kwargs['restaurant_id'])
 
     def get_context_data(self, **kwargs):
@@ -117,20 +133,20 @@ class CustomerLoginView(LoginView):
         return reverse_lazy('cust_register')
 
 
-class CustomerSearchView(FormView):
+class CustomerSearchView(AddressMixin, FormView):
     form_class = CustomerSearchAddressForm
     template_name = 'ET_Cust/customer_search.html'
     success_url = reverse_lazy('cust_main_page')
 
     def get(self, request, *args, **kwargs):
-        if 'stay' not in request.GET and 'address' in self.request.session and 'location' in self.request.session:
+        if 'stay' not in request.GET and self.address and self.location:
             return HttpResponseRedirect(self.get_success_url())
 
         return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
-        self.request.session['address'] = form.cleaned_data['address']
-        self.request.session['location'] = form.cleaned_data['location']
+        self.set_address(form.cleaned_data['address'], form.cleaned_data['location'])
+
         return super(CustomerSearchView, self).form_valid(form)
 
 
@@ -160,13 +176,13 @@ class CustomerMainPageView(AddressRequiredMixin, ListView):
             return self.get(self, request, *args, **kwargs)
 
     def dispatch(self, request, *args, **kwargs):
-        location_search = GEOSGeometry(self.request.session['location'], srid=4326)
+        location_search = GEOSGeometry(self.location, srid=4326)
         self.queryset = Restaurant.objects.annotate(distance=Distance('location', location_search)).order_by('distance')
         self.queryset = self.queryset.annotate(favorite_restaurant=Distance('location', location_search))
         return super(CustomerMainPageView, self).dispatch(request, *args, **kwargs)
 
 
-class CustomerRestaurantGroupView(CustomerRequiredMixin, RestaurantQueryMixin, AddressMixin, ListView):
+class CustomerRestaurantGroupView(CustomerRequiredMixin, RestaurantQueryMixin, ListView):
     template_name = 'ET_Cust/customer_restaurant_group_page.html'
     model = Group
     context_object_name = 'group_list'
@@ -177,7 +193,7 @@ class CustomerRestaurantGroupView(CustomerRequiredMixin, RestaurantQueryMixin, A
         return queryset
 
 
-class CustomerCreateGroupView(CustomerRequiredMixin, RestaurantQueryMixin, AddressMixin, CreateView):
+class CustomerCreateGroupView(CustomerRequiredMixin, RestaurantQueryMixin, CreateView):
     template_name = 'ET_Cust/customer_create_group.html'
     model = Group
     fields = ['destination', 'location', 'group_time']
@@ -198,8 +214,17 @@ class CustomerCreateGroupView(CustomerRequiredMixin, RestaurantQueryMixin, Addre
 
         return super(CustomerCreateGroupView, self).form_valid(form)
 
+    def get_initial(self):
+        init = super().get_initial()
 
-class CustomerRestaurantMenuView(CustomerRequiredMixin, RestaurantQueryMixin, AddressMixin, ListView):
+        if self.location:
+            init['destination'] = self.address
+            init['location'] = self.location
+
+        return init
+
+
+class CustomerRestaurantMenuView(CustomerRequiredMixin, RestaurantQueryMixin, ListView):
     template_name = 'ET_Cust/customer_restaurant_menu_page.html'
     model = Food
     context_object_name = 'food_list'
@@ -211,7 +236,7 @@ class CustomerRestaurantMenuView(CustomerRequiredMixin, RestaurantQueryMixin, Ad
         return context
 
 
-class CustomerRestaurantCheckOutView(CustomerRequiredMixin, RestaurantQueryMixin, AddressMixin, ListView):
+class CustomerRestaurantCheckOutView(CustomerRequiredMixin, RestaurantQueryMixin, ListView):
     template_name = 'ET_Cust/customer_restaurant_checkout_page.html'
     model = OrderFood
     context_object_name = 'orderfood_list'
