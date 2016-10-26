@@ -1,0 +1,57 @@
+{% extends "ET_Cust/base_cust_no_topbar.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}Login{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-6" style="border: dashed; height: 600px;">
+            <div class="col-md-3"
+                 style="border: dashed; width: 60%;height: 50%; margin-top: 10%; margin-left: 20%;"></div>
+            <div class="col-md-2"
+                 style="border: dashed; width: 60%;height: 20%; margin-top: 5%; margin-left: 20%;"></div>
+            <div class="col-md-3" style="border: dashed; width: 60%; margin-top: 5%; margin-left: 20%;"><p
+                    class="text-center">Advertisement</p></div>
+        </div>
+        <div class="col-md-6" style="border: dashed; height: 600px;">
+            {% crispy form %}
+
+            {% if password_reset_url %}
+                <div class="Retrive_Password">
+                    <p align="center">
+                        <a input style="font-family: Calibri;line-height: 20px"> Don't worried if you </a>
+                        <a input style="font-family: Calibri;line-height: 20px" href="{{ password_reset_url }}"
+                           class="btn btn-link">forget password.</a>
+                    </p>
+                </div>
+            {% endif %}
+
+            {% if signup_url %}
+                <div class="Register">
+                    <p align="center">
+                        <a input style="font-family: Calibri;line-height: 20px; color: #101010"> Not a member yet? </a>
+                        <a input style="font-family: Calibri;line-height: 20px" href="{{ signup_url }}">Register
+                            now for free!</a>
+                        <br/>
+                        <br/>
+                        <br/>
+                        <br/>
+                    </p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#id_{{ form.identifier_field }}').focus();
+        });
+    </script>
+{% endblock %}

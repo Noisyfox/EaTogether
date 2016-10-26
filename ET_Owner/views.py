@@ -74,10 +74,6 @@ class OwnerLoginView(LoginView):
         return reverse_lazy('owner_register')
 
 
-class OwnerOrderListView(RestaurantRequiredMixin, TemplateView):
-    template_name = 'ET_Cust/homepage.html'
-
-
 class OwnerRestaurantEditView(OwnerRequiredMixin, UpdateView):
     model = Restaurant
     form_class = RestaurantEditForm

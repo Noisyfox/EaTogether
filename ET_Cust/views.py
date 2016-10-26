@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.models import Group as UserGroup
 from django.contrib.gis.db.models.functions import Distance
 from django.contrib.gis.geos import GEOSGeometry
+from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.utils import timezone
@@ -13,6 +14,7 @@ from django.views.generic import FormView, CreateView
 from django.views.generic.list import ListView
 from django.urls import reverse_lazy
 from ET.forms import FormHelper
+from ET.mixins import QueryMixin
 from ET.models import Customer, Group, Restaurant, Food, OrderFood, PersonalOrder
 from ET.views import LoginView, RegisterView
 from ET_Cust.forms import CustomerLoginForm, CustomerRegisterForm, CustomerSearchRestaurantForm, \
@@ -24,9 +26,34 @@ from django.views.decorators.csrf import csrf_exempt
 from ET_Cust.tasks import on_group_created
 
 
+class AddressMixin(QueryMixin):
+    _address = None
+
+    def do_query(self, request, *args, **kwargs):
+        if 'address' in request.session:
+            self._address = request.session['address']
+
+    def get_context_data(self, **kwargs):
+        context = super(AddressMixin, self).get_context_data(**kwargs)
+        context['address'] = self._address
+        return context
+
+    @property
+    def address(self):
+        return self._address
+
+
+class AddressRequiredMixin(AddressMixin):
+    def get(self, request, *args, **kwargs):
+        if not self.address:
+            return HttpResponseRedirect(reverse_lazy('cust_search'))
+
+        return super(AddressRequiredMixin, self).get(request, *args, **kwargs)
+
+
 class CustomerRegisterView(RegisterView):
     form_class = CustomerRegisterForm
-    template_name = 'ET_Cust/register_test.html'
+    template_name = 'ET_Cust/customer_register.html'
     success_url = reverse_lazy('cust_search')
 
     def create_user(self, form, commit=True, **kwargs):
@@ -59,7 +86,7 @@ class CustomerRegisterView(RegisterView):
 
 class CustomerLoginView(LoginView):
     form_class = CustomerLoginForm
-    template_name = 'ET_Cust/login_test.html'
+    template_name = 'ET_Cust/customer_login.html'
     success_url = reverse_lazy('cust_search')
 
     def get_login_url(self):
@@ -74,13 +101,19 @@ class CustomerSearchView(FormView):
     template_name = 'ET_Cust/customer_search.html'
     success_url = reverse_lazy('cust_main_page')
 
+    def get(self, request, *args, **kwargs):
+        if 'stay' not in request.GET and 'address' in self.request.session and 'location' in self.request.session:
+            return HttpResponseRedirect(self.get_success_url())
+
+        return super().get(request, *args, **kwargs)
+
     def form_valid(self, form):
         self.request.session['address'] = form.cleaned_data['address']
         self.request.session['location'] = form.cleaned_data['location']
         return super(CustomerSearchView, self).form_valid(form)
 
 
-class CustomerMainPageView(ListView):
+class CustomerMainPageView(AddressRequiredMixin, ListView):
     template_name = 'ET_Cust/customer_main_page.html'
     model = Restaurant
     context_object_name = 'restaurant_list'
@@ -89,7 +122,6 @@ class CustomerMainPageView(ListView):
         context = super(CustomerMainPageView, self).get_context_data(**kwargs)
         form = CustomerSearchRestaurantForm()
         context['form'] = form
-        context['address'] = self.request.session['address']
         return context
 
     def post(self, request, *args, **kwargs):
@@ -106,7 +138,7 @@ class CustomerMainPageView(ListView):
         return super(CustomerMainPageView, self).dispatch(request, *args, **kwargs)
 
 
-class CustomerRestaurantGroupView(CustomerRequiredMixin, ListView):
+class CustomerRestaurantGroupView(CustomerRequiredMixin, AddressMixin, ListView):
     template_name = 'ET_Cust/customer_restaurant_group_page.html'
     model = Group
     context_object_name = 'group_list'
@@ -114,7 +146,6 @@ class CustomerRestaurantGroupView(CustomerRequiredMixin, ListView):
     def get_context_data(self, **kwargs):
         context = super(CustomerRestaurantGroupView, self).get_context_data(**kwargs)
         context['restaurant'] = Restaurant.objects.get(pk=self.kwargs['restaurant_id'])
-        context['address'] = self.request.session['address']
         return context
 
     def get_queryset(self, **kwargs):
@@ -123,7 +154,7 @@ class CustomerRestaurantGroupView(CustomerRequiredMixin, ListView):
         return queryset
 
 
-class CustomerCreateGroupView(CustomerRequiredMixin, CreateView):
+class CustomerCreateGroupView(CustomerRequiredMixin, AddressMixin, CreateView):
     template_name = 'ET_Cust/customer_create_group.html'
     model = Group
     fields = ['destination', 'location', 'group_time']
@@ -144,8 +175,8 @@ class CustomerCreateGroupView(CustomerRequiredMixin, CreateView):
         return super(CustomerCreateGroupView, self).form_valid(form)
 
 
-class CustomerRestaurantMenuView(CustomerRequiredMixin, ListView):
-    template_name = 'ET_Cust/customer_restaurant_menu_page_test.html'
+class CustomerRestaurantMenuView(CustomerRequiredMixin, AddressMixin, ListView):
+    template_name = 'ET_Cust/customer_restaurant_menu_page.html'
     model = Food
     context_object_name = 'food_list'
 
@@ -154,11 +185,10 @@ class CustomerRestaurantMenuView(CustomerRequiredMixin, ListView):
         context['food_list'] = context['food_list'].filter(restaurant__id=self.kwargs['restaurant_id'])
         context['restaurant'] = Restaurant.objects.get(pk=self.kwargs['restaurant_id'])
         context['group'] = self.kwargs['group_id']
-        # context['address'] = self.request.session['address']
         return context
 
 
-class CustomerRestaurantCheckOutView(CustomerRequiredMixin, ListView):
+class CustomerRestaurantCheckOutView(CustomerRequiredMixin, AddressMixin, ListView):
     template_name = 'ET_Cust/customer_restaurant_checkout_page.html'
     model = OrderFood
     context_object_name = 'orderfood_list'
@@ -213,7 +243,7 @@ class CustomerRestaurantCheckOutView(CustomerRequiredMixin, ListView):
         return context
 
 
-class CustomerWalletView(CustomerRequiredMixin, TemplateView):
+class CustomerWalletView(CustomerRequiredMixin, AddressMixin, TemplateView):
     template_name = 'ET_Cust/Customer Account (Profile & Wallet).html'
 
     def get_context_data(self, **kwargs):
@@ -222,7 +252,7 @@ class CustomerWalletView(CustomerRequiredMixin, TemplateView):
         return context
 
 
-class CustomerOrderView(CustomerRequiredMixin, ListView):
+class CustomerOrderView(CustomerRequiredMixin, AddressMixin, ListView):
     template_name = 'ET_Cust/Customer Account (Order).html'
     model = PersonalOrder
     context_object_name = "order_list"

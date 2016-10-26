@@ -1,25 +1,16 @@
-{% extends "site_base.html" %}
+{% extends "ET_Cust/base_cust.html" %}
 
 {% load i18n %}
-
-
 {% block head_title %}{% trans "Search" %}{% endblock %}
 
 {% block body %}
     {{ top_up_information }}
     {% if orderfood_list %}
         <h3>Pay Successfully</h3>
-    {% for orderfood in orderfood_list %}
-        <label>Name:</label>{{ orderfood.food.name }}<label>Quantity:</label>{{ orderfood.count }}<br>
-    {% endfor %}
-    <label>Delivery Fee:</label>{{ delivery_fee }}<br>
-    <label>Frozen Price:</label>{{ price }}<br>
+        {% for orderfood in orderfood_list %}
+            <label>Name:</label>{{ orderfood.food.name }}<label>Quantity:</label>{{ orderfood.count }}<br>
+        {% endfor %}
+        <label>Delivery Fee:</label>{{ delivery_fee }}<br>
+        <label>Frozen Price:</label>{{ price }}<br>
     {% endif %}
-
-
-{% endblock %}
-
-{% block scripts %}
-    {{ block.super }}
-    {{ form.media }}
 {% endblock %}
