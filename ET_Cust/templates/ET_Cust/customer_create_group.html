@@ -1,6 +1,4 @@
-
-
-{% extends "site_base.html" %}
+{% extends "ET_Cust/base_cust.html" %}
 
 {% load i18n %}
 {% load static %}
@@ -11,48 +9,81 @@
 {% block  title %} dsafdasfadfa{% endblock %}
 {% block body %}
     <div class="container-fluid">
-        <div class="row" style="border: dashed;">
-            <div class="col-lg-6">
-                <p>Current Selected Place</p>
-                <a href="{% url 'cust_search' %}"> Switch Place</a>
-            </div>
-            <div class="col-lg-6">
-                <button>Welcome, User!</button>
+        <div class="col-lg-6">
+            {{ address }}
+            <a href="{% url 'cust_search' %}"> Switch Place</a>
+        </div>
+        <div class="col-lg-6">
+            <div class="dropdown">
+                <button class="btn btn-default dropdown-toggle; pull-right"
+                        type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Welcome, User!
+                    <span class="caret"></span>
+                    <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                    <li><a href="#">Notification (3)</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="#">My Order</a></li>
+                    <li><a href="">My Favourites</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="">Profile & Wallet</a></li>
+                    <li role="separator" class="divider"></li>
+                    <li><a href="">Logout</a></li>
+                </ul>
             </div>
         </div>
+    </div>
+    </br>
+    <div class="row"  >
 
-        <div class="row" style="border: dashed;">
-            <div class="col-lg-3" id="restaurant_logo">
-                <h1>Picture: LOGO</h1>
-            </div>
-            <div class="col-lg-9" id="search_bar">
-                <input type="text" placeholder="Search...">
-                <button type="submit">Search</button>
-            </div>
+        <a class="fa-align-center">
+            <input type="text" placeholder="Search..."
+                   style="width: 1000px">
+            <button type="submit"
+                    style="background-color: #f9a127; border-color: transparent " class="btn btn-primary">Search</button>
+        </a>
+
+    </div>
+    </br>
+    <div class="row">
+        <div class="col-lg-4">
+            <a><img src="{% static "img_owner/brand_et_piconly.png" %}" height="200px" class="pull-right"/>
+            </a>
         </div>
-
-        <div class="row" style="border: dashed;">
-            <div class="col-lg-4">
-                <h3>LOGO</h3>
-            </div>
-            <div class="col-lg-8">
-                <div class="row">
-                    <div class="col-lg-9">
-                        <h6>Restaurant Name</h6>
-                    </div>
-                    <div class="col-lg-3">
-                        <input type="checkbox">
-                    </div>
+        <div class="col-lg-4">
+            <div class="row">
+                <div class="col-lg-12;show-more-content"
+                     style="height: 300px; width: 360px; text-overflow:ellipsis; overflow: hidden" >
+                    <a style="font-size: 230%; color: #ffb725">Restaurant Name{{ restaurant.name }}</a>
+                    <p>{{ restaurant.address }}</p>
+                    <a style="font-size: 150%; color: #bd881b">restaurant intro{{ restaurant.introduction }}</a>
                 </div>
-                <div class="row">
-                    <div class="col-lg-12" style="border: dashed; height: 50%;">
-                        <h3>Lalalalalalalalalalalalala</h3>
-                    </div>
+                </br>
+                <input type="checkbox">
+                <a style="color: #bd881b">tick to choose this restaurant</a>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="row" >
+                <a style="color: #ffb725; font-size: 200%">Delivery Info. of Restaurant:</a>
+                <div class="col-lg-12">
+                    <h6>Announcement</h6>
+                    <p>{{ restaurant.restaurantserviceinfo.announcement }}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <p>Min Delivery: {{ restaurant.restaurantserviceinfo.min_delivery }}</p>
+                    <p>Delivery Fee: {{ restaurant.restaurantserviceinfo.delivery_fee }}</p>
+                    <!-- <h6>Activities and Discounts</h6>
+                     <p>xxxxxxxxxxxxxxxxxxxxxx</p> -->
                 </div>
             </div>
         </div>
-
-        {% crispy form %}
+    </div>
+    </br>
+    <a style="color: #da8823">{% crispy form %}</a>
     </div>
 {% endblock %}
 
