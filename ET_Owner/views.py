@@ -24,7 +24,7 @@ from ET.mixins import QueryMixin
 from ET.models import Owner, Food, Restaurant, Courier, RestaurantServiceInfo, GroupOrder
 from ET.views import RegisterView, LoginView
 from ET_Owner.forms import OwnerRegisterForm, OwnerLoginForm, FoodEditForm, RestaurantEditForm, CourierEditForm, \
-    FoodDeliveryForm
+    FoodDeliveryForm, ServiceInfoEditForm
 from ET_Owner.mixins import RestaurantRequiredMixin, OwnerRequiredMixin
 
 
@@ -325,3 +325,12 @@ class OrderDeliveryView(RestaurantRequiredMixin, OrderQueryMixin, FormView):
             self.order.save()
 
         return super().form_valid(form)
+
+
+class ServiceInfoUpdateView(RestaurantRequiredMixin, UpdateView):
+    form_class = ServiceInfoEditForm
+    template_name = 'ET_Owner/owner_service_info_edit.html'
+    success_url = reverse_lazy('owner_menu')
+
+    def get_object(self, queryset=None):
+        return self.request.user.owner.restaurant.restaurantserviceinfo

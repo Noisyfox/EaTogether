@@ -4,7 +4,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 
 from ET.forms import LoginPhoneNumberForm, RegisterForm, FormMixin
-from ET.models import Restaurant, Food, Courier
+from ET.models import Restaurant, Food, Courier, RestaurantServiceInfo
 
 GROUP = 'owner'
 
@@ -102,3 +102,21 @@ class FoodDeliveryForm(FormMixin, forms.Form):
         self.helper.add_input(Submit('start', 'Start Delivery'))
 
         self.fields['courier'].queryset = couriers
+
+
+class ServiceInfoEditForm(FormMixin, forms.ModelForm):
+    class Meta:
+        model = RestaurantServiceInfo
+        fields = ['min_delivery', 'delivery_fee', 'announcement']
+
+        labels = {
+            'min_delivery': _('Min Delivery'),
+            'delivery_fee': _('Delivery Fee'),
+            'announcement': _('Announcement'),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(ServiceInfoEditForm, self).__init__(*args, **kwargs)
+        self.helper.form_id = 'service_info_form'
+
+        self.helper.add_input(Submit('save', _('Save')))

@@ -1,0 +1,24 @@
+{% extends "ET_Owner/base_nav.html" %}
+
+{% load i18n %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block head_title %}
+    Thia is the owner restaurant information page.
+{% endblock %}
+
+{% block topbar_label %}my restaurant information{% endblock %}
+
+{% block body%}
+    <div class="row">
+        <div class="col-lg-10">
+            {% crispy form %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    {{ form.media }}
+{% endblock %}

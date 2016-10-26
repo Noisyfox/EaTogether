@@ -1,5 +1,6 @@
 import re
 
+from django.core.validators import MinValueValidator
 from django.db import models
 from django.conf import settings
 from django.urls import reverse
@@ -53,10 +54,10 @@ class RestaurantServiceInfo(models.Model):
     )
     restaurant = models.OneToOneField(Restaurant, on_delete=models.CASCADE)
 
-    min_delivery = models.FloatField(default=0)
-    delivery_fee = models.FloatField(default=0)
+    min_delivery = models.FloatField(default=0, validators=[MinValueValidator(0)])
+    delivery_fee = models.FloatField(default=0, validators=[MinValueValidator(0)])
 
-    announcement = models.TextField(max_length=500)
+    announcement = models.TextField(max_length=500, blank=True)
 
     service_status = models.CharField(max_length=1, choices=SERV_STATUS, default='C')
 

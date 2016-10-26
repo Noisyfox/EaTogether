@@ -44,9 +44,6 @@
                             <p style="word-break:break-all;border-color: #ffe027;font-family: Calibri; font-size: 100%"
                                class="list-group-item-text">{{ service.announcement }}
                             </p>
-                            <button class="btn btn-primary; pull-right" type="button"
-                                    style="width: 60px;height: 30px;background-color: #ffe027; border: medium">Edit
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -58,6 +55,13 @@
                     <button class="btn btn-primary; center-block" type="button"
                             style="width: 120px;height: 30px;background-color: #ffe027; border: medium">Close Now
                     </button>
+                    <br/>
+                    <br/>
+                    <br/>
+
+                    <a class="btn btn-primary center-block" href="{% url 'owner_service_info_edit' %}"
+                       style="width: 150px;height: 30px;background-color: #ffe027; border: medium">Edit Service Info
+                    </a>
                 </div>
             </div>
             <br/>

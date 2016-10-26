@@ -20,6 +20,7 @@ urlpatterns = [
     url(r"^register/$", views.OwnerRegisterView.as_view(), name='owner_register'),
     url(r"^restaurant/$", views.OwnerRestaurantEditView.as_view(), name='owner_edit_restaurant'),
     url(r"^menu/$", views.OwnerMenuView.as_view(), name='owner_menu'),
+    url(r"^service/$", views.ServiceInfoUpdateView.as_view(), name='owner_service_info_edit'),
     url(r"^food/", include([
         url("^new/$", views.OwnerFoodCreateView.as_view(), name='owner_create_food'),
         url("^(?P<pk>[0-9]+)/$", views.OwnerFoodEditView.as_view(), name='owner_edit_food'),
