@@ -144,6 +144,17 @@ class CustomerSearchView(AddressMixin, FormView):
 
         return super().get(request, *args, **kwargs)
 
+    def get_initial(self):
+        init = super().get_initial()
+
+        if self.address and self.location:
+            init.update({
+                'address': self.address,
+                'location': self.location,
+            })
+
+        return init
+
     def form_valid(self, form):
         self.set_address(form.cleaned_data['address'], form.cleaned_data['location'])
 
