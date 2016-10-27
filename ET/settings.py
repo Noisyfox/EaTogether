@@ -206,6 +206,8 @@ SPATIALITE_LIBRARY_PATH = 'mod_spatialite'
 
 GOOGLE_MAPS_V3_APIKEY = 'AIzaSyD8yC2qzzlufDZva6mc_d1QXi94XiMgu5k'
 GOOGLE_MAPS_LIBRARIES = ['places']
+GOOGLE_MAPS_LANGUAGE = 'en-AU'
+GOOGLE_MAPS_REGION = 'AU'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
 # Change the serializer of the session

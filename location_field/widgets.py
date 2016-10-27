@@ -8,6 +8,9 @@ from django.utils.safestring import mark_safe
 GOOGLE_MAPS_V3_APIKEY = getattr(settings, 'GOOGLE_MAPS_V3_APIKEY', None)
 GOOGLE_MAPS_LIBRARIES = getattr(settings, 'GOOGLE_MAPS_LIBRARIES', None)
 
+GOOGLE_MAPS_LANGUAGE = getattr(settings, 'GOOGLE_MAPS_LANGUAGE', 'en')
+GOOGLE_MAPS_REGION = getattr(settings, 'GOOGLE_MAPS_REGION', 'US')
+
 GOOGLE_API_JS = '//maps.google.com/maps/api/js?'
 
 if GOOGLE_MAPS_V3_APIKEY:
@@ -15,6 +18,8 @@ if GOOGLE_MAPS_V3_APIKEY:
 
 if GOOGLE_MAPS_LIBRARIES:
     GOOGLE_API_JS = '{0}&libraries={1}'.format(GOOGLE_API_JS, ','.join(GOOGLE_MAPS_LIBRARIES))
+
+GOOGLE_API_JS = '{0}&language={1}&region={2}'.format(GOOGLE_API_JS, GOOGLE_MAPS_LANGUAGE, GOOGLE_MAPS_REGION)
 
 
 class LocationWidget(widgets.HiddenInput):
