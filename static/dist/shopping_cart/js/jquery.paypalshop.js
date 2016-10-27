@@ -120,7 +120,7 @@
                 '<p>Your total purchase is: <span class="total-items"></span> ' +
                 'items (<span class="total-price"></span>)</p>' +
                 '<a class="clear-button" href="#">Clear</a>' +
-                '<a class="checkout-button" href="#">PayPal Checkout</a>')
+                '<a class="checkout-button" href="#">Checkout</a>')
         };
 
         //add to document
