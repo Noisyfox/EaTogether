@@ -194,3 +194,4 @@ class OrderFood(models.Model):
     @property
     def price(self):
         return self.food.price * self.count
+
