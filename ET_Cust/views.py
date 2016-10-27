@@ -193,7 +193,7 @@ class CustomerMainPageView(AddressRequiredMixin, ListView):
         location_search = GEOSGeometry(self.location, srid=4326)
         qs = Restaurant.objects
         if self.filter_name:
-            qs = qs.filter(name__contains=self.filter_name)
+            qs = qs.filter(name__icontains=self.filter_name)
         qs = qs.annotate(distance=Distance('location', location_search)).order_by('distance')
         qs = qs.annotate(favorite_restaurant=Distance('location', location_search))
         return qs
