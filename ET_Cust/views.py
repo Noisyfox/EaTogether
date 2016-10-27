@@ -359,3 +359,13 @@ class DeleteFavoriteView(View):
         else:
             customer.favourite_restaurants.remove(restaurant)
             return HttpResponse("Remove from Favorite successfully!")
+
+
+def count_current_group(request, **kwargs):
+    restaurant_id = kwargs['restaurant_id']
+    count = 0
+    if restaurant_id:
+        restaurant = Restaurant.objects.get(pk=restaurant_id)
+        if restaurant:
+            count = restaurant.check_active_group()
+    return HttpResponse(count)
