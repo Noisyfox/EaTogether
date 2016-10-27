@@ -11,10 +11,13 @@
 {% block topbar_label %}Owner Login{% endblock %}
 
 {% block body %}
-    <div class="Page_title">
+    <div class="Page_title" >
         <p align="center">
-            <a input style="font-family: Calibri; font-size: 300% ; color: #ffb125; " class="Page_title"> Welcome to
+            <a style="font-family: Calibri; font-size: 500% ; color: #f9f2dc; " class="Page_title"> &nbsp;  &nbsp;  &nbsp; Welcome to
                 EaTogether! </a>
+            <a href="{% url 'owner_edit_restaurant' %}">
+               <img src="{% static "img_owner/brand_et_button.png" %}" height="56" />
+           </a>
         </p>
     </div>
 

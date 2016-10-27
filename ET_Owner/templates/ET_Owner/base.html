@@ -6,18 +6,18 @@
 {% block body_class %}owner{% endblock %}
 
 {% block topbar_base %}
-    <div class="container" style="background: url('{{ STATIC_URL }}img_owner/back_title_2.jpg') right bottom no-repeat;background-size: cover;">
-        <div>
+    <div class="container">
+{#         style="background: url('{{ STATIC_URL }}img_owner/brand_et_piconly.png') right bottom no-repeat;#}
+{#            background-size: cover;">#}
+        <div >
            <a href="{% url 'owner_edit_restaurant' %}">
-               <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
+               <img src="{% static "img_owner/brand_et_piconly.png" %}" height="36" class="pull-right"/>
            </a>
-            <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat
+            <a input style="font-family: Calibri; color:  #f9f9f5; font-size: 150%" class="pull-right">EaTogether - Eat
                 Now, Eat Together - {% block topbar_label %}{% endblock %}</a>
            <br/>
            <br/>
-           <br/>
-           <br/>
-           <br/>
+
            <br/>
            <br/>
            <br/>
@@ -25,4 +25,19 @@
            <br/>
         </div>
     </div>
+
+
+    <div>
+    <style type="text/css">
+    body {
+	background: #f06;
+	background: linear-gradient(45deg, #ff1c43, #ffe430);
+	min-height: 100%;
+}
+a,a:visited { color: #fff; }
+a:hover { color: #fff; }
+
+</style>
+    </div>
+
 {% endblock %}
