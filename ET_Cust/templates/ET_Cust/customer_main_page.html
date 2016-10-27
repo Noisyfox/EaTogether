@@ -36,12 +36,13 @@
                             </div>
                             <div class="col-lg-3" id="groupOrLike" style="border-width: 2px; border-style: solid;border-color: #e98520;height: 200px;border-radius: 5%; padding-left: 5%; padding-top: 3%;">
                                 <div class="row">
-                                    <input id="{{ restaurant.id }}" type="checkbox"><span>Like</span>
+                                    <label>
+                                        <input id="{{ restaurant.id }}" type="checkbox">Favourite
+                                    </label>
                                 </div>
-
                                 <div class="row">
                                     <div>
-                                        <a href="{% url 'cust_restaurant_group' restaurant.id %}">Group Now!</a>
+                                        <a href="{% url 'cust_restaurant_group' restaurant.id %}"><h3 style="color: #e98520">Group Now!</h3></a>
                                         <p>Monthly Sale: 999</p>
                                     </div>
                                 </div>
