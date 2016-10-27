@@ -10,14 +10,14 @@
 {% block  title %}dsafdasfadfa{% endblock %}
 {% block body %}
     <div class="container-fluid">
-        <div class="row" style="border: dashed; margin-top: 3%;">
-            <div class="col-lg-6">
+        <div class="row">
+            <div class="col-lg-12">
                 <h1>{{ customer.available_balance }} Available</h1>
                 <h4>{{ customer.frozen_balance }} Under Processing</h4>
                 {{ k }}
             </div>
-            <div class="col-lg-6" style="border-left: dashed;">
-                <button type="submit">Top Up now</button>
+            <div class="col-lg-12">
+                <button type="submit" class="btn btn-default" style="width:200px;"><h3 style="color: #e98520;">Top Up Now</h3></button>
             </div>
         </div>
     </div>

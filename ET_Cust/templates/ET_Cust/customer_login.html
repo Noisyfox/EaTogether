@@ -8,15 +8,17 @@
 
 {% block body %}
     <div class="row">
-        <div class="col-md-6" style="border: dashed; height: 600px;">
-            <div class="col-md-3"
-                 style="border: dashed; width: 60%;height: 50%; margin-top: 10%; margin-left: 20%;"></div>
-            <div class="col-md-2"
-                 style="border: dashed; width: 60%;height: 20%; margin-top: 5%; margin-left: 20%;"></div>
-            <div class="col-md-3" style="border: dashed; width: 60%; margin-top: 5%; margin-left: 20%;"><p
-                    class="text-center">Advertisement</p></div>
-        </div>
-        <div class="col-md-6" style="border: dashed; height: 600px;">
+{#        <div class="col-md-6" style="border: dashed; height: 600px;">#}
+{#            <div class="col-md-3"#}
+{#                 style="border: dashed; width: 60%;height: 50%; margin-top: 10%; margin-left: 20%;"></div>#}
+{#            <div class="col-md-2"#}
+{#                 style="border: dashed; width: 60%;height: 20%; margin-top: 5%; margin-left: 20%;"></div>#}
+{#            <div class="col-md-3" style="border: dashed; width: 60%; margin-top: 5%; margin-left: 20%;"><p#}
+{#                    class="text-center">Advertisement</p></div>#}
+{#        </div>#}
+        <div class="col-lg-12">
+        
+            <h1 style="text-align: center; color: #e98520;">Customer Login</h1>
             {% crispy form %}
 
             {% if password_reset_url %}

@@ -5,15 +5,15 @@
 
 {% block head_title %}{% trans 'Favourite Restaurants' %}{% endblock %}
 
-{% block  title %} dsafdasfadfa{% endblock %}
+{% block  title %} {% endblock %}
 {% block body %}
     <div class="container-fluid">
         <div class="row" id="restaurant_list">
             {% if restaurant_list %}
                 {% for restaurant in restaurant_list %}
-                    <div class="col-lg-6" id="restaurant_1" style="border: dashed;">
+                    <div class="col-lg-6" id="restaurant_1">
                         <div class="col-lg-4" id="restaurant_picture">
-                            <h3>Picture</h3>
+                            <img src="{{ restaurant.logo.url }}" height="200px" class="pull-right"/>
                         </div>
                         <div class="col-lg-8" id="restaurant_info">
                             <div class="row" id="restaurant_name" style="height: 30%;">
