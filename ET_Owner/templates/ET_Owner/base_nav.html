@@ -39,35 +39,96 @@
 {% endblock %}
 
 {% block subnav %}
+
+
+
+
     <div id="nav">
         <div class="btn-group-vertical" role="group" aria-label="information list">
-            <a href="{% url 'owner_order_list' %}" class="btn btn-primary"
-               style=" width: 200px;padding: 10px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%;">
-                <span style="color:#fcf8e3" aria-hidden="true" class="glyphicon glyphicon-cutlery"></span>
-                <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3;">My Order</span>
+
+            <style type="text/css">
+
+                .social {
+                    float: left;
+                    margin: 0em 0em; width: 200px; height: 50px;
+                    display: block; text-align: center; line-height:56px; color: #fff;
+
+                    position: relative;
+                    transform:rotateY(0deg);
+                    transition:transform .25s ease-out;
+                    transform-style:preserve-3d;
+                }
+                .social > div {
+                    width: 200px; height: 50px; background: #000;
+                    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+                }
+                .social >.front {
+                    transform:translateZ(75px);
+                }
+                .social >.back {
+                    background: #3B5998; font-size: 3em;
+                    transform:rotateY(-100deg) translateZ(75px);
+                }
+
+                .social:hover {
+                    transform: rotateY(100deg);
+                }
+            </style>
+
+
+            <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+
+
+
+            <a class="social"  href="{% url 'owner_menu' %}">
+                <div class="front"style="background-color: #ffa500">
+                    <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3;">My Order</span>
+                </div>
+                <div class="back" style="background-color: #ffde7b">
+                    <span style="color:#fcf8e3" aria-hidden="true" class="glyphicon glyphicon-cutlery"></span>
+                </div>
             </a>
-            <a href="{% url 'owner_edit_restaurant' %}" class="btn btn-primary"
-               style="width: 200px;padding: 10px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%">
-                <img src="{% static "img_owner/brand_et_button.png" %}" height="25"/>
-                <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3">My Restaurant</span>
+
+
+            <a class="social"  href="{% url 'owner_edit_restaurant' %}" >
+                <div class="front"style="background-color: #ffa500">
+                    <span style="font-family: Calibri; font-size: 110%; color: #fcf8e3">My Restaurant</span>
+                </div>
+                <div class="back" style="background-color: #ffde7b">
+                    <img src="{% static "img_owner/brand_et_button.png" %}" height="25"/>
+                </div>
             </a>
-            <a href="{% url 'owner_menu' %}" class="btn btn-primary"
-               style="width: 200px;padding: 10px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%">
-                <span style="color:#fcf8e3" aria-hidden="true" class="glyphicon glyphicon-list-alt"></span>
-                <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3"> My Menu </span>
+
+            <a class="social"  href="{% url 'owner_menu' %}">
+                <div class="front"style="background-color: #ffa500">
+                    <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3"> My Menu </span>
+                </div>
+                <div class="back" style="background-color: #ffde7b">
+                    <span style="color:#fcf8e3" aria-hidden="true" class="glyphicon glyphicon-list-alt"></span>
+                </div>
             </a>
-            <a href="{% url 'owner_courier' %}" class="btn btn-primary"
-               style="width: 200px;padding: 10px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%">
-                <span style="color:#fcf8e3" aria-hidden="true" class="glyphicon glyphicon-shopping-cart"></span>
-                <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3"> Delivery</span>
+
+            <a class="social"  href="{% url 'owner_courier' %}" >
+                <div class="front"style="background-color: #ffa500">
+                    <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3"> Delivery</span>
+                </div>
+                <div class="back" style="background-color: #ffde7b">
+                    <span style="color:#fcf8e3" aria-hidden="true" class="glyphicon glyphicon-shopping-cart"></span>
+                </div>
             </a>
-            <a href="{% url 'owner_wallet' %}" class="btn btn-primary"
-               style="width: 200px;padding: 10px;background-color: #ffb725; border-color: #fcf8e3; border-radius: 10%">
-                <span style="color:#fcf8e3" aria-hidden="true" class="glyphicon glyphicon-usd"></span>
-                <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3">Wallet</span>
+
+            <a class="social " href="{% url 'owner_wallet' %}" >
+                <div class="front"style="background-color: #ffa500">
+                    <span style="font-family: Calibri; font-size: 150%; color: #fcf8e3">Wallet</span>
+                </div>
+                <div class="back"style="background-color: #ffde7b">
+                    <span style="color:#fcf8e3" aria-hidden="true" class="glyphicon glyphicon-usd"></span>
+                </div>
             </a>
         </div>
 
     </div>
+
+
 
 {% endblock %}
