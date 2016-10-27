@@ -29,7 +29,7 @@ class CustomerSearchAddressForm(FormMixin, forms.Form):
 
 # The form which customers use to search the certain restaurant.
 class CustomerSearchRestaurantForm(FormMixin, forms.Form):
-    restaurant = forms.CharField(max_length=30)
+    restaurant = forms.CharField(max_length=30, required=False)
 
     def __init__(self, *args, **kwargs):
         super(CustomerSearchRestaurantForm, self).__init__(*args, **kwargs)

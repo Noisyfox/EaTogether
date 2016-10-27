@@ -155,9 +155,11 @@ class CustomerMainPageView(AddressRequiredMixin, ListView):
     model = Restaurant
     context_object_name = 'restaurant_list'
 
+    filter_name = ''
+
     def get_context_data(self, **kwargs):
         context = super(CustomerMainPageView, self).get_context_data(**kwargs)
-        form = CustomerSearchRestaurantForm()
+        form = CustomerSearchRestaurantForm(initial={'restaurant': self.filter_name})
         context['form'] = form
         try:
             customer = self.request.user.customer
@@ -170,14 +172,18 @@ class CustomerMainPageView(AddressRequiredMixin, ListView):
     def post(self, request, *args, **kwargs):
         form = CustomerSearchRestaurantForm(request.POST)
         if form.is_valid():
-            self.queryset = self.queryset.filter(name__contains=form.cleaned_data['restaurant'])
+            self.filter_name = form.cleaned_data['restaurant']
             return self.get(self, request, *args, **kwargs)
         else:
+            self.filter_name = ''
             return self.get(self, request, *args, **kwargs)
 
     def get_queryset(self):
         location_search = GEOSGeometry(self.location, srid=4326)
-        qs = Restaurant.objects.annotate(distance=Distance('location', location_search)).order_by('distance')
+        qs = Restaurant.objects
+        if self.filter_name:
+            qs = qs.filter(name__contains=self.filter_name)
+        qs = qs.annotate(distance=Distance('location', location_search)).order_by('distance')
         qs = qs.annotate(favorite_restaurant=Distance('location', location_search))
         return qs
 
