@@ -137,6 +137,16 @@ class GroupOrder(models.Model):
     def personal_orders(self):
         return self.group.personalorder_set.all()
 
+    # Calculate price
+    def frozen_price(self):
+        price = 0
+        for p in self.personal_orders:
+            price += p.price
+
+        self.price_food = price
+        self.price_delivery = self.group.restaurant.restaurantserviceinfo.delivery_fee
+        self.price_total = self.price_food + self.price_delivery
+
 
 class Customer(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -152,6 +162,7 @@ class Customer(models.Model):
 class PersonalOrder(models.Model):
     STATUS = (
         ('W', 'Waiting'),
+        ('S', 'Submitted'),
         ('D', 'Delivering'),
         ('F', 'Delivered'),
         ('U', 'Undelivered'),
@@ -180,6 +191,12 @@ class PersonalOrder(models.Model):
     @property
     def undelivered(self):
         return self.status == 'U'
+
+    def update_delivery_fee(self, total_food_price, total_delivery_fee):
+        if total_delivery_fee > 0:
+            self.delivery_fee = round(total_delivery_fee * self.price / total_food_price, 2)
+        else:
+            self.delivery_fee = 0
 
 
 class OrderFood(models.Model):
