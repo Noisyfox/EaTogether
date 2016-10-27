@@ -26,6 +26,7 @@ from django.views.decorators.csrf import csrf_exempt
 
 from ET_Cust.tasks import on_group_created
 from bootstrap3_duration.widgets import DurationPicker
+from paypal.standard.forms import PayPalPaymentsForm
 
 
 class AddressMixin(QueryMixin):
@@ -306,12 +307,25 @@ class CustomerRestaurantCheckOutView(CustomerRequiredMixin, RestaurantQueryMixin
         return context
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class CustomerWalletView(CustomerRequiredMixin, AddressMixin, TemplateView):
     template_name = 'ET_Cust/Customer Account (Profile & Wallet).html'
 
     def get_context_data(self, **kwargs):
+        paypal_dict = {
+            "business": "nirvana_seller@hotmail.com",
+            "amount": "",
+            "currency_code": "AUD",
+            "item_name": "Top Up",
+            "notify_url": "http://819d0423.ngrok.io/paypal/",
+            "return_url": "http://819d0423.ngrok.io/wallet/",
+            "cancel_return": "https://www.example.com/your-cancel-location/",
+            "custom": self.request.user.customer.id
+        }
         context = super(CustomerWalletView, self).get_context_data(*kwargs)
         context['customer'] = self.request.user.customer
+        form = PayPalPaymentsForm(initial=paypal_dict)
+        context["form"] = form
         return context
 
 

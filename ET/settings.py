@@ -159,7 +159,8 @@ INSTALLED_APPS = [
     'bootstrap3_duration',
 
     # tools
-    "mathfilters"
+    "mathfilters",
+    "paypal.standard.ipn",
 ]
 
 # A sample logging configuration. The only tangible logging
@@ -210,6 +211,7 @@ GOOGLE_MAPS_LANGUAGE = 'en-AU'
 GOOGLE_MAPS_REGION = 'AU'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
 # Change the serializer of the session
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
@@ -219,3 +221,6 @@ BROKER_URL = 'redis://localhost:6379/0'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
+
+# Paypal setting
+PAYPAL_TEST = True

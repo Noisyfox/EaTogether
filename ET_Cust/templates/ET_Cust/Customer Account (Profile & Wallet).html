@@ -8,15 +8,14 @@
 {% block topbar_label %}{% trans 'My Wallet' %}{% endblock %}
 
 {% block content %}
-    <div class="row">
-        <h1>{{ customer.available_balance }} Available</h1>
-        </br>
-        <h4>{{ customer.frozen_balance }} Pending</h4>
-        {{ k }}
-        </br>
-        </br>
-        <a class="btn btn-primary"
-           style="font-size: 25px; width:100%; background-color: #ffb411; border-color: transparent"
-           type="submit">Top Up now</a>
+    <div class="row" style="margin-top: 3%;">
+        <div class="col-lg-6">
+            <h1>{{ customer.available_balance }} Available</h1>
+            <h4>{{ customer.frozen_balance }} Under Processing</h4>
+            {{ k }}
+        </div>
+        <div class="col-lg-6">
+            {{ form.render }}
+        </div>
     </div>
 {% endblock %}

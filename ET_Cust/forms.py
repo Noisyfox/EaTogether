@@ -37,3 +37,4 @@ class CustomerSearchRestaurantForm(FormMixin, forms.Form):
         self.helper.layout = Layout(
             FieldWithButtons('restaurant', Submit('search', 'Search'))
         )
+
