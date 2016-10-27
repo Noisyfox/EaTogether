@@ -1,5 +1,6 @@
 from django.core.exceptions import ImproperlyConfigured
 from django.db import transaction
+from django.db.models import F
 from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
@@ -109,5 +110,10 @@ class CourierPersonalOrderFinishView(CourierRequiredMixin, PersonalOrderQueryMix
                     self.order.status = 'F'
                     self.order.confirm_delivery_time = timezone.now()
                     self.order.save()
+
+                    # Send money to owner
+                    owner = self.order.group.restaurant.owner
+                    owner.money = F('money') + self.order.price_total
+                    owner.save()
 
         return HttpResponseRedirect(reverse_lazy('cour_detail', kwargs={'order_id': self.order.pk}))
