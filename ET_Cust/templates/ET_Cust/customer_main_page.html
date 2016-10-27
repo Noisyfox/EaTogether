@@ -23,7 +23,8 @@
                             </div>
                             <div class="col-lg-3" id="restaurantInfo">
                                 <div class="row">
-                                    <div class="col-lg-12" style="border-width: 2px; border-style: solid;border-color: #ffbc34;height: 200px;border-radius: 5%">
+                                    <div class="col-lg-12"
+                                         style="border-width: 2px; border-style: solid;border-color: #ffbc34;height: 200px;border-radius: 5%">
                                         <h3 style="color: #e98520;">{{ restaurant.name }}</h3>
                                         <p>{{ restaurant.address }}</p>
                                         <p>Min. Delivery: ${{ restaurant.restaurantserviceinfo.min_delivery }}</p>
@@ -31,13 +32,16 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3" id="groupInfo" style="border-width: 2px; border-style: solid;border-color: #e98520;height: 200px;border-radius: 5%">
-                                <h3 style="color: #e98520;">Current Group: <span id="{{ restaurant.id }}"
-                                                name="current_group">{{ restaurant.check_active_group }}</span></h3>
+                            <div class="col-lg-3" id="groupInfo"
+                                 style="border-width: 2px; border-style: solid;border-color: #e98520;height: 200px;border-radius: 5%">
+                                <h3 style="color: #e98520;">Current Group: <span
+                                        id="current_group_{{ restaurant.id }}">{{ restaurant.check_active_group }}</span>
+                                </h3>
                             </div>
-                            <div class="col-lg-3" id="groupOrLike" style="border-width: 2px; border-style: solid;border-color: #e98520;height: 200px;border-radius: 5%; padding-left: 5%; padding-top: 3%;">
+                            <div class="col-lg-3" id="groupOrLike"
+                                 style="border-width: 2px; border-style: solid;border-color: #e98520;height: 200px;border-radius: 5%; padding-left: 5%; padding-top: 3%;">
                                 <div class="row">
-                                    <input id="{{ restaurant.id }}" type="checkbox"><span>Like</span>
+                                    <input id="favourite_{{ restaurant.id }}" type="checkbox"><span>Like</span>
                                 </div>
 
                                 <div class="row">
@@ -70,14 +74,15 @@
             count_current_group();
 
             {% for restaurant in restaurant_list %}
-                $("#{{ restaurant.id }}").change(function () {
+                $("#favourite_{{ restaurant.id }}").change(function () {
+                    var cb = $(this);
                     var url;
-                    if ($(this).is(":checked")) {
+                    if (cb.is(":checked")) {
                         url = "{% url 'add_favorite' restaurant.id %}";
                         $.get(url, function (data) {
                             alert(data)
                             if (data == "Please log in first.") {
-                                $("#{{ restaurant.id }}").attr('checked', false);
+                                cb.attr('checked', false);
                             }
                         });
                     }
@@ -86,7 +91,7 @@
                         $.get(url, function (data) {
                             alert(data)
                             if (data == "Please log in first.") {
-                                $("#{{ restaurant.id }}").attr('checked', false);
+                                cb.attr('checked', false);
                             }
                         });
                     }
@@ -98,7 +103,7 @@
             {% for restaurant in restaurant_list %}
                 {% for customer_all in restaurant.customer_set.all %}
                     {% if customer_all == customer %}
-                        $("#{{ restaurant.id }}").attr("checked", true);
+                        $("#favourite_{{ restaurant.id }}").attr("checked", true);
                     {% endif %}
                 {% endfor %}
             {% endfor %}
@@ -109,7 +114,7 @@
                 var url;
                 url = "{% url 'count_current_group' restaurant.id %}"
                 $.get(url, function (data) {
-                    $("#{{ restaurant.id }}[name = 'current_group']").html(data);
+                    $("#current_group_{{ restaurant.id }}").html(data);
                 })
             {% endfor %}
             setTimeout(count_current_group, 5000)
