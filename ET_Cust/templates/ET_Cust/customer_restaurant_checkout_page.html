@@ -4,13 +4,52 @@
 {% block head_title %}{% trans "Search" %}{% endblock %}
 
 {% block body %}
-    {{ top_up_information }}
+    <div><h2 style="color: #e98520;">
+        {{ top_up_information }}
+        </h2>
+    </div>
     {% if orderfood_list %}
-        <h3>Pay Successfully</h3>
-        {% for orderfood in orderfood_list %}
-            <label>Name:</label>{{ orderfood.food.name }}<label>Quantity:</label>{{ orderfood.count }}<br>
-        {% endfor %}
-        <label>Delivery Fee:</label>{{ delivery_fee }}<br>
-        <label>Frozen Price:</label>{{ price }}<br>
+        <h3 style="color: #e98520;">Pay Successfully</h3>
+        <div style="border-top: solid; border-color: #e98520">
+            <p>Checkout Information</p>
+            {% for orderfood in orderfood_list %}
+                {#            <label>Name:</label>{{ orderfood.food.name }}<label>Quantity:</label>{{ orderfood.count }}<br>#}
+                <div class="panel panel-default">
+
+                    <!-- Default panel contents -->
+                    {#                <div class="panel-heading">Check Information</div>#}
+                    <table class="table">
+                        {#                    <thead>#}
+                        {#                    <tr>#}
+                        {#                        <th>Name</th>#}
+                        {#                        <th>Quality</th>#}
+                        {#                    </tr>#}
+                        {#                    </thead>#}
+                        <tbody>
+                        <tr>
+                            <th>Name: {{ orderfood.food.name }}</th>
+                            <th>Quality: {{ orderfood.count }}</th>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+
+                        </tfoot>
+                    </table>
+                </div>
+
+            {% endfor %}
+        </div>
+        <table>
+            <thead>
+            {#            <label>Delivery Fee:</label>{{ delivery_fee }}<br>#}
+            {#            <label>Frozen Price:</label>{{ price }}<br>#}
+            <tr>
+                <th><h3>Delivery Fee: {{ delivery_fee }}</h3></th>
+            </tr>
+            <tr>
+                <th><h3>Frozen Price: {{ price }}</h3></th>
+            </tr>
+            </thead>
+        </table>
     {% endif %}
 {% endblock %}
