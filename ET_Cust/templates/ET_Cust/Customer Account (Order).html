@@ -13,54 +13,66 @@
     <div class="container-fluid">
         <div class="row" style="margin-bottom: 3%;">
             {% for order in order_list %}
-                <div class="row" style="border-bottom: dashed;">
-                    <div class="col-lg-3" style="border: dashed;">
-                        <h2>Picture:LOGO</h2>
+                <div class="row" style="border-top: solid; border-color: #e98520">
+                    <p>Order ID: {{ order.id }} &nbsp; Group ID: {{ order.group.id }}</p>
+                    <div class="col-lg-3" id="restaurantPic">
+                        <img src="{{ order.group.restaurant.logo.url }}" height="200px" class="pull-right"/>
                     </div>
                     <div class="col-lg-4">
-                        <h2>{{ order.group.restaurant.name }}</h2>
-                        <p>Order ID: {{ order.id }}</p>
-                        <p>Group ID: {{ order.group.id }}</p>
+                        <div style="padding-top: 15%;">
+                            <h2>{{ order.group.restaurant.name }}</h2>
+                        </div>
+                        {#                        <ul>#}
+                        {#                            <li>Order ID: {{ order.id }}</li>#}
+                        {#                            <li>Group ID: {{ order.group.id }}</li>#}
+                        {#                        </ul>#}
                     </div>
-                    <div class="col-lg-5">
+                    <div class="col-lg-5" style="padding-top: 3%;">
+                        <div style="padding-top: 10%;">
                         <p>Contact Number: {{ order.group.restaurant.contact_number }}</p>
                         <p>Order Time: {{ order.order_time }}</p>
+                            </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <div class="row" style="border-bottom: dashed">
-                            <div class="col-lg-12" style="border-bottom: dashed">
-                                <table>
-                                    <thead>
-                                    <tr>
-                                        <th>Food Name</th>
-                                        <th>Count</th>
-                                        <th>Unit</th>
-                                        <th>Total</th>
-                                    </tr>
-
-                                    </thead>
-                                    <tbody>
-                                    {% for orderfood in order.orderfood_set.all %}
+                        <div class="row">
+                            <div class="col-lg-12" style="padding-top: 15%;">
+                                <div class="panel panel-default">
+                                    <table class="table">
+                                        <thead>
                                         <tr>
-                                            <th>{{ orderfood.food.name }}</th>
-                                            <th>{{ orderfood.count }}</th>
-                                            <th>{{ orderfood.food.price }}</th>
-                                            <th>{{ orderfood.food.price|mul:orderfood.count }}</th>
+                                            <th>Food Name</th>
+                                            <th>Count</th>
+                                            <th>Unit</th>
+                                            <th>Total</th>
                                         </tr>
-                                    {% endfor %}
-                                    </tbody>
-                                </table>
+
+                                        </thead>
+                                        <tbody>
+                                        {% for orderfood in order.orderfood_set.all %}
+                                            <tr>
+                                                <th>{{ orderfood.food.name }}</th>
+                                                <th>{{ orderfood.count }}</th>
+                                                <th>{{ orderfood.food.price }}</th>
+                                                <th>{{ orderfood.food.price|mul:orderfood.count }}</th>
+                                            </tr>
+                                        {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                            <div class="col-lg-12">
-                                <p>Name: {{ order.customer.user.first_name }} {{ order.customer.user.last_name }}</p>
-                                <p>Contact: {{ order.customer.phone_number }}</p>
+                            <div class="col-lg-12" id="customerDetails">
+                                {#                                <ul>#}
+                                {#                                    <li>Name: {{ order.customer.user.first_name }} {{ order.customer.user.last_name }}</li>#}
+                                {#                                    <li>Contact: {{ order.customer.phone_number }}</li>#}
+                                {#                                </ul>#}
                             </div>
                         </div>
                         <div class="row"></div>
                     </div>
-                    <div class="col-lg-4">
+                    <div class="col-lg-1"></div>
+                    <div class="col-lg-3">
                         <h3>Group Info</h3>
                         <p>Delivery Destination</p>
                         <p>{{ order.group.destination }}</p>
