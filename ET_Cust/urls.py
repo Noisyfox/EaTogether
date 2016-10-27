@@ -23,5 +23,6 @@ urlpatterns = [
     # URL used to handle AJAX
     url(r"^count_people/(?P<group_id>[0-9]+)/$", views.count_people, name='count_people'),
     url(r"^add_favorite/(?P<restaurant_id>[0-9]+)/$", views.AddFavoriteView.as_view(), name='add_favorite'),
-    url(r"^delete_favorite/(?P<restaurant_id>[0-9]+)/$", views.DeleteFavoriteView.as_view(), name='delete_favorite')
+    url(r"^delete_favorite/(?P<restaurant_id>[0-9]+)/$", views.DeleteFavoriteView.as_view(), name='delete_favorite'),
+    url(r"^count_current_restaurant/(?P<restaurant_id>[0-9]+)$", views.count_current_group, name='count_current_group')
 ]

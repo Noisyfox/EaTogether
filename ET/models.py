@@ -36,6 +36,10 @@ class Restaurant(models.Model):
     id_photo = models.ImageField()
     business_license = models.ImageField()
 
+    def check_active_group(self):
+        count = self.group_set.filter(status='G').count()
+        return count
+
 
 class Courier(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

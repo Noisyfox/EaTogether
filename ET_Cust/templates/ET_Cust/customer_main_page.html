@@ -32,7 +32,8 @@
                                 </div>
                             </div>
                             <div class="col-lg-3" id="groupInfo" style="border-width: 2px; border-style: solid;border-color: #e98520;height: 200px;border-radius: 5%">
-                                <h3 style="color: #e98520;">Current Group: {{ restaurant.group_set.count }}</h3>
+                                <h3 style="color: #e98520;">Current Group: <span id="{{ restaurant.id }}"
+                                                name="current_group">{{ restaurant.check_active_group }}</span></h3>
                             </div>
                             <div class="col-lg-3" id="groupOrLike" style="border-width: 2px; border-style: solid;border-color: #e98520;height: 200px;border-radius: 5%; padding-left: 5%; padding-top: 3%;">
                                 <div class="row">
@@ -66,6 +67,7 @@
     <script>
         $(document).ready(function () {
             check_favorite();
+            count_current_group();
 
             {% for restaurant in restaurant_list %}
                 $("#{{ restaurant.id }}").change(function () {
@@ -102,5 +104,15 @@
             {% endfor %}
         }
 
+        function count_current_group() {
+            {% for restaurant in restaurant_list %}
+                var url;
+                url = "{% url 'count_current_group' restaurant.id %}"
+                $.get(url, function (data) {
+                    $("#{{ restaurant.id }}[name = 'current_group']").html(data);
+                })
+            {% endfor %}
+            setTimeout(count_current_group, 5000)
+        }
     </script>
 {% endblock %}
