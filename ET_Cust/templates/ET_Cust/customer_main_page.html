@@ -18,46 +18,46 @@
 
         {% if restaurant_list %}
             {% for restaurant in restaurant_list %}
-                <div class="row">
-                    <div class="col-sm-9"
-                         style="height:300px; border-top-style: solid;border-color: #f9cf7b;border-width: 1px">
+                <div class="row" style="padding-bottom: 40px">
+                    <div class="col-sm-8"
+                         style="border: 1px #f9cf7b;border-top-style: solid;">
                         <div class="row">
-                            <div class="col-sm-6">
-                                <p style="font-size: 30px; color: #ffb725">{{ restaurant.name }}</p>
-                                <img src="{{ restaurant.logo.url }}" height="200px" class="pull-left"/>
+                            <div class="col-sm-3">
+                                <img src="{{ restaurant.logo.url }}" width="100%" class="pull-left"/>
                                 </br>
                             </div>
-                            <div class="col-sm-3">
-                                </br>
-                                </br>
+                            <div class="col-sm-6">
+                                <p style="font-size: 30px; color: #ffb725">{{ restaurant.name }}</p>
                                 <p>{{ restaurant.address }}</p>
                             </div>
                             <div class="col-sm-3">
-                                </br>
-                                </br>
+                                <br/>
+                                <br/>
                                 <p>Min. Delivery: ${{ restaurant.restaurantserviceinfo.min_delivery }} Delivery Fee:
                                     ${{ restaurant.restaurantserviceinfo.delivery_fee }}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div class="col-sm-3"
-                         style="border-top-style: solid;border-color: #f9cf7b;border-width: 1px; height:200px; background-color: #ec971f; border-radius: 3%"
+                    <div class="col-sm-4"
+                         style="border: 1px #f9cf7b;border-top-style: solid;background-color: #ec971f; border-radius: 3%"
                          id="groupNow">
-                        </br>
+                        <div class="container-fluid">
+                        <br/>
                         <p style="color: white; font-size: 30px">
                             Current Group: <span
                                 id="current_group_{{ restaurant.id }}">{{ restaurant.check_active_group }}</span>
                         </p>
+                        <br/>
                         <p>
                             <a class="btn btn-primary"
-                               style="background-color: white;width:250px; border-color: transparent; color: orange; font-size: 25px"
+                               style="background-color: white;width:100%; border-color: transparent; color: orange; font-size: 25px"
                                href="{% url 'cust_restaurant_group' restaurant.id %}">
                                 Group Now!
                             </a>
                         </p>
                         <div class="row">
-                            <label>
+                            <label class="pull-right">
                                 <input name="favourite"
                                        data-id='{{ restaurant.id }}'
                                        data-url-favourite-add="{% url 'add_favorite' restaurant.id %}"
@@ -65,6 +65,7 @@
                                        type="checkbox">Favourite
                             </label>
                         </div>
+                            </div>
                     </div>
 
                 </div>
