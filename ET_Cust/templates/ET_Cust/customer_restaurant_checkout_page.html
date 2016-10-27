@@ -6,11 +6,29 @@
 {% block body %}
     {{ top_up_information }}
     {% if orderfood_list %}
-        <h3>Pay Successfully</h3>
+        <h3>
+            Pay Successfully
+        </h3>
         {% for orderfood in orderfood_list %}
-            <label>Name:</label>{{ orderfood.food.name }}<label>Quantity:</label>{{ orderfood.count }}<br>
+            <label>
+                Name:
+            </label>
+            {{ orderfood.food.name }}
+            <label>
+                Quantity:
+            </label>
+            {{ orderfood.count }}
+            <br>
         {% endfor %}
-        <label>Delivery Fee:</label>{{ delivery_fee }}<br>
-        <label>Frozen Price:</label>{{ price }}<br>
+        <label>
+            Delivery Fee:
+        </label>
+        {{ delivery_fee }}
+        <br>
+        <label>
+            Frozen Price:
+        </label>
+        {{ price }}
+        <br>
     {% endif %}
 {% endblock %}

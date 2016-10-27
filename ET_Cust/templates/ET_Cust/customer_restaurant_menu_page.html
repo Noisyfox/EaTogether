@@ -17,10 +17,17 @@
 {% endblock %}
 
 {% block restaurant_content %}
-    <div class="wrapper">
+    <div class="wrapper" style="border-top: solid; border-color: #e98520; float: left;">
+    <div>
+        <p style="color: #e98520;">
+            PayPal Checkout
+        </p>
+    </div>
         <!-- #PayPal Shop# (START) -->
-        <div id="ppshop" class="paypalshop">
-            <div class="shop-logo"></div>
+        <div id="payPalShop" class="paypalshop">
+            <div class="shop-logo">
+
+            </div>
             <!-- #Products# -->
             <div class="shop-products">
                 <!-- start group 1 -->
@@ -31,13 +38,21 @@
                                 <a class="product-image fancybox" href="{{ food.picture.url }}" title="Picture 4">
                                     <img src="{{ food.picture.url }}" alt="Preview" width="100%" height="70%"/>
                                     <div class="text-overlay" style="width: 100%">
-                                        <p class="product-heading">Description</p>
+                                        <p class="product-heading">
+                                            Description
+                                        </p>
                                         {{ food.introduction }}
                                     </div>
                                 </a>
-                                <p class="product-heading">{{ food.name }}</p>
-                                <a href="#" class="product-buy">Buy Now</a>
-                                <div class="product-price"><span class="product-currency">$</span>{{ food.price }}</div>
+                                <p class="product-heading">
+                                    {{ food.name }}
+                                </p>
+                                <a href="#" class="product-buy">
+                                    Buy Now
+                                </a>
+                                <div class="product-price"><span class="product-currency">$</span>
+                                    {{ food.price }}
+                                </div>
                             </li>
                         {% endfor %}
                     {% endif %}
