@@ -22,7 +22,7 @@
             },
             showSeconds: false
         };
-        var settings = $.extend( {}, defaults, options );
+        var settings = $.extend({}, defaults, options);
 
         this.each(function (i, mainInput) {
 
@@ -32,10 +32,10 @@
                 return;
 
             function buildDisplayBlock(id, hidden) {
-                return '<div class="bdp-block '+ (hidden ? 'hidden' : '') + '">' +
-                            '<span id="bdp-'+ id +'"></span><br>' +
-                            '<span class="bdp-label" id="' + id + '_label"></span>' +
-                        '</div>';
+                return '<div class="bdp-block ' + (hidden ? 'hidden' : '') + '">' +
+                    '<span id="bdp-' + id + '"></span><br>' +
+                    '<span class="bdp-label" id="' + id + '_label"></span>' +
+                    '</div>';
             }
 
             var mainInputReplacer = $('<div class="bdp-input">' +
@@ -43,7 +43,7 @@
                 buildDisplayBlock('hours') +
                 buildDisplayBlock('minutes') +
                 buildDisplayBlock('seconds', !settings.showSeconds) +
-            '</div>');
+                '</div>');
 
             mainInput.after(mainInputReplacer).hide().data('bdp', '1');
 
@@ -55,7 +55,7 @@
             var inputs = [];
 
             var disabled = false;
-            if (mainInput.hasClass('disabled') || mainInput.attr('disabled')=='disabled') {
+            if (mainInput.hasClass('disabled') || mainInput.attr('disabled') == 'disabled') {
                 disabled = true;
                 mainInputReplacer.addClass('disabled');
             }
@@ -92,11 +92,11 @@
                     mainInput.val(0);
                 var total = parseInt(mainInput.val(), 10);
                 seconds = total % 60;
-                total = Math.floor(total/60);
+                total = Math.floor(total / 60);
                 minutes = total % 60;
-                total = Math.floor(total/60);
+                total = Math.floor(total / 60);
                 hours = total % 24;
-                days = Math.floor(total/24);
+                days = Math.floor(total / 24);
                 updateMainInputReplacer();
                 updatePicker();
             }
@@ -136,6 +136,17 @@
                     trigger: 'click',
                     html: true,
                     content: picker
+                });
+
+                $(document).on('click', function (e) {
+                    $('[data-toggle="popover"],[data-original-title]').each(function () {
+                        //the 'is' for buttons that trigger popups
+                        //the 'has' for icons within a button that triggers a popup
+                        if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+                            (($(this).popover('hide').data('bs.popover') || {}).inState || {}).click = false;  // fix for BS 3.3.6
+                        }
+
+                    });
                 });
             }
             init();
