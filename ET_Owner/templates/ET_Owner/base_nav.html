@@ -6,36 +6,12 @@
 {% block body_class %}owner{% endblock %}
 
 {% block topbar_base %}
-    <div class="container">
-
-        <a href="{% url 'owner_edit_restaurant' %}" >
-            <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
-        </a>
-
-        <a  input style="font-family: Calibri; color:  #f6ae09; font-size: 100%"
-            class="pull-right">EaTogether - Eat Now, Eat Together - {% block topbar_label %}{% endblock %}</a>
-
-
-        <div class="row">
-            <style type="text/css">
-                .a{background:url('{{ STATIC_URL }}img_owner/back_title_6.jpg')
-                0 0 no-repeat;
-                    width:1200px;
-                    height:230px;
-                    display:block;}
-            </style>
-
-            <a href="{% url 'owner_edit_restaurant' %}" class="a"></a>
-
-            <a href="{% url 'owner_edit_restaurant' %}"
-               style="background: url('{{ STATIC_URL }}img_owner/back_title_2.jpg') right bottom no-repeat;background-size: cover; display: block">
-            </a>
-        </div>
-        <div>
-
-        </div>
+    <div class="container"
+         style="background: url('{{ STATIC_URL }}img_owner/back_title_2.jpg') right bottom no-repeat;background-size: cover; height: 200px;position:relative;">
+        <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
+        <span style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat
+            Now, Eat Together - {% block topbar_label %}{% endblock %}</span>
     </div>
-
 {% endblock %}
 
 {% block subnav %}
@@ -69,5 +45,4 @@
         </div>
 
     </div>
-
 {% endblock %}

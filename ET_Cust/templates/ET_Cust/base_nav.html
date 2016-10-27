@@ -56,22 +56,12 @@
     {% endblock %}
 
     <div class="container"
-         style="background: url('{{ STATIC_URL }}img_owner/back_title_2.jpg') right bottom no-repeat;background-size: cover;">
-        <div>
-            <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
-            <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat
-                Now, Eat Together - {% block topbar_label %}{% endblock %}</a>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-            <br/>
-        </div>
+         style="background: url('{{ STATIC_URL }}img_owner/back_title_2.jpg') right bottom no-repeat;background-size: cover; height: 200px;position:relative;">
+        <a href="{% url 'cust_main_page' %}"><span
+                style="position:absolute;width:100%;height:100%;top:0;left: 0;"></span></a>
+        <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
+        <span style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat
+            Now, Eat Together - {% block topbar_label %}{% endblock %}</span>
     </div>
 {% endblock %}
 
