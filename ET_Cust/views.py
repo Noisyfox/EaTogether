@@ -259,7 +259,7 @@ class CustomerRestaurantCheckOutView(CustomerRequiredMixin, RestaurantQueryMixin
         # The price which need to be frozen.
         self.frozen_price = self.frozen_price + self.restaurant.restaurantserviceinfo.delivery_fee
         if self.request.user.customer.available_balance < self.frozen_price:
-            error['top_up_information'] = "You don't have enough balance, please top up first"
+            error['top_up_information'] = "Sorry, you don't have enough balance, please top up first."
             return render(request, self.template_name, error)
         else:
             new_personal_order = PersonalOrder.objects.create(price=price, order_time=timezone.now(),
