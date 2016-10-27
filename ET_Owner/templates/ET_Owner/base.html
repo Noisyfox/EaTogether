@@ -8,7 +8,9 @@
 {% block topbar_base %}
     <div class="container" style="background: url('{{ STATIC_URL }}img_owner/back_title_2.jpg') right bottom no-repeat;background-size: cover;">
         <div>
-           <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
+           <a href="{% url 'owner_edit_restaurant' %}">
+               <img src="{% static "img_owner/brand_et_piconly.png" %}" height="26" class="pull-right"/>
+           </a>
             <a input style="font-family: Calibri; color:  #f6ae09; font-size: 100%" class="pull-right">EaTogether - Eat
                 Now, Eat Together - {% block topbar_label %}{% endblock %}</a>
            <br/>

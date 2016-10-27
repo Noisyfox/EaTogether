@@ -29,9 +29,13 @@
                         </div>
                     {% endfor %}
                 </div>
+                {% else%}
+                <h2>There is no courier in your restaurant!</h2>
             {% endif %}
             <div>
-                <a href="{% url "owner_create_courier" %}" style="width: 120px;height: 30px;background-color: #ffe027"
+
+
+                <a href="{% url "owner_create_courier" %}" style="width: 220px;height: 30px;background-color: #ffa500; color:white"
                    class="btn btn-danger; pull-right">Add Courier
                 </a>
             </div>
