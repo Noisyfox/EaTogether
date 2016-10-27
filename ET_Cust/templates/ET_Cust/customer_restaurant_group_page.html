@@ -10,7 +10,7 @@
             <div class="col-sm-9 col-xs-7">
                 <legend>{% trans 'Existing Groups' %}</legend>
             </div>
-            <div class="col-sm-3 col-xs-5">
+            <div class="col-sm-3 col-xs-5" id="createGroupButton">
                 <a class="btn btn-primary"
                    style="width:100%; background-color: #ffa312;border-width: 1px; color:  #fafeff; border-color:white"
                    href="{% url 'cust_create_group' restaurant.id %}">Create Group</a>
@@ -23,10 +23,10 @@
                     {% for group in group_list %}
                         <li class="list-group-item container-fluid">
                             <div class="row">
-                                <div class="col-lg-4">
-                                    <h3>{{ group.destination }}</h3>
+                                <div class="col-lg-5">
+                                    <h4>{{ group.destination }}</h4>
                                 </div>
-                                <div class="col-lg-4">
+                                <div class="col-lg-3">
 
                                     <div id="{{ group.id }}">{{ group.personalorder_set.count }}</div>
                                     people

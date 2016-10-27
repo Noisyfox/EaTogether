@@ -17,7 +17,9 @@
 {% endblock %}
 
 {% block restaurant_content %}
-    <div class="wrapper">
+    <div class="wrapper" style="border-top: solid; border-color: #e98520;">
+    <p>Select Food</p>
+    </br>
         <!-- #PayPal Shop# (START) -->
         <div id="ppshop" class="paypalshop">
             <div class="shop-logo"></div>
@@ -31,7 +33,7 @@
                                 <a class="product-image fancybox" href="{{ food.picture.url }}" title="Picture 4">
                                     <img src="{{ food.picture.url }}" alt="Preview" width="100%" height="70%"/>
                                     <div class="text-overlay" style="width: 100%">
-                                        <p class="product-heading">Description</p>
+                                        <h3 class="product-heading">Description</h3>
                                         {{ food.introduction }}
                                     </div>
                                 </a>
