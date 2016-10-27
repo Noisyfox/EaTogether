@@ -5,44 +5,41 @@
 
 {% block head_title %}{% trans 'Favourite Restaurants' %}{% endblock %}
 
-{% block  title %} {% endblock %}
-{% block body %}
-    <div class="container-fluid">
-        <div class="row" id="restaurant_list">
-            {% if restaurant_list %}
-                {% for restaurant in restaurant_list %}
-                    <div class="col-lg-6" id="restaurant_1">
-                        <div class="col-lg-4" id="restaurant_picture">
-                            <img src="{{ restaurant.logo.url }}" height="200px" class="pull-right"/>
+{% block content %}
+    <div class="row" id="restaurant_list">
+        {% if restaurant_list %}
+            {% for restaurant in restaurant_list %}
+                <div class="col-lg-6" id="restaurant_1">
+                    <div class="col-lg-4" id="restaurant_picture">
+                        <img src="{{ restaurant.logo.url }}" height="100px" width="100%" class="pull-right"/>
+                    </div>
+                    <div class="col-lg-8" id="restaurant_info">
+                        <div class="row" id="restaurant_name" style="height: 30%;">
+                            <div class="col-lg-9">
+                                <h6>{{ restaurant.name }}</h6>
+                            </div>
+                            <div class="col-lg-3">
+                                <input id="{{ restaurant.id }}" type="checkbox">
+                            </div>
                         </div>
-                        <div class="col-lg-8" id="restaurant_info">
-                            <div class="row" id="restaurant_name" style="height: 30%;">
-                                <div class="col-lg-9">
-                                    <h6>{{ restaurant.name }}</h6>
-                                </div>
-                                <div class="col-lg-3">
-                                    <input id="{{ restaurant.id }}" type="checkbox">
-                                </div>
+                        <div class="row" id="restaurant_location" style="height: 40%;">
+                            <div class="col-lg-12">
+                                <p>{{ restaurant.address }}</p>
                             </div>
-                            <div class="row" id="restaurant_location" style="height: 40%;">
-                                <div class="col-lg-12">
-                                    <p>{{ restaurant.address }}</p>
-                                </div>
-                            </div>
-                            <div class="row" style="height: 30%;">
-                                <div class="col-lg-12">
-                                    <p>Min Delivery: ${{ restaurant.restaurantserviceinfo.min_delivery }}
-                                        Delivery
-                                        Fee: ${{ restaurant.restaurantserviceinfo.delivery_fee }} </p>
-                                </div>
+                        </div>
+                        <div class="row" style="height: 30%;">
+                            <div class="col-lg-12">
+                                <p>Min Delivery: ${{ restaurant.restaurantserviceinfo.min_delivery }}
+                                    Delivery
+                                    Fee: ${{ restaurant.restaurantserviceinfo.delivery_fee }} </p>
                             </div>
                         </div>
                     </div>
-                {% endfor %}
-            {% else %}
-                <p>You haven't add any favorite restaurant.</p>
-            {% endif %}
-        </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>You haven't add any favorite restaurant.</p>
+        {% endif %}
     </div>
 {% endblock %}
 
