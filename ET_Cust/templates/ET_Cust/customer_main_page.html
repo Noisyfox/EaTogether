@@ -62,8 +62,8 @@
                             </a>
                         </p>
                         <div class="row">
-                            <label class="pull-right">
-                                <input name="favourite"
+                            <label class="pull-right"><span class="glyphicon glyphicon-heart"></span>
+                                <input name="favourite" style="display:none;"
                                        data-id='{{ restaurant.id }}'
                                        data-url-favourite-add="{% url 'add_favorite' restaurant.id %}"
                                        data-url-favourite-delete="{% url 'delete_favorite' restaurant.id %}"
