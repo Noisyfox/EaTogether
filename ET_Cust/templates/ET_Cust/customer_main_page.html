@@ -41,7 +41,11 @@
                             <div class="col-lg-3" id="groupOrLike"
                                  style="border-width: 2px; border-style: solid;border-color: #e98520;height: 200px;border-radius: 5%; padding-left: 5%; padding-top: 3%;">
                                 <div class="row">
-                                    <input id="favourite_{{ restaurant.id }}" type="checkbox"><span>Like</span>
+                                    <input name="favourite"
+                                           data-id='{{ restaurant.id }}'
+                                           data-url-favourite-add="{% url 'add_favorite' restaurant.id %}"
+                                           data-url-favourite-delete="{% url 'delete_favorite' restaurant.id %}"
+                                           type="checkbox"><span>Like</span>
                                 </div>
 
                                 <div class="row">
@@ -73,37 +77,35 @@
             check_favorite();
             count_current_group();
 
-            {% for restaurant in restaurant_list %}
-                $("#favourite_{{ restaurant.id }}").change(function () {
-                    var cb = $(this);
-                    var url;
-                    if (cb.is(":checked")) {
-                        url = "{% url 'add_favorite' restaurant.id %}";
-                        $.get(url, function (data) {
-                            alert(data)
-                            if (data == "Please log in first.") {
-                                cb.attr('checked', false);
-                            }
-                        });
-                    }
-                    else {
-                        url = "{% url 'delete_favorite' restaurant.id %}";
-                        $.get(url, function (data) {
-                            alert(data)
-                            if (data == "Please log in first.") {
-                                cb.attr('checked', false);
-                            }
-                        });
-                    }
-                });
-            {% endfor %}
+            $("input[name='favourite']").change(function () {
+                var cb = $(this);
+                var url;
+                if (cb.is(":checked")) {
+                    url = cb.attr('data-url-favourite-add');
+                    $.get(url, function (data) {
+                        alert(data)
+                        if (data == "Please log in first.") {
+                            cb.attr('checked', false);
+                        }
+                    });
+                }
+                else {
+                    url = cb.attr('data-url-favourite-delete');
+                    $.get(url, function (data) {
+                        alert(data)
+                        if (data == "Please log in first.") {
+                            cb.attr('checked', false);
+                        }
+                    });
+                }
+            });
         });
 
         function check_favorite() {
             {% for restaurant in restaurant_list %}
                 {% for customer_all in restaurant.customer_set.all %}
                     {% if customer_all == customer %}
-                        $("#favourite_{{ restaurant.id }}").attr("checked", true);
+                        $($("input[name='favourite'][data-id='{{ restaurant.pk }}']")).attr("checked", true);
                     {% endif %}
                 {% endfor %}
             {% endfor %}
