@@ -7,7 +7,7 @@ from ET.forms import LoginPhoneNumberForm
 class CourierLoginForm(LoginPhoneNumberForm):
     courier_id = forms.CharField(label=_('Courier Id'), max_length=30)
     authentication_fail_message = _("The phone number, courier id and/or password you specified are not correct.")
-    field_order = ['phone_number', 'courier_id', 'password', 'remember']
+    field_order = ['phone_number', 'courier_id', 'password', 'captcha', 'remember']
     group = 'courier'
 
     def __init__(self, *args, **kwargs):

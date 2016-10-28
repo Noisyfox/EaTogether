@@ -157,6 +157,7 @@ INSTALLED_APPS = [
     'djcelery',
 
     'bootstrap3_duration',
+    'captcha',
 
     # tools
     "mathfilters",
@@ -224,3 +225,7 @@ CELERY_RESULT_SERIALIZER = 'json'
 
 # Paypal setting
 PAYPAL_TEST = True
+
+NOCAPTCHA = True
+RECAPTCHA_PUBLIC_KEY = '6LdqiwoUAAAAAHgHxbVWUf64pcdm5LvLyv29pkfg'
+RECAPTCHA_PRIVATE_KEY = '6LdqiwoUAAAAAHKeO6SbUOdCSvBOZikVWuYUy2eT'

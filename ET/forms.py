@@ -1,3 +1,4 @@
+from captcha.fields import ReCaptchaField
 from crispy_forms import helper
 from crispy_forms.layout import Submit, Hidden
 from django import forms
@@ -58,6 +59,9 @@ class RegisterForm(FormMixin, forms.Form):
         label=_("Password (again)"),
         widget=forms.PasswordInput(render_value=False)
     )
+    captcha = ReCaptchaField(
+        label=_("Turin Test"),
+    )
     group = None
 
     def __init__(self, *args, **kwargs):
@@ -106,6 +110,9 @@ class LoginForm(FormMixin, forms.Form):
     remember = forms.BooleanField(
         label=_("Remember Me"),
         required=False,
+    )
+    captcha = ReCaptchaField(
+        label=_("Turin Test"),
     )
     user = None
     group = None
@@ -161,5 +168,5 @@ class LoginForm(FormMixin, forms.Form):
 class LoginPhoneNumberForm(LoginForm):
     phone_number = forms.CharField(label=_('Phone Number'), strip=True, max_length=12)
     authentication_fail_message = _("The phone number and/or password you specified are not correct.")
-    field_order = ['phone_number', 'password', 'remember']
+    field_order = ['phone_number', 'password', 'captcha', 'remember']
     identifier_field = 'phone_number'
