@@ -19,28 +19,26 @@
         <div class="row" style="margin-top: 1%; margin-bottom: 1%;">
             <div class="container-fluid" id="topInforArea">
                 <div class="row">
+                    <div class="col-xs-10">
+                        <strong style="font-size: 200%">Destination:</strong>
+                        <p>{{ order.group.destination }}</p></div>
+                    <div class="col-xs-2">
+                        <span class="glyphicon glyphicon-map-marker fa-2x" aria-hidden="true"></span></div>
+                </div>
+                {#            <div class="row" style="text-align:left;" id="sendNotification">#}
+                {#                <a class="btn btn-default">Send Notification</a>#}
+                {#                <hr>#}
+                {#            </div>#}
+                <div class="row">
+
                     <div class="col-xs-6">
-                        <div>
-                            <div class="row">
-                                <span class="glyphicon glyphicon-map-marker  fa-2x" aria-hidden="true"></span>
-                                <strong style="font-size: 200%">Destination:</strong>
-                            </div>
-                            <div class="row">
-                                <p>{{ order.group.destination }}</p>
-                                <p>Delivery Time: {{ order.delivery_start_time }}</p>
-                            </div>
-                        </div>
+                        <p>Delivery Time: {{ order.delivery_start_time }}</p>
                     </div>
-                    <div class="col-xs-6" style="text-align:right;" id="sendNotification">
-                        {#                    <p>{{ order.group.destination }}</p>#}
-                        {#                    <p>Delivery Time: {{ order.delivery_start_time }}</p>#}
+                    <div class="col-xs-6">
+
                         <a class="btn btn-default" style="padding-top: 3%; padding-bottom: 3%; margin-top: 3%;">Send
                             Notification</a>
                     </div>
-                    {#            <div class="row" style="text-align:left;" id="sendNotification">#}
-                    {#                <a class="btn btn-default">Send Notification</a>#}
-                    {#                <hr>#}
-                    {#            </div>#}
                 </div>
             </div>
         </div>
@@ -55,19 +53,12 @@
                             <div class="list-group-item {% if order_p.finished %}disabled{% endif %}">
                                 <div class="container">
                                     <div class="row">
-                                        <div class="col-xs-9">
-                                            <div class="row">
-                                                <div>
+                                        <div class="col-xs-10">
+                                                    Contact Number:{{ order_p.customer.phone_number }}
+                                        </div>
+                                        <div class="col-xs-2">
                                                 <span class="glyphicon glyphicon glyphicon-earphone fa-2x"
                                                       aria-hidden="true"></span>
-                                                    Contact Number:{{ order_p.customer.phone_number }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-xs-3">
-                                            <div style="text-align:right;" class="row">
-                                                {#                                            <span class="glyphicon glyphicon glyphicon-earphone fa-2x" aria-hidden="true"></span>#}
-                                            </div>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -82,7 +73,7 @@
                                             {% if order_p.undelivered %}
                                                 <a class="btn btn-danger disabled">Undelivered</a>
                                             {% else %}
-                                                <a class="btn btn-default disabled">Delivered</a>
+                                                <a class="btn btn-default disabled pull-right">Delivered</a>
                                             {% endif %}
                                         {% else %}
                                             <div>
