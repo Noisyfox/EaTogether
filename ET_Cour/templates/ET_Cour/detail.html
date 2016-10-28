@@ -5,75 +5,79 @@
 {% block head_title %}Order Detail{% endblock %}
 
 {% block body %}
-    <div class="navbar navbar-default navbar-fixed-top" style="background: white;">
-        <div class="row" style="background-color:#e98520">
-            <div>
-                <a class="btn btn-default" aria-label="Left Align" href="{% url 'cour_order' %}">
-                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                    Back
-                </a>
+    <div class="container-fluid" id="topInforArea">
+        <div class="navbar navbar-default navbar-fixed-top" style="background: white;">
+            <div class="row" style="background-color:#e98520">
+                <div>
+                    <a class="btn btn-default" aria-label="Left Align" href="{% url 'cour_order' %}">
+                        <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                        Back
+                    </a>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="row" style="margin-top: 1%; margin-bottom: 1%;">
-        <div class="container" id="topInforArea">
-            <div class="row">
-                <div class="col-xs-6">
-                    <div>
-                        <div class="row">
-                            <span class="glyphicon glyphicon-map-marker  fa-2x" aria-hidden="true"></span>
-                            <strong style="font-size: 200%">Destination:</strong>
-                        </div>
-                        <div class="row">
-                            <p>{{ order.group.destination }}</p>
-                            <p>Delivery Time: {{ order.delivery_start_time }}</p>
+        <div class="row" style="margin-top: 1%; margin-bottom: 1%;">
+            <div class="container-fluid" id="topInforArea">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div>
+                            <div class="row">
+                                <span class="glyphicon glyphicon-map-marker  fa-2x" aria-hidden="true"></span>
+                                <strong style="font-size: 200%">Destination:</strong>
+                            </div>
+                            <div class="row">
+                                <p>{{ order.group.destination }}</p>
+                                <p>Delivery Time: {{ order.delivery_start_time }}</p>
+                            </div>
                         </div>
                     </div>
+                    <div class="col-xs-6" style="text-align:right;" id="sendNotification">
+                        {#                    <p>{{ order.group.destination }}</p>#}
+                        {#                    <p>Delivery Time: {{ order.delivery_start_time }}</p>#}
+                        <a class="btn btn-default" style="padding-top: 3%; padding-bottom: 3%; margin-top: 3%;">Send
+                            Notification</a>
+                    </div>
+                    {#            <div class="row" style="text-align:left;" id="sendNotification">#}
+                    {#                <a class="btn btn-default">Send Notification</a>#}
+                    {#                <hr>#}
+                    {#            </div>#}
                 </div>
-                <div class="col-xs-6" style="text-align:right;" id="sendNotification">
-                    {#                    <p>{{ order.group.destination }}</p>#}
-                    {#                    <p>Delivery Time: {{ order.delivery_start_time }}</p>#}
-                    <a class="btn btn-default" style="padding-top: 3%; padding-bottom: 3%; margin-top: 3%;">Send Notification</a>
-                </div>
-                {#            <div class="row" style="text-align:left;" id="sendNotification">#}
-                {#                <a class="btn btn-default">Send Notification</a>#}
-                {#                <hr>#}
-                {#            </div>#}
             </div>
         </div>
-    </div>
-    <div>
         <div>
-            {% for order_p in order.personal_orders %}
-                <div   style="border-top: solid #ffa82f">
-                    <p><strong style="font-family: Calibri; font-size: 150%;">Customer: {{ order_p.customer.user.first_name }}</strong></p>
-                    <div class="list-group">
-                        <div class="list-group-item {% if order_p.finished %}disabled{% endif %}">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col-xs-9">
-                                        <div class="row">
-                                            <div>
-                                                <span class="glyphicon glyphicon glyphicon-earphone fa-2x" aria-hidden="true"></span>
-                                                Contact Number:{{ order_p.customer.phone_number }}
+            <div>
+                {% for order_p in order.personal_orders %}
+                    <div style="border-top: solid #ffa82f">
+                        <p><strong
+                                style="font-family: Calibri; font-size: 150%;">Customer: {{ order_p.customer.user.first_name }}</strong>
+                        </p>
+                        <div class="list-group">
+                            <div class="list-group-item {% if order_p.finished %}disabled{% endif %}">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-xs-9">
+                                            <div class="row">
+                                                <div>
+                                                <span class="glyphicon glyphicon glyphicon-earphone fa-2x"
+                                                      aria-hidden="true"></span>
+                                                    Contact Number:{{ order_p.customer.phone_number }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-3">
+                                            <div style="text-align:right;" class="row">
+                                                {#                                            <span class="glyphicon glyphicon glyphicon-earphone fa-2x" aria-hidden="true"></span>#}
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-xs-3">
-                                        <div style="text-align:right;" class="row">
-                                            {#                                            <span class="glyphicon glyphicon glyphicon-earphone fa-2x" aria-hidden="true"></span>#}
-                                        </div>
+                                    <div class="row">
+                                        <ul class="list-group" style="width:95%;">
+                                            {% for food in order_p.foods %}
+                                                <li class="list-group-item">{{ food.food.name }} * {{ food.count }}</li>
+                                            {% endfor %}
+                                        </ul>
                                     </div>
-                                </div>
-                                <div class="row">
-                                    <ul class="list-group" style="width:95%;">
-                                        {% for food in order_p.foods %}
-                                            <li class="list-group-item">{{ food.food.name }} * {{ food.count }}</li>
-                                        {% endfor %}
-                                    </ul>
-                                </div>
-                                <div style="text-align:left;" class="row">
-                                    <div class="col-sm-12">
+                                    <div class="row">
                                         {% if order_p.finished %}
                                             {% if order_p.undelivered %}
                                                 <a class="btn btn-danger disabled">Undelivered</a>
@@ -84,8 +88,8 @@
                                             <div>
                                                 <a class="btn btn-danger"
                                                    href="{% url 'cour_order_undelivered' order.pk order_p.pk %}">Undelivered</a>
-                                                <a class="btn btn-default"
-                                                   href="{% url 'cour_order_delivered' order.pk order_p.pk %}" style="margin-left: 78%;">Delivered</a>
+                                                <a class="btn btn-default pull-right"
+                                                   href="{% url 'cour_order_delivered' order.pk order_p.pk %}">Delivered</a>
                                             </div>
                                         {% endif %}
                                     </div>
@@ -93,8 +97,9 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
 
+            </div>
         </div>
+    </div>
 {% endblock %}
