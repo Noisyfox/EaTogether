@@ -7,6 +7,7 @@ from django.contrib.gis.geos import GEOSGeometry
 from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, get_object_or_404
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.utils import timezone
 from django.template import RequestContext
@@ -317,8 +318,8 @@ class CustomerWalletView(CustomerRequiredMixin, AddressMixin, TemplateView):
             "amount": "",
             "currency_code": "AUD",
             "item_name": "Top Up",
-            "notify_url": "http://819d0423.ngrok.io/paypal/",
-            "return_url": "http://819d0423.ngrok.io/wallet/",
+            "notify_url": self.request.build_absolute_uri(reverse('paypal-ipn')),
+            "return_url": self.request.build_absolute_uri(reverse('cust_wallet')),
             "cancel_return": "https://www.example.com/your-cancel-location/",
             "custom": self.request.user.customer.id
         }
