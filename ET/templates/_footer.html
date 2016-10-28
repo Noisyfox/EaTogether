@@ -3,26 +3,18 @@
 
 <div>
     <table>
-        <thead>
-        <h3><strong>Login </strong></h3>
-        </thead>
         <tbody>
         <tr>
-            <td><a  style="border-width: 1px; color: #000;"
-                    href="{% url 'cust_login'%}"><h5>Customer Login</h5></a></td>
-        </tr>
-        </br>
-        <tr>
-            <td><a  style="border-width: 1px; color: #000;"
-                    href="{% url 'owner_login'%}"><h5>Owner Login</h5></a></td>
+            <td><a  style="color: #888;"
+                    href="{% url 'owner_login'%}"><h5>I have a restaurant</h5></a></td>
         </tr>
         <tr>
-            <td><a  style="border-width: 1px; color: #000;"
-                    href="{% url 'cour_login'%}"><h5>Courier Login</h5></a></td>
+            <td><a  style="color: #888;"
+                    href="{% url 'cour_login'%}"><h5>I am a courier</h5></a></td>
         </tr>
         </tbody>
     </table>
 </div>
 <div style="margin-top: 5%;text-align: center;">
-    {% trans "&copy; 2016 &lt;et.noisyfox.cn&gt;" %}
+    {% trans "&copy; 2016 EaTogether" %}
 </div>
