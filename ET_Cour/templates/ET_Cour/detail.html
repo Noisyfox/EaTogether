@@ -5,12 +5,15 @@
 {% block head_title %}Order Detail{% endblock %}
 
 {% block body %}
-    <div class="row" style="background-color:lightslategrey">
-        <div>
-            <a class="btn btn-default" aria-label="Left Align" href="{% url 'cour_order' %}">
-                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
-                Back
-            </a>
+    <div class="navbar navbar-default navbar-fixed-top" style="background: white;">
+        <div class="row" style="background-color:#e98520">
+            <div>
+                <a class="btn btn-default" aria-label="Left Align" href="{% url 'cour_order' %}">
+                    <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                    Back
+                </a>
+                <strong style="color: #fdfff6; font-size: 150%; float: right; padding-right: 5%;">Welcome, CourierID: {{ order.courier_id }}</strong>
+            </div>
         </div>
     </div>
     <div class="row" style="margin-top: 1%; margin-bottom: 1%;">
