@@ -269,7 +269,7 @@ class CustomerRestaurantCheckOutView(CustomerRequiredMixin, RestaurantQueryMixin
             order['item_name_' + str(k)] = request.POST['item_name_' + str(k)]
             order['quantity_' + str(k)] = request.POST['quantity_' + str(k)]
             order['amount_' + str(k)] = request.POST['amount_' + str(k)]
-            self.frozen_price = self.frozen_price + int(order['quantity_' + str(k)]) * int(order['amount_' + str(k)])
+            self.frozen_price = self.frozen_price + float(order['quantity_' + str(k)]) * int(order['amount_' + str(k)])
         group = Group.objects.get(pk=kwargs['group_id'])
         # The actual price for the food.
         price = self.frozen_price
