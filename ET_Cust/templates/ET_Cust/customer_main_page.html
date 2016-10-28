@@ -19,18 +19,23 @@
         {% if restaurant_list %}
             {% for restaurant in restaurant_list %}
                 <div class="row" style="padding-bottom: 40px">
-                    <div class="col-sm-8"
-                         style="border: 1px #f9cf7b;border-top-style: solid;">
+                    <div class="col-sm-8" style="border: 4px #e98520;border-top-style: solid;">
+                        <p>Contact Name: {{ restaurant.contact_name }} &nbsp; Contact Number: {{ restaurant.contact_number }}</p>
                         <div class="row">
                             <div class="col-sm-3">
                                 <img src="{{ restaurant.logo.url }}" width="100%" class="pull-left"/>
                                 </br>
                             </div>
                             <div class="col-sm-6">
+                                </br>
+                                </br>
+                                </br>
                                 <p style="font-size: 30px; color: #ffb725">{{ restaurant.name }}</p>
                                 <p>{{ restaurant.address }}</p>
                             </div>
                             <div class="col-sm-3">
+                                <br/>
+                                <br/>
                                 <br/>
                                 <br/>
                                 <p>Min. Delivery: ${{ restaurant.restaurantserviceinfo.min_delivery }} Delivery Fee:
@@ -57,8 +62,8 @@
                             </a>
                         </p>
                         <div class="row">
-                            <label class="pull-right">
-                                <input name="favourite"
+                            <label class="pull-right"><span class="glyphicon glyphicon-heart"></span>
+                                <input name="favourite" style="display:none;"
                                        data-id='{{ restaurant.id }}'
                                        data-url-favourite-add="{% url 'add_favorite' restaurant.id %}"
                                        data-url-favourite-delete="{% url 'delete_favorite' restaurant.id %}"
