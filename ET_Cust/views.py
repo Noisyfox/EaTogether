@@ -329,6 +329,9 @@ class CustomerWalletView(CustomerRequiredMixin, AddressMixin, TemplateView):
         context["form"] = form
         return context
 
+    def post(self, request, *args, **kwargs):
+        return self.get(request, *args, **kwargs)
+
 
 class CustomerOrderView(CustomerRequiredMixin, AddressMixin, ListView):
     template_name = 'ET_Cust/Customer Account (Order).html'
