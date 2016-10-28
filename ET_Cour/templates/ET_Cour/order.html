@@ -5,15 +5,28 @@
 {% block head_title %}Courier Order{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <div class="list-group">
+    <div class="row" style="background-color:lightslategrey">
+        <div>
+            <a class="btn btn-default" aria-label="Left Align" href="{% url 'cour_login' %}">
+                <span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span>
+                Logout
+            </a>
+        </div>
+    </div>
+    <div class="container" style="margin-top: 3%;">
+        <div style="border-top: solid; border-color: #e98520">
+            <p>Current Existing Orders</p>
+
             {% for order in orders %}
-                <a href="{% url 'cour_detail' order.pk %}"
-                   class="list-group-item {% if not order.finished %}active{% endif %}">
-                    <h4 class="list-group-item-heading">{{ order.group.destination }}</h4>
-                    <p class="list-group-item-text">Start: {{ order.delivery_start_time }}</p>
-                </a>
+                <div class="list-group">
+                    <a href="{% url 'cour_detail' order.pk %}"
+                       class="list-group-item {% if not order.finished %}active{% endif %}">
+                        <h4 class="list-group-item-heading">{{ order.group.destination }}</h4>
+                        <p class="list-group-item-text">Start: {{ order.delivery_start_time }}</p>
+                    </a>
+                </div>
             {% endfor %}
+
         </div>
     </div>
 {% endblock %}
